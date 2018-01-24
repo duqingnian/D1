@@ -1,5 +1,16 @@
 #include "Pokemon.h"
 
+
+/* These are guidlines on how you create your pokemon
+Pokemon(name, level,
+		exp, strength, agility,
+		hp, maxHP, maxStamina,
+		weakness, type,
+		pictureFileName,
+		ability1,
+		ability2,
+		ability3);
+		*/
 Pokemon Catter{ "Catter", 1, 0, 12, 40, 90, 90, 100,
 	"water", "earth", "Pictures/cat.txt",
 	{ {"name","Scratch"},{"damage","10"},{"stamina","0"} },
