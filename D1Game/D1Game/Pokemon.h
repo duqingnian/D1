@@ -52,7 +52,7 @@ public:
 	inline const int& getMaxStamina() const { return this->maxStamina; }
 	inline const string& getWeakness() const { return this->weakness; }
 	inline const string& getType() const { return this->type; }
-	inline const string& getPictureFileName() const { return this->pictureFileName; }
+	inline const string getPictureFileName() const { return this->pictureFileName; }
 	inline const map<string, string>& getAbility1() const { return this->ability1; }
 	inline const map<string, string>& getAbility2() const { return this->ability2; }
 	inline const map<string, string>& getAbility3() const { return this->ability3; }
