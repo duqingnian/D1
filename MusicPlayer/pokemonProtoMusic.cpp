@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {
 
-	PlaySound(TEXT("poke-caterpie.wav"), NULL, SND_SYNC);
+	PlaySound(TEXT("poke-caterpie.wav"), NULL, SND_SYNC); //file name of the user
 	system("pause");
 
     return 0;
