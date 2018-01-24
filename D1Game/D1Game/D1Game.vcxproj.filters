@@ -35,10 +35,10 @@
     <ClCompile Include="D1Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\D1_Game\D1_Game\OurPokemons.cpp">
+    <ClCompile Include="OurPokemons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\D1_Game\D1_Game\Pokemon.cpp">
+    <ClCompile Include="Pokemon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
