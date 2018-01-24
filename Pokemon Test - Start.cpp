@@ -1,3 +1,5 @@
+//I've added this stuff in only to test if the mouse handling and keyboard functions work (which I will upload soon)
+
 #include <iostream>
 #include <chrono> //name of a header and a sub-namespace. It's used in all things related to time (clocks, time spans and references to specific time points)
 #include <thread>
@@ -10,11 +12,11 @@ int main()
     using namespace std::this_thread;      // <thread> refers to the sleep_until
     using namespace std::chrono_literals;  // choose either h = hours, s = seconds, ms = miliseconds (etc)
     using std::chrono::system_clock;
-    sleep_until(system_clock::now() + 2s); // uses the time from when the last line is executed (eg: wait 2 seconds after line 12 has been executed)
+    sleep_until(system_clock::now() + 2s); // uses the time from when the last line is executed (eg: wait 2 seconds the last line has been executed)
     
     cout <<"Ah, there you are.\n"<< endl; // the \n adds a new line before it.. Only added them because I thought it looked neater (but you can remove them if you want to)
-    using namespace std::this_thread;
-    using namespace std::chrono_literals;
+    using namespace std::this_thread; // finds the name for the function it's working with 
+    using namespace std::chrono_literals; // the chrono_literals accesses the class duration, and makes the literal values become visible (the h = hours, s = seconds etc are the literals)
     using std::chrono::system_clock;
     sleep_until(system_clock::now() + 1s);
     
@@ -87,4 +89,5 @@ int main()
     }
 
 }
-//not yet completed (as you can tell...). I was also thinking that we could add a difficulty setting as well?
+
+//not yet completed (as you can tell...). I was also thinking that we could add a difficulty setting?
