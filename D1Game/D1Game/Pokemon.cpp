@@ -1,6 +1,6 @@
 #include "Pokemon.h"
 
-
+//Initialising a pokemon
 Pokemon::Pokemon() {
 	this->name = "";
 	this->level = 0;
@@ -14,9 +14,9 @@ Pokemon::Pokemon() {
 	this->weakness = "";
 	this->type = "";
 	this->pictureFileName = "";
-	this->ability1 = {};
-	this->ability2 = {};
-	this->ability3 = {};
+	this->ability1 = Ability();
+	this->ability2 = Ability();
+	this->ability3 = Ability();
 }
 
 Pokemon::Pokemon(string name, int level,
@@ -24,9 +24,9 @@ Pokemon::Pokemon(string name, int level,
 	int hp, int maxHP, int maxStamina,
 	string weakness, string type,
 	string pictureFileName,
-	map<string, string> ability1,
-	map<string, string> ability2,
-	map<string, string> ability3) {
+	Ability ability1,
+	Ability ability2,
+	Ability ability3) {
 	this->name = name;
 	this->level = level;
 	this->exp = exp;
@@ -47,7 +47,7 @@ Pokemon::~Pokemon() {
 
 }
 
-void Pokemon::heal(int healAmount) {
+void Pokemon::heal(int healAmount) { //Heal back HP
 	int newHP = this->HP + healAmount;
 	if (newHP > maxHP) {
 		this->HP = maxHP;
@@ -56,7 +56,7 @@ void Pokemon::heal(int healAmount) {
 		this->HP = newHP;
 	}
 }
-void Pokemon::levelUp() {
+void Pokemon::levelUp() { //level Up
 	if (this->exp >= 100) {
 		this->level += 1;
 		this->exp -= 100;
@@ -74,7 +74,7 @@ void Pokemon::levelUp() {
 	}
 
 }
-void Pokemon::receiveDmg(int dmg) {
+void Pokemon::receiveDmg(const int dmg) { //Subtract HP
 	int newHP = this->HP - dmg;
 	if (newHP < 0) {
 		this->HP = 0;
