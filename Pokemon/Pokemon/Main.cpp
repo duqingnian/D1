@@ -19,7 +19,8 @@ int main()
 	{
 		while (getline(leftFile, leftLine) && getline(rightFile, rightLine))
 		{
-			cout << leftLine << "\t \t \t \t \t \t \t \t " << rightLine << endl;
+			cout << leftLine << menu[i] << rightLine << endl;
+			i++;
 		}
 		leftFile.close();
 	}

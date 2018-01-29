@@ -56,6 +56,15 @@ void Pokemon::heal(int healAmount) { //Heal back HP
 		this->HP = newHP;
 	}
 }
+void Pokemon::addStamina(int staminaAmount) { //Heal back HP
+	int newStamina = this->stamina + staminaAmount;
+	if (newStamina > maxStamina) {
+		this->stamina = maxStamina;
+	}
+	else {
+		this->stamina = newStamina;
+	}
+}
 void Pokemon::levelUp() { //level Up
 	if (this->exp >= 100) {
 		this->level += 1;

@@ -33,7 +33,8 @@ public:
 
 	//Functions
 	void levelUp();
-	void heal(int health);
+	void heal(int healAmount);
+	void addStamina(int staminaAmount);
 	void receiveDmg(const int dmg);
 	void printStats();
 	
@@ -57,7 +58,6 @@ public:
 
 	//Setters
 	inline void gainExp(const int exp) { this->exp += exp; }
-	inline void addStamina(const int stamina) { this->stamina += stamina; }
 	inline void removeStamina(const int stamina) { this->stamina -= stamina; }
 	inline void changeName(string name) { this->name = name; }
 
