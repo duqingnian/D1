@@ -1,4 +1,5 @@
 #pragma once
+#include "Game.h"
 
 namespace pokemonGUI {
 
@@ -20,8 +21,27 @@ namespace pokemonGUI {
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
-			//
+			//---------------------------------------------------------------------------------------------------------
+			updateLabels();
+			//Adding Ability1 name to button
+			string ability1 = game.getPlayer().getPokemon().getAbility1().getName();
+			System::String^ s = gcnew System::String(ability1.c_str());
+			btnAbility1->Text = s;
+			//Adding Ability2 name to button
+			string ability2 = game.getPlayer().getPokemon().getAbility2().getName();
+			s = gcnew System::String(ability2.c_str());
+			btnAbility2->Text = s;
+			//Adding Ability3 name to button
+			string ability3 = game.getPlayer().getPokemon().getAbility3().getName();
+			s = gcnew System::String(ability3.c_str());
+			btnAbility3->Text = s;
+			
 		}
+		void updateLabels() {
+			labelPlayerStats->Text = game.getPlayer().getPokemon().labelStats();
+			labelEnemyStats->Text = game.getFight().getEnemy().labelStats();
+		}
+		//--------------------------------------------------------------------------------------------------------------
 
 	protected:
 		/// <summary>
@@ -34,15 +54,21 @@ namespace pokemonGUI {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^  btnAttack1;
+	private: System::Windows::Forms::Button^  btnAbility1;
+	private: System::Windows::Forms::Button^  btnAbility2;
+	private: System::Windows::Forms::Button^  btnAbility3;
 	protected:
-	private: System::Windows::Forms::Button^  btnAttack2;
-	private: System::Windows::Forms::Button^  button3;
+
+	protected:
+
+
 	private: System::Windows::Forms::Button^  btnAttack4;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
 	private: System::Windows::Forms::ProgressBar^  progressBar1;
 	private: System::Windows::Forms::ProgressBar^  progressBar2;
+	private: System::Windows::Forms::Label^  labelPlayerStats;
+	private: System::Windows::Forms::Label^  labelEnemyStats;
 
 	private:
 		/// <summary>
@@ -57,44 +83,49 @@ namespace pokemonGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->btnAttack1 = (gcnew System::Windows::Forms::Button());
-			this->btnAttack2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->btnAbility1 = (gcnew System::Windows::Forms::Button());
+			this->btnAbility2 = (gcnew System::Windows::Forms::Button());
+			this->btnAbility3 = (gcnew System::Windows::Forms::Button());
 			this->btnAttack4 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
 			this->progressBar2 = (gcnew System::Windows::Forms::ProgressBar());
+			this->labelPlayerStats = (gcnew System::Windows::Forms::Label());
+			this->labelEnemyStats = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// btnAttack1
+			// btnAbility1
 			// 
-			this->btnAttack1->Location = System::Drawing::Point(643, 385);
-			this->btnAttack1->Name = L"btnAttack1";
-			this->btnAttack1->Size = System::Drawing::Size(210, 62);
-			this->btnAttack1->TabIndex = 0;
-			this->btnAttack1->Text = L"button1";
-			this->btnAttack1->UseVisualStyleBackColor = true;
+			this->btnAbility1->Location = System::Drawing::Point(643, 385);
+			this->btnAbility1->Name = L"btnAbility1";
+			this->btnAbility1->Size = System::Drawing::Size(210, 62);
+			this->btnAbility1->TabIndex = 0;
+			this->btnAbility1->Text = L"button1";
+			this->btnAbility1->UseVisualStyleBackColor = true;
+			this->btnAbility1->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility1_Click);
 			// 
-			// btnAttack2
+			// btnAbility2
 			// 
-			this->btnAttack2->Location = System::Drawing::Point(859, 385);
-			this->btnAttack2->Name = L"btnAttack2";
-			this->btnAttack2->Size = System::Drawing::Size(210, 62);
-			this->btnAttack2->TabIndex = 1;
-			this->btnAttack2->Text = L"button2";
-			this->btnAttack2->UseVisualStyleBackColor = true;
+			this->btnAbility2->Location = System::Drawing::Point(859, 385);
+			this->btnAbility2->Name = L"btnAbility2";
+			this->btnAbility2->Size = System::Drawing::Size(210, 62);
+			this->btnAbility2->TabIndex = 1;
+			this->btnAbility2->Text = L"button2";
+			this->btnAbility2->UseVisualStyleBackColor = true;
+			this->btnAbility2->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility2_Click);
 			// 
-			// button3
+			// btnAbility3
 			// 
-			this->button3->Location = System::Drawing::Point(859, 456);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(210, 62);
-			this->button3->TabIndex = 2;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
+			this->btnAbility3->Location = System::Drawing::Point(859, 456);
+			this->btnAbility3->Name = L"btnAbility3";
+			this->btnAbility3->Size = System::Drawing::Size(210, 62);
+			this->btnAbility3->TabIndex = 2;
+			this->btnAbility3->Text = L"button3";
+			this->btnAbility3->UseVisualStyleBackColor = true;
+			this->btnAbility3->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility3_Click);
 			// 
 			// btnAttack4
 			// 
@@ -135,25 +166,47 @@ namespace pokemonGUI {
 			this->progressBar2->Size = System::Drawing::Size(461, 23);
 			this->progressBar2->TabIndex = 7;
 			// 
+			// labelPlayerStats
+			// 
+			this->labelPlayerStats->AutoSize = true;
+			this->labelPlayerStats->Location = System::Drawing::Point(22, 194);
+			this->labelPlayerStats->Name = L"labelPlayerStats";
+			this->labelPlayerStats->Size = System::Drawing::Size(46, 17);
+			this->labelPlayerStats->TabIndex = 8;
+			this->labelPlayerStats->Text = L"label1";
+			// 
+			// labelEnemyStats
+			// 
+			this->labelEnemyStats->AutoSize = true;
+			this->labelEnemyStats->Location = System::Drawing::Point(961, 169);
+			this->labelEnemyStats->Name = L"labelEnemyStats";
+			this->labelEnemyStats->Size = System::Drawing::Size(46, 17);
+			this->labelEnemyStats->TabIndex = 9;
+			this->labelEnemyStats->Text = L"label1";
+			this->labelEnemyStats->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			// 
 			// protoGUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1116, 530);
+			this->Controls->Add(this->labelEnemyStats);
+			this->Controls->Add(this->labelPlayerStats);
 			this->Controls->Add(this->progressBar2);
 			this->Controls->Add(this->progressBar1);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnAttack4);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->btnAttack2);
-			this->Controls->Add(this->btnAttack1);
+			this->Controls->Add(this->btnAbility3);
+			this->Controls->Add(this->btnAbility2);
+			this->Controls->Add(this->btnAbility1);
 			this->Name = L"protoGUI";
 			this->Text = L"protoGUI";
 			this->Load += gcnew System::EventHandler(this, &protoGUI::protoGUI_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -163,5 +216,19 @@ namespace pokemonGUI {
 
 
 	}
-	};
+			 //-----------------------------------------------------------------------------------------------------------
+private: System::Void btnAbility1_Click(System::Object^  sender, System::EventArgs^  e) {
+	game.getFight().useAbility1(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	updateLabels();
+}
+private: System::Void btnAbility2_Click(System::Object^  sender, System::EventArgs^  e) {
+	game.getFight().useAbility2(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	updateLabels();
+}
+private: System::Void btnAbility3_Click(System::Object^  sender, System::EventArgs^  e) {
+	game.getFight().useAbility3(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	updateLabels();
+}
+			//-----------------------------------------------------------------------------------------------------------
+};
 }
