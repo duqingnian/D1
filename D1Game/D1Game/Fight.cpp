@@ -2,22 +2,12 @@
 #include <time.h>
 
 
-Fight::Fight()
-{
-	this->player = Player();
-	this->pokemon = Pokemon();
-	this->enemy = Pokemon();
-	this->fighting = true;
-}
-
 
 Fight::~Fight()
 {
 }
 
-Fight::Fight(Player& player, Pokemon& enemy) {
-	this->player = player;
-	this->pokemon = player.getPokemon();
+Fight::Fight(Player& playerIN, Pokemon& enemy) : player(playerIN), pokemon(playerIN.getPokemon()){
 	this->enemy = enemy;
 	this->fighting = true;
 }

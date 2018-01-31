@@ -20,7 +20,7 @@ public:
 
 	//Getters
 	inline const string& getName() const { return this->name; }
-	inline const Pokemon& getPokemon() const { return this->pokemon; }
+	inline Pokemon& getPokemon() { return this->pokemon; }
 	inline const int& getMoney() const { return this->money; }
 	inline const int& getHealthPotions() const { return this->healthPotions; }
 	inline const int& getStaminaPotions() const { return this->staminaPotions; }

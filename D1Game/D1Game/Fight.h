@@ -7,17 +7,17 @@ class Fight
 {
 private:
 	bool fighting;
-	Player player;
-	Pokemon pokemon;
+	Player& player;
+	Pokemon& pokemon;
 	Pokemon enemy;
 public:
-	Fight();
+	//Fight();
 	~Fight();
 	Fight(Player& player, Pokemon& enemy);
 
 
 	int MONEY_FOR_WIN = 50 + 10 * this->enemy.getLevel();
-	int EXPERIENCE_FOR_WIN = this->pokemon.getHP*0.5 + (rand() % 20);
+	int EXPERIENCE_FOR_WIN = this->pokemon.getHP()*0.5 + (rand() % 20);
 	int POTION_HEAL_AMOUNT = 50;
 
 	//Functions
