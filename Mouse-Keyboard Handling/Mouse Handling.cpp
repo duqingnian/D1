@@ -29,7 +29,7 @@
            gotoxy(15,2);
            printf("Right button");
            gotoxy(55,3);
-           printf("press anaykey to exit");
+           printf("press anykey to exit");
            while(!kbhit())
            {
             getmousepos(&button,&x,&y);
