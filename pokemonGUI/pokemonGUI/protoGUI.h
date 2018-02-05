@@ -157,6 +157,7 @@ namespace pokemonGUI {
 			this->btnAttack4->TabIndex = 3;
 			this->btnAttack4->Text = L"button4";
 			this->btnAttack4->UseVisualStyleBackColor = true;
+			this->btnAttack4->Click += gcnew System::EventHandler(this, &protoGUI::btnAttack4_Click);
 			// 
 			// pictureBox1
 			// 
