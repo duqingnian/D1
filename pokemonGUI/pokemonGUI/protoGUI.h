@@ -219,14 +219,17 @@ namespace pokemonGUI {
 			 //-----------------------------------------------------------------------------------------------------------
 private: System::Void btnAbility1_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getFight().useAbility1(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 }
 private: System::Void btnAbility2_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getFight().useAbility2(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 }
 private: System::Void btnAbility3_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getFight().useAbility3(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 }
 			//-----------------------------------------------------------------------------------------------------------

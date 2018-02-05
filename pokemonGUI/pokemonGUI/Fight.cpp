@@ -1,6 +1,7 @@
 #include "Fight.h"
 #include "Player.h"
 #include <time.h>
+#include "Game.h"
 
 
 Fight::Fight() : player(Player()), pokemon(Pokemon()){
@@ -27,6 +28,7 @@ string Fight::useAbility1(Pokemon& dealer, Pokemon& receiver) { //Ability 1 used
 		if (receiver.getHP() == 0) { //If attack was the killing blow
 			declareWinner(dealer);
 		}
+		game.setEnemyTurn(true); //Time for enemy to attack back
 		if (damage == 0) {
 			return (dealer.getName() + " used " + dealer.getAbility1().getName() + ", but it missed.");
 		}
@@ -47,6 +49,7 @@ string Fight::useAbility2(Pokemon& dealer, Pokemon& receiver) { //Ability 2 used
 		if (receiver.getHP() == 0) { //If attack was the killing blow
 			declareWinner(dealer);
 		}
+		game.setEnemyTurn(true); //Time for enemy to attack back
 		if (damage == 0) {
 			return (dealer.getName() + " used " + dealer.getAbility2().getName() + ", but it missed.");
 		}
@@ -67,6 +70,7 @@ string Fight::useAbility3(Pokemon& dealer, Pokemon& receiver) { //Ability 3 used
 		if (receiver.getHP() == 0) { //If attack was the killing blow
 			declareWinner(dealer);
 		}
+		game.setEnemyTurn(true); //Time for enemy to attack back
 		if (damage == 0) {
 			return (dealer.getName() + " used " + dealer.getAbility3().getName() + ", but it missed.");
 		}
@@ -79,8 +83,8 @@ string Fight::useAbility3(Pokemon& dealer, Pokemon& receiver) { //Ability 3 used
 string Fight::declareWinner(Pokemon& winner) { // When other pokemon's HP is 0
 	if (winner.getName() == this->pokemon.getName()) {
 		return ("You have beated " + this->enemy.getName() + " and earned yourself 100$");
-		this->player.addMoney(MONEY_FOR_WIN); //Updated in Fight.h
-		this->pokemon.gainExp(EXPERIENCE_FOR_WIN); //Updated in Fight.h
+		game.getPlayer().addMoney(MONEY_FOR_WIN); //Updated in Fight.h
+		winner.gainExp(EXPERIENCE_FOR_WIN); //Updated in Fight.h
 	}
 	else {
 		return ("You lost to " + this->enemy.getName());
@@ -102,6 +106,7 @@ string Fight::useHealthPotion() {
 		this->player.removeHealthPotion();
 		this->pokemon.heal(POTION_HEAL_AMOUNT); //Updated in Fight.h
 		return("Health potion used.");
+		game.setEnemyTurn(true); //Time for enemy to attack back
 	}
 	else {
 		return("You're out of health potions.");
@@ -112,6 +117,7 @@ string Fight::useStaminaPotion() {
 		this->player.removeStaminaPotion();
 		this->pokemon.addStamina(POTION_HEAL_AMOUNT); //Updated in Fight.h
 		return("Stamina potion used.");
+		game.setEnemyTurn(true); //Time for enemy to attack back
 	}
 	else {
 		return ("You're out of stamina potions.");
