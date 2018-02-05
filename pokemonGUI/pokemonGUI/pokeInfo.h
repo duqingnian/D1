@@ -188,6 +188,15 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 	} else 	if (cbPokemonSelect->Text == "Zizi") {
 		labelStats->Text = Zizi.labelStats();
 		game.getPlayer().setPokemon(Zizi);
+	} else 	if (cbPokemonSelect->Text == "Pyro") {
+		labelStats->Text = Pyro.labelStats();
+		game.getPlayer().setPokemon(Pyro);
+	} else 	if (cbPokemonSelect->Text == "Lemongrass") {
+		labelStats->Text = Lemongrass.labelStats();
+		game.getPlayer().setPokemon(Lemongrass);
+	} else 	if (cbPokemonSelect->Text == "Thundershock") {
+		labelStats->Text = Thundershock.labelStats();
+		game.getPlayer().setPokemon(Thundershock);
 	}
 }
 		 //----------------------------------------------------------------------------------------------------------------------------
