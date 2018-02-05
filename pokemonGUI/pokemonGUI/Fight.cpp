@@ -82,9 +82,9 @@ string Fight::useAbility3(Pokemon& dealer, Pokemon& receiver) { //Ability 3 used
 }
 string Fight::declareWinner(Pokemon& winner) { // When other pokemon's HP is 0
 	if (winner.getName() == this->pokemon.getName()) {
-		return ("You have beated " + this->enemy.getName() + " and earned yourself 100$");
 		game.getPlayer().addMoney(MONEY_FOR_WIN); //Updated in Fight.h
 		winner.gainExp(EXPERIENCE_FOR_WIN); //Updated in Fight.h
+		return ("You have beated " + this->enemy.getName() + " and earned yourself 100$");
 	}
 	else {
 		return ("You lost to " + this->enemy.getName());
