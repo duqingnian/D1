@@ -32,7 +32,7 @@ public:
 
 	//Getters
 	inline Player& getPlayer() { return this->player; }
-	inline Pokemon& getPokemon() { return this->pokemon; }
+	inline Pokemon& getPokemon() { return this->player.getPokemon(); }
 	inline Pokemon& getEnemy() { return this->enemy; }
 	inline bool isFighting() { return this->fighting; }
 

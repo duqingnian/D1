@@ -36,6 +36,11 @@ namespace pokemonGUI {
 			s = gcnew System::String(ability3.c_str());
 			btnAbility3->Text = s;
 			
+			
+			pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
+			pictureBox2->ImageLocation = gcnew System::String(game.getFight().getEnemy().getPictureFileName().c_str());
+
+			
 		}
 		void updateLabels() {
 			labelPlayerStats->Text = game.getPlayer().getPokemon().labelStats();
@@ -119,6 +124,7 @@ namespace pokemonGUI {
 			this->btnAbility1->TabIndex = 0;
 			this->btnAbility1->Text = L"button1";
 			this->btnAbility1->UseVisualStyleBackColor = true;
+			this->btnAbility1->Visible = false;
 			this->btnAbility1->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility1_Click);
 			// 
 			// btnAbility2
@@ -129,6 +135,7 @@ namespace pokemonGUI {
 			this->btnAbility2->TabIndex = 1;
 			this->btnAbility2->Text = L"button2";
 			this->btnAbility2->UseVisualStyleBackColor = true;
+			this->btnAbility2->Visible = false;
 			this->btnAbility2->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility2_Click);
 			// 
 			// btnAbility3
@@ -139,6 +146,7 @@ namespace pokemonGUI {
 			this->btnAbility3->TabIndex = 2;
 			this->btnAbility3->Text = L"button3";
 			this->btnAbility3->UseVisualStyleBackColor = true;
+			this->btnAbility3->Visible = false;
 			this->btnAbility3->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility3_Click);
 			// 
 			// btnAttack4
@@ -149,13 +157,13 @@ namespace pokemonGUI {
 			this->btnAttack4->TabIndex = 3;
 			this->btnAttack4->Text = L"button4";
 			this->btnAttack4->UseVisualStyleBackColor = true;
-			this->btnAttack4->Click += gcnew System::EventHandler(this, &protoGUI::btnAttack4_Click);
 			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->Location = System::Drawing::Point(12, 385);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(436, 133);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -164,6 +172,7 @@ namespace pokemonGUI {
 			this->pictureBox2->Location = System::Drawing::Point(643, 12);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(461, 125);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox2->TabIndex = 5;
 			this->pictureBox2->TabStop = false;
 			// 
@@ -260,6 +269,7 @@ namespace pokemonGUI {
 			 //-----------------------------------------------------------------------------------------------------------
 private: System::Void btnAbility1_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getFight().useAbility1(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 	updatePgbar();
 	
@@ -267,6 +277,7 @@ private: System::Void btnAbility1_Click(System::Object^  sender, System::EventAr
 private: System::Void btnAbility2_Click(System::Object^  sender, System::EventArgs^  e) {
 	updatePgbar();
 	game.getFight().useAbility2(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 	updatePgbar();
 }
@@ -274,13 +285,17 @@ private: System::Void btnAbility3_Click(System::Object^  sender, System::EventAr
 	
 
 	game.getFight().useAbility3(game.getPlayer().getPokemon(), game.getFight().getEnemy());
+	game.enemyAttack(); //Enemy's attack
 	updateLabels();
 	updatePgbar();
 }
 			//-----------------------------------------------------------------------------------------------------------
 private: System::Void btnStartBattle_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->timerHealth->Start();
-
+	btnAbility1->Visible = true;
+	btnAbility2->Visible = true;
+	btnAbility3->Visible = true;
+	btnStartBattle->Visible = false;
 
 }
 private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArgs^  e) {
