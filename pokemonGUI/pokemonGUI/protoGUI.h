@@ -36,6 +36,11 @@ namespace pokemonGUI {
 			s = gcnew System::String(ability3.c_str());
 			btnAbility3->Text = s;
 			
+			
+			pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
+			pictureBox2->ImageLocation = gcnew System::String(game.getFight().getEnemy().getPictureFileName().c_str());
+
+			
 		}
 		void updateLabels() {
 			labelPlayerStats->Text = game.getPlayer().getPokemon().labelStats();
