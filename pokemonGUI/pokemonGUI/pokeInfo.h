@@ -158,6 +158,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->button1);
 			this->Name = L"pokeInfo";
 			this->Text = L"pokeInfo";
+			this->Load += gcnew System::EventHandler(this, &pokeInfo::pokeInfo_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
@@ -202,6 +203,8 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	updateLabel();
+}
+private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

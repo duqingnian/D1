@@ -41,7 +41,7 @@ namespace pokemonGUI {
 			labelPlayerStats->Text = game.getPlayer().getPokemon().labelStats();
 			labelEnemyStats->Text = game.getFight().getEnemy().labelStats();
 
-			updatePgbar();
+			
 		}
 		//--------------------------------------------------------------------------------------------------------------
 
@@ -77,6 +77,7 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Label^  labelEnemyStats;
 	private: System::Windows::Forms::Timer^  timerHealth;
 	private: System::Windows::Forms::Button^  btnStartBattle;
+	private: System::Windows::Forms::Label^  label1;
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -105,6 +106,7 @@ namespace pokemonGUI {
 			this->labelEnemyStats = (gcnew System::Windows::Forms::Label());
 			this->timerHealth = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnStartBattle = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
@@ -147,6 +149,7 @@ namespace pokemonGUI {
 			this->btnAttack4->TabIndex = 3;
 			this->btnAttack4->Text = L"button4";
 			this->btnAttack4->UseVisualStyleBackColor = true;
+			this->btnAttack4->Click += gcnew System::EventHandler(this, &protoGUI::btnAttack4_Click);
 			// 
 			// pictureBox1
 			// 
@@ -199,6 +202,7 @@ namespace pokemonGUI {
 			// 
 			// timerHealth
 			// 
+			this->timerHealth->Enabled = true;
 			this->timerHealth->Tick += gcnew System::EventHandler(this, &protoGUI::timerHealth_Tick);
 			// 
 			// btnStartBattle
@@ -211,11 +215,21 @@ namespace pokemonGUI {
 			this->btnStartBattle->UseVisualStyleBackColor = true;
 			this->btnStartBattle->Click += gcnew System::EventHandler(this, &protoGUI::btnStartBattle_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(184, 119);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(46, 17);
+			this->label1->TabIndex = 11;
+			this->label1->Text = L"label1";
+			// 
 			// protoGUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1116, 530);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->btnStartBattle);
 			this->Controls->Add(this->labelEnemyStats);
 			this->Controls->Add(this->labelPlayerStats);
@@ -247,14 +261,21 @@ namespace pokemonGUI {
 private: System::Void btnAbility1_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getFight().useAbility1(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	updateLabels();
+	updatePgbar();
+	
 }
 private: System::Void btnAbility2_Click(System::Object^  sender, System::EventArgs^  e) {
+	updatePgbar();
 	game.getFight().useAbility2(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	updateLabels();
+	updatePgbar();
 }
 private: System::Void btnAbility3_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+
 	game.getFight().useAbility3(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	updateLabels();
+	updatePgbar();
 }
 			//-----------------------------------------------------------------------------------------------------------
 private: System::Void btnStartBattle_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -263,33 +284,43 @@ private: System::Void btnStartBattle_Click(System::Object^  sender, System::Even
 
 }
 private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArgs^  e) {
-	
+	updatePgbar();
 	
 }
 		 void updatePgbar()
 		 {
 			 //Pokemons health and Stamina
 			 int playerMaxHealth = game.getFight().getPokemon().getMaxHP();
-			 int playerHealth = game.getPlayer().getPokemon().getHP();
+			 double playerHealth = game.getPlayer().getPokemon().getHP();
+			 playerHealth = playerHealth / playerMaxHealth * 100;
 
 			 int enemyMaxHealth = game.getFight().getEnemy().getMaxHP();
-			 int enemyHealth = game.getFight().getEnemy().getHP();
+			 double enemyHealth = game.getFight().getEnemy().getHP();
 			 enemyHealth = enemyHealth / enemyMaxHealth * 100;
 
 			 //Pokemons stamina
 			 int playerMaxStamina = game.getFight().getPokemon().getMaxStamina();
-			 int playerStamina = game.getFight().getPokemon().getStamina();
+			 double playerStamina = game.getFight().getPokemon().getStamina();
+			 playerStamina = playerStamina / playerMaxStamina * 100;
+
+
 
 			 int enemyMaxStamina = game.getFight().getEnemy().getMaxStamina();
-			 int enemyStamina = game.getFight().getEnemy().getStamina();
+			 double enemyStamina = game.getFight().getEnemy().getStamina();
+			 enemyStamina = enemyStamina / enemyMaxStamina * 100;
 
-			 
-			 pgBarPlayerHealth->Value = enemyHealth;
+			string  a = to_string(playerStamina);
+
+			label1->Text = Convert::ToString(enemyStamina);
+			 pgBarPlayerHealth->Value = playerStamina;
 
 
 		 }
 
 
 		 
+private: System::Void btnAttack4_Click(System::Object^  sender, System::EventArgs^  e) {
+	updatePgbar();
+}
 };
 }
