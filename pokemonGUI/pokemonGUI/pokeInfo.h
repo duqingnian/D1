@@ -169,18 +169,12 @@ namespace pokemonGUI {
 #pragma endregion
 		//--------------------------------------------------------------------------------------------------------------------------------
 	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { //Start Game button clicked
-		if (game.getPlayer().getPokemon().getName() == "") {
-			if (cbPokemonSelect->Text == "Catter") {
-				game.getPlayer().setPokemon(Catter);
-			}
-			else if (cbPokemonSelect->Text == "Zizi") {
-				game.getPlayer().setPokemon(Zizi);
-			}
+
+		if (game.getPlayer().getPokemon().getHP() > 0) {
+			game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
+			pokemonGUI::protoGUI gui;
+			gui.ShowDialog(); //Launch fight GUI
 		}
-		game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
-		pokemonGUI::protoGUI gui;
-		gui.ShowDialog(); //Launch fight GUI
-		
 		
 	}
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {

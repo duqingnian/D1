@@ -16,7 +16,7 @@ public:
 	Game(Player& player);
 
 	//Functions
-	void enemyAttack();
+	string enemyAttack();
 	System::String^ systemString(string s);
 
 	//Getters
