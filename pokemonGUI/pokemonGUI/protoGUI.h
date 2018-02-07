@@ -189,6 +189,7 @@ namespace pokemonGUI {
 			// 
 			// pgBarEnemyHealth
 			// 
+			this->pgBarEnemyHealth->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
 			this->pgBarEnemyHealth->Location = System::Drawing::Point(643, 143);
 			this->pgBarEnemyHealth->Name = L"pgBarEnemyHealth";
 			this->pgBarEnemyHealth->Size = System::Drawing::Size(461, 23);
@@ -322,13 +323,9 @@ private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArg
 			 double playerStamina = game.getFight().getPokemon().getStamina();
 			 playerStamina = playerStamina / playerMaxStamina * 100;
 
-
-
 			 int enemyMaxStamina = game.getFight().getEnemy().getMaxStamina();
 			 double enemyStamina = game.getFight().getEnemy().getStamina();
 			 enemyStamina = enemyStamina / enemyMaxStamina * 100;
-
-
 
 			label1->Text = Convert::ToString(playerHealth);
 			pgBarEnemyHealth->Value = enemyHealth;

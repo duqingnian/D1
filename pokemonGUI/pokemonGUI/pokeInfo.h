@@ -13,6 +13,7 @@ namespace pokemonGUI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	
 
 	/// <summary>
 	/// Summary for pokeInfo
@@ -168,24 +169,38 @@ namespace pokemonGUI {
 		}
 #pragma endregion
 		//--------------------------------------------------------------------------------------------------------------------------------
-	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { //Start Game button clicked
-		if (game.getPlayer().getPokemon().getName() == "") {
-			if (cbPokemonSelect->Text == "Catter") {
-				game.getPlayer().setPokemon(Catter);
-			}
-			else if (cbPokemonSelect->Text == "Zizi") {
-				game.getPlayer().setPokemon(Zizi);
-			}
+	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { 
+
+		if (cbPokemonSelect->SelectedIndex == -1)
+		{
+			MessageBox::Show("Select a Pokemon", "Alert");
 		}
-		game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
-		pokemonGUI::protoGUI gui;
-		gui.ShowDialog(); //Launch fight GUI
+		else
+		{
+			
+			//Start Game button clicked
+			if (game.getPlayer().getPokemon().getName() == "") {
+				if (cbPokemonSelect->Text == "Catter") {
+					game.getPlayer().setPokemon(Catter);
+				}
+				else if (cbPokemonSelect->Text == "Zizi") {
+					game.getPlayer().setPokemon(Zizi);
+				}
+			}
+			game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
+			pokemonGUI::protoGUI gui;
+			gui.ShowDialog(); //Launch fight GUI
+
+		}
+		
 		
 		
 	}
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { //Pokemon selection made
+private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { 
+	
+		//Pokemon selection made
 	if (cbPokemonSelect->Text == "Catter") {
 		labelStats->Text = Catter.labelStats();
 		game.getPlayer().setPokemon(Catter);
@@ -208,6 +223,11 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	updateLabel();
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
+	
+
+
+
+
 }
 };
 }
