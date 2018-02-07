@@ -17,7 +17,7 @@ namespace pokemonGUI {
 	public:
 		frmAdventrureMap(void)
 		{
-			Graphics ^ graphics = panel->CreateGraphics();
+			Graphics ^ graphics = panel1->CreateGraphics();
 			Pen^ penCurrent = gcnew Pen(Color::Red);
 			Point p1(10, 10);
 			Point p2(20, 20);
