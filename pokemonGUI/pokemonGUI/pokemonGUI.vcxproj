@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Fight.cpp" />
+    <ClCompile Include="frmAdventrureMap.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -144,6 +145,9 @@
   <ItemGroup>
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Fight.h" />
+    <ClInclude Include="frmAdventrureMap.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Game.h" />
     <ClInclude Include="OurPokemons.h" />
     <ClInclude Include="Player.h" />
@@ -158,6 +162,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAdventrureMap.resx">
+      <DependentUpon>frmAdventrureMap.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pokeInfo.resx">
       <DependentUpon>pokeInfo.h</DependentUpon>
     </EmbeddedResource>

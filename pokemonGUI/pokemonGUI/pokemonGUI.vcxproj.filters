@@ -42,6 +42,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="frmAdventrureMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="protoGUI.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pokemon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="frmAdventrureMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

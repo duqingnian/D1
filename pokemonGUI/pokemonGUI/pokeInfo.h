@@ -133,7 +133,7 @@ namespace pokemonGUI {
 			this->cbPokemonSelect->Name = L"cbPokemonSelect";
 			this->cbPokemonSelect->Size = System::Drawing::Size(146, 24);
 			this->cbPokemonSelect->TabIndex = 6;
-			this->cbPokemonSelect->Text = L"Select pokemon";
+			this->cbPokemonSelect->Text= L"Select pokemon";
 			this->cbPokemonSelect->SelectedIndexChanged += gcnew System::EventHandler(this, &pokeInfo::cbPokemonSelect_SelectedIndexChanged);
 			// 
 			// labelStats

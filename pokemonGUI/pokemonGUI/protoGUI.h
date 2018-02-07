@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 
+
 namespace pokemonGUI {
 
 	using namespace System;
@@ -9,6 +10,7 @@ namespace pokemonGUI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Runtime::InteropServices;
 
 	/// <summary>
 	/// Summary for protoGUI
@@ -179,6 +181,7 @@ namespace pokemonGUI {
 			// 
 			// pgBarPlayerHealth
 			// 
+			this->pgBarPlayerHealth->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->pgBarPlayerHealth->Location = System::Drawing::Point(12, 356);
 			this->pgBarPlayerHealth->Name = L"pgBarPlayerHealth";
 			this->pgBarPlayerHealth->Size = System::Drawing::Size(436, 23);
@@ -325,10 +328,11 @@ private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArg
 			 double enemyStamina = game.getFight().getEnemy().getStamina();
 			 enemyStamina = enemyStamina / enemyMaxStamina * 100;
 
-			string  a = to_string(playerStamina);
 
-			label1->Text = Convert::ToString(enemyStamina);
-			 pgBarPlayerHealth->Value = playerStamina;
+
+			label1->Text = Convert::ToString(playerHealth);
+			pgBarEnemyHealth->Value = enemyHealth;
+			pgBarPlayerHealth->Value = playerHealth;
 
 
 		 }
