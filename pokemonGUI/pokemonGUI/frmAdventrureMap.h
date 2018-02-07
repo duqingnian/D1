@@ -17,6 +17,12 @@ namespace pokemonGUI {
 	public:
 		frmAdventrureMap(void)
 		{
+			Graphics ^ graphics = panel->CreateGraphics();
+			Pen^ penCurrent = gcnew Pen(Color::Red);
+			Point p1(10, 10);
+			Point p2(20, 20);
+			graphics->DrawLine(penCurrent, p1, p2);
+
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -34,6 +40,8 @@ namespace pokemonGUI {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Panel^  panel1;
+	protected:
 
 	private:
 		/// <summary>
@@ -48,13 +56,23 @@ namespace pokemonGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->SuspendLayout();
+			// 
+			// panel1
+			// 
+			this->panel1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->panel1->Location = System::Drawing::Point(233, 12);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1000, 500);
+			this->panel1->TabIndex = 0;
 			// 
 			// frmAdventrureMap
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1000, 437);
+			this->ClientSize = System::Drawing::Size(1543, 594);
+			this->Controls->Add(this->panel1);
 			this->Name = L"frmAdventrureMap";
 			this->Text = L"frmAdventrureMap";
 			this->ResumeLayout(false);
