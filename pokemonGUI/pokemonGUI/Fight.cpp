@@ -102,9 +102,9 @@ int Fight::calculateDamage(Ability ability, Pokemon& dealer, Pokemon& receiver) 
 	return damage;
 }
 string Fight::useHealthPotion() {
-	if (this->player.getHealthPotions() > 0) {
-		this->player.removeHealthPotion();
-		this->pokemon.heal(POTION_HEAL_AMOUNT); //Updated in Fight.h
+	if (game.getPlayer().getHealthPotions() > 0) {
+		game.getPlayer().removeHealthPotion();
+		game.getPlayer().getPokemon().heal(POTION_HEAL_AMOUNT); //Updated in Fight.h
 		return("Health potion used.");
 		game.setEnemyTurn(true); //Time for enemy to attack back
 	}
@@ -113,9 +113,9 @@ string Fight::useHealthPotion() {
 	}
 }
 string Fight::useStaminaPotion() {
-	if (this->player.getStaminaPotions() > 0) {
-		this->player.removeStaminaPotion();
-		this->pokemon.addStamina(POTION_HEAL_AMOUNT); //Updated in Fight.h
+	if (game.getPlayer().getStaminaPotions() > 0) {
+		game.getPlayer().removeStaminaPotion();
+		game.getPlayer().getPokemon().addStamina(POTION_HEAL_AMOUNT); //Updated in Fight.h
 		return("Stamina potion used.");
 		game.setEnemyTurn(true); //Time for enemy to attack back
 	}

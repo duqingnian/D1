@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <time.h>
 
 Game game{ Player("You") };
 
@@ -22,6 +23,7 @@ Game::Game(Player& player) {
 void Game::enemyAttack() {
 	if (this->enemyTurn) {// Only when enenmy turn is set to true
 		//System::Threading::Thread::Sleep(2000);
+		srand(time(NULL));
 		int attack = rand() % 3 + 1; // attack = 0-3
 		Pokemon& enemy = this->onGoingFight.getEnemy();
 		Pokemon& player = this->player.getPokemon();

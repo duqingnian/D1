@@ -26,30 +26,11 @@ namespace pokemonGUI {
 			//---------------------------------------------------------------------------------------------------------
 			updateLabels();
 			//Adding Ability1 name to button
-			string ability1 = game.getPlayer().getPokemon().getAbility1().getName();
-			System::String^ s = gcnew System::String(ability1.c_str());
-			btnAbility1->Text = s;
-			//Adding Ability2 name to button
-			string ability2 = game.getPlayer().getPokemon().getAbility2().getName();
-			s = gcnew System::String(ability2.c_str());
-			btnAbility2->Text = s;
-			//Adding Ability3 name to button
-			string ability3 = game.getPlayer().getPokemon().getAbility3().getName();
-			s = gcnew System::String(ability3.c_str());
-			btnAbility3->Text = s;
-			
-			
-			pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
-			pictureBox2->ImageLocation = gcnew System::String(game.getFight().getEnemy().getPictureFileName().c_str());
-
+			initialize();
 			
 		}
-		void updateLabels() {
-			labelPlayerStats->Text = game.getPlayer().getPokemon().labelStats();
-			labelEnemyStats->Text = game.getFight().getEnemy().labelStats();
-
-			
-		}
+		void initialize();
+		void updateLabels();
 		//--------------------------------------------------------------------------------------------------------------
 
 	protected:
@@ -66,12 +47,13 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Button^  btnAbility1;
 	private: System::Windows::Forms::Button^  btnAbility2;
 	private: System::Windows::Forms::Button^  btnAbility3;
+	private: System::Windows::Forms::Button^  btnStaminaPotion;
 	protected:
 
 	protected:
 
 
-	private: System::Windows::Forms::Button^  btnAttack4;
+
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
 	private: System::Windows::Forms::ProgressBar^  pgBarPlayerHealth;
@@ -85,7 +67,13 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Timer^  timerHealth;
 	private: System::Windows::Forms::Button^  btnStartBattle;
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  btnHealthPotion;
+
+	private: System::Windows::Forms::Label^  labelHP;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::ProgressBar^  pgBarPlayerStamina;
+
+	private: System::Windows::Forms::Label^  label3;
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -105,7 +93,7 @@ namespace pokemonGUI {
 			this->btnAbility1 = (gcnew System::Windows::Forms::Button());
 			this->btnAbility2 = (gcnew System::Windows::Forms::Button());
 			this->btnAbility3 = (gcnew System::Windows::Forms::Button());
-			this->btnAttack4 = (gcnew System::Windows::Forms::Button());
+			this->btnStaminaPotion = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pgBarPlayerHealth = (gcnew System::Windows::Forms::ProgressBar());
@@ -115,14 +103,18 @@ namespace pokemonGUI {
 			this->timerHealth = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnStartBattle = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->btnHealthPotion = (gcnew System::Windows::Forms::Button());
+			this->labelHP = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->pgBarPlayerStamina = (gcnew System::Windows::Forms::ProgressBar());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAbility1
 			// 
-			this->btnAbility1->Location = System::Drawing::Point(473, 308);
+			this->btnAbility1->Location = System::Drawing::Point(473, 376);
 			this->btnAbility1->Name = L"btnAbility1";
 			this->btnAbility1->Size = System::Drawing::Size(210, 62);
 			this->btnAbility1->TabIndex = 0;
@@ -133,7 +125,7 @@ namespace pokemonGUI {
 			// 
 			// btnAbility2
 			// 
-			this->btnAbility2->Location = System::Drawing::Point(473, 376);
+			this->btnAbility2->Location = System::Drawing::Point(473, 448);
 			this->btnAbility2->Name = L"btnAbility2";
 			this->btnAbility2->Size = System::Drawing::Size(210, 62);
 			this->btnAbility2->TabIndex = 1;
@@ -144,7 +136,7 @@ namespace pokemonGUI {
 			// 
 			// btnAbility3
 			// 
-			this->btnAbility3->Location = System::Drawing::Point(473, 444);
+			this->btnAbility3->Location = System::Drawing::Point(473, 516);
 			this->btnAbility3->Name = L"btnAbility3";
 			this->btnAbility3->Size = System::Drawing::Size(210, 62);
 			this->btnAbility3->TabIndex = 2;
@@ -153,21 +145,22 @@ namespace pokemonGUI {
 			this->btnAbility3->Visible = false;
 			this->btnAbility3->Click += gcnew System::EventHandler(this, &protoGUI::btnAbility3_Click);
 			// 
-			// btnAttack4
+			// btnStaminaPotion
 			// 
-			this->btnAttack4->Location = System::Drawing::Point(730, 444);
-			this->btnAttack4->Name = L"btnAttack4";
-			this->btnAttack4->Size = System::Drawing::Size(62, 62);
-			this->btnAttack4->TabIndex = 3;
-			this->btnAttack4->Text = L"button4";
-			this->btnAttack4->UseVisualStyleBackColor = true;
-			this->btnAttack4->Click += gcnew System::EventHandler(this, &protoGUI::btnAttack4_Click);
+			this->btnStaminaPotion->Location = System::Drawing::Point(730, 444);
+			this->btnStaminaPotion->Name = L"btnStaminaPotion";
+			this->btnStaminaPotion->Size = System::Drawing::Size(192, 62);
+			this->btnStaminaPotion->TabIndex = 3;
+			this->btnStaminaPotion->Text = L"Use Stamina potion";
+			this->btnStaminaPotion->UseVisualStyleBackColor = true;
+			this->btnStaminaPotion->Visible = false;
+			this->btnStaminaPotion->Click += gcnew System::EventHandler(this, &protoGUI::btnStaminaPotion_Click);
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 385);
+			this->pictureBox1->Location = System::Drawing::Point(12, 405);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(436, 133);
+			this->pictureBox1->Size = System::Drawing::Size(436, 173);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
@@ -184,22 +177,22 @@ namespace pokemonGUI {
 			// pgBarPlayerHealth
 			// 
 			this->pgBarPlayerHealth->BackColor = System::Drawing::SystemColors::ActiveCaption;
-			this->pgBarPlayerHealth->Location = System::Drawing::Point(12, 356);
+			this->pgBarPlayerHealth->Location = System::Drawing::Point(77, 347);
 			this->pgBarPlayerHealth->Name = L"pgBarPlayerHealth";
-			this->pgBarPlayerHealth->Size = System::Drawing::Size(436, 23);
+			this->pgBarPlayerHealth->Size = System::Drawing::Size(371, 23);
 			this->pgBarPlayerHealth->TabIndex = 6;
 			// 
 			// pgBarEnemyHealth
 			// 
-			this->pgBarEnemyHealth->Location = System::Drawing::Point(643, 143);
+			this->pgBarEnemyHealth->Location = System::Drawing::Point(691, 143);
 			this->pgBarEnemyHealth->Name = L"pgBarEnemyHealth";
-			this->pgBarEnemyHealth->Size = System::Drawing::Size(461, 23);
+			this->pgBarEnemyHealth->Size = System::Drawing::Size(413, 23);
 			this->pgBarEnemyHealth->TabIndex = 7;
 			// 
 			// labelPlayerStats
 			// 
 			this->labelPlayerStats->AutoSize = true;
-			this->labelPlayerStats->Location = System::Drawing::Point(22, 194);
+			this->labelPlayerStats->Location = System::Drawing::Point(12, 169);
 			this->labelPlayerStats->Name = L"labelPlayerStats";
 			this->labelPlayerStats->Size = System::Drawing::Size(46, 17);
 			this->labelPlayerStats->TabIndex = 8;
@@ -222,7 +215,7 @@ namespace pokemonGUI {
 			// 
 			// btnStartBattle
 			// 
-			this->btnStartBattle->Location = System::Drawing::Point(473, 194);
+			this->btnStartBattle->Location = System::Drawing::Point(473, 223);
 			this->btnStartBattle->Name = L"btnStartBattle";
 			this->btnStartBattle->Size = System::Drawing::Size(159, 75);
 			this->btnStartBattle->TabIndex = 10;
@@ -239,21 +232,62 @@ namespace pokemonGUI {
 			this->label1->TabIndex = 11;
 			this->label1->Text = L"label1";
 			// 
-			// button1
+			// btnHealthPotion
 			// 
-			this->button1->Location = System::Drawing::Point(730, 376);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(62, 62);
-			this->button1->TabIndex = 12;
-			this->button1->Text = L"button4";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btnHealthPotion->Location = System::Drawing::Point(730, 376);
+			this->btnHealthPotion->Name = L"btnHealthPotion";
+			this->btnHealthPotion->Size = System::Drawing::Size(192, 62);
+			this->btnHealthPotion->TabIndex = 12;
+			this->btnHealthPotion->Text = L"Use Health potion";
+			this->btnHealthPotion->UseVisualStyleBackColor = true;
+			this->btnHealthPotion->Visible = false;
+			this->btnHealthPotion->Click += gcnew System::EventHandler(this, &protoGUI::btnHealthPotion_Click);
+			// 
+			// labelHP
+			// 
+			this->labelHP->AutoSize = true;
+			this->labelHP->Location = System::Drawing::Point(31, 347);
+			this->labelHP->Name = L"labelHP";
+			this->labelHP->Size = System::Drawing::Size(27, 17);
+			this->labelHP->TabIndex = 13;
+			this->labelHP->Text = L"HP";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(12, 376);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(59, 17);
+			this->label2->TabIndex = 15;
+			this->label2->Text = L"Stamina";
+			// 
+			// pgBarPlayerStamina
+			// 
+			this->pgBarPlayerStamina->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->pgBarPlayerStamina->Location = System::Drawing::Point(77, 376);
+			this->pgBarPlayerStamina->Name = L"pgBarPlayerStamina";
+			this->pgBarPlayerStamina->Size = System::Drawing::Size(371, 23);
+			this->pgBarPlayerStamina->TabIndex = 14;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(656, 149);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(27, 17);
+			this->label3->TabIndex = 16;
+			this->label3->Text = L"HP";
 			// 
 			// protoGUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1116, 530);
-			this->Controls->Add(this->button1);
+			this->ClientSize = System::Drawing::Size(1116, 590);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->pgBarPlayerStamina);
+			this->Controls->Add(this->labelHP);
+			this->Controls->Add(this->btnHealthPotion);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->btnStartBattle);
 			this->Controls->Add(this->labelEnemyStats);
@@ -262,7 +296,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->pgBarPlayerHealth);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->btnAttack4);
+			this->Controls->Add(this->btnStaminaPotion);
 			this->Controls->Add(this->btnAbility3);
 			this->Controls->Add(this->btnAbility2);
 			this->Controls->Add(this->btnAbility1);
@@ -311,6 +345,8 @@ private: System::Void btnStartBattle_Click(System::Object^  sender, System::Even
 	btnAbility1->Visible = true;
 	btnAbility2->Visible = true;
 	btnAbility3->Visible = true;
+	btnHealthPotion->Visible = true;
+	btnStaminaPotion->Visible = true;
 	btnStartBattle->Visible = false;
 
 }
@@ -321,7 +357,7 @@ private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArg
 		 void updatePgbar()
 		 {
 			 //Pokemons health and Stamina
-			 int playerMaxHealth = game.getFight().getPokemon().getMaxHP();
+			 int playerMaxHealth = game.getPlayer().getPokemon().getMaxHP();
 			 double playerHealth = game.getPlayer().getPokemon().getHP();
 			 playerHealth = playerHealth / playerMaxHealth * 100;
 
@@ -330,28 +366,30 @@ private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArg
 			 enemyHealth = enemyHealth / enemyMaxHealth * 100;
 
 			 //Pokemons stamina
-			 int playerMaxStamina = game.getFight().getPokemon().getMaxStamina();
-			 double playerStamina = game.getFight().getPokemon().getStamina();
+			 int playerMaxStamina = game.getPlayer().getPokemon().getMaxStamina();
+			 double playerStamina = game.getPlayer().getPokemon().getStamina();
 			 playerStamina = playerStamina / playerMaxStamina * 100;
-
-
-
-			 int enemyMaxStamina = game.getFight().getEnemy().getMaxStamina();
-			 double enemyStamina = game.getFight().getEnemy().getStamina();
-			 enemyStamina = enemyStamina / enemyMaxStamina * 100;
 
 
 
 			label1->Text = Convert::ToString(playerHealth);
 			pgBarEnemyHealth->Value = enemyHealth;
 			pgBarPlayerHealth->Value = playerHealth;
+			pgBarPlayerStamina->Value = playerStamina;
 
 
 		 }
 
-
-		 
-private: System::Void btnAttack4_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void btnHealthPotion_Click(System::Object^  sender, System::EventArgs^  e) { //Health potion button click
+	game.getFight().useHealthPotion();
+	game.enemyAttack(); //Enemy's turn
+	updateLabels();
+	updatePgbar();
+}
+private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::EventArgs^  e) { //Stamina potion button click
+	game.getFight().useStaminaPotion();
+	game.enemyAttack(); //Enemy's turn
+	updateLabels();
 	updatePgbar();
 }
 };
