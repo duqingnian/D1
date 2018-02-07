@@ -1,6 +1,7 @@
 #include "protoGUI.h"
 #include "pokeInfo.h"
 #include "Game.h"
+#include "frmAdventrureMap.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -14,4 +15,6 @@ void main() {
 	
 	pokemonGUI::pokeInfo form;
 	Application::Run(%form);
+	pokemonGUI::frmAdventrureMap map;
+	Application::Run(%map);
 }
