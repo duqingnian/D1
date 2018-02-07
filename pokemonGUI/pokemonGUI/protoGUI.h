@@ -85,6 +85,7 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Timer^  timerHealth;
 	private: System::Windows::Forms::Button^  btnStartBattle;
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Button^  button1;
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -114,13 +115,14 @@ namespace pokemonGUI {
 			this->timerHealth = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnStartBattle = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAbility1
 			// 
-			this->btnAbility1->Location = System::Drawing::Point(643, 385);
+			this->btnAbility1->Location = System::Drawing::Point(473, 308);
 			this->btnAbility1->Name = L"btnAbility1";
 			this->btnAbility1->Size = System::Drawing::Size(210, 62);
 			this->btnAbility1->TabIndex = 0;
@@ -131,7 +133,7 @@ namespace pokemonGUI {
 			// 
 			// btnAbility2
 			// 
-			this->btnAbility2->Location = System::Drawing::Point(859, 385);
+			this->btnAbility2->Location = System::Drawing::Point(473, 376);
 			this->btnAbility2->Name = L"btnAbility2";
 			this->btnAbility2->Size = System::Drawing::Size(210, 62);
 			this->btnAbility2->TabIndex = 1;
@@ -142,7 +144,7 @@ namespace pokemonGUI {
 			// 
 			// btnAbility3
 			// 
-			this->btnAbility3->Location = System::Drawing::Point(859, 456);
+			this->btnAbility3->Location = System::Drawing::Point(473, 444);
 			this->btnAbility3->Name = L"btnAbility3";
 			this->btnAbility3->Size = System::Drawing::Size(210, 62);
 			this->btnAbility3->TabIndex = 2;
@@ -153,9 +155,9 @@ namespace pokemonGUI {
 			// 
 			// btnAttack4
 			// 
-			this->btnAttack4->Location = System::Drawing::Point(643, 456);
+			this->btnAttack4->Location = System::Drawing::Point(730, 444);
 			this->btnAttack4->Name = L"btnAttack4";
-			this->btnAttack4->Size = System::Drawing::Size(210, 62);
+			this->btnAttack4->Size = System::Drawing::Size(62, 62);
 			this->btnAttack4->TabIndex = 3;
 			this->btnAttack4->Text = L"button4";
 			this->btnAttack4->UseVisualStyleBackColor = true;
@@ -238,11 +240,21 @@ namespace pokemonGUI {
 			this->label1->TabIndex = 11;
 			this->label1->Text = L"label1";
 			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(730, 376);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(62, 62);
+			this->button1->TabIndex = 12;
+			this->button1->Text = L"button4";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
 			// protoGUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1116, 530);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->btnStartBattle);
 			this->Controls->Add(this->labelEnemyStats);
