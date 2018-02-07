@@ -29,10 +29,23 @@ namespace pokemonGUI {
 		Color color = Color::Black;
 	private: System::Windows::Forms::Button^  btnSaveMap;
 	private: System::Windows::Forms::Button^  btnLoadMap;
-	private: System::Windows::Forms::ComboBox^  cbBrush;
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::TextBox^  textBoxWorldName;
 	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Timer^  timerEraser;
+	private: System::Windows::Forms::Panel^  panelWall;
+	private: System::Windows::Forms::Panel^  panelWater;
+
+
+
+
+
+
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Panel^  panelMoney;
+	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Timer^  timerMouseDrag;
 
 
@@ -84,10 +97,16 @@ namespace pokemonGUI {
 			this->timerMouseDrag = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnSaveMap = (gcnew System::Windows::Forms::Button());
 			this->btnLoadMap = (gcnew System::Windows::Forms::Button());
-			this->cbBrush = (gcnew System::Windows::Forms::ComboBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBoxWorldName = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->timerEraser = (gcnew System::Windows::Forms::Timer(this->components));
+			this->panelWall = (gcnew System::Windows::Forms::Panel());
+			this->panelWater = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->panelMoney = (gcnew System::Windows::Forms::Panel());
+			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -98,7 +117,6 @@ namespace pokemonGUI {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1330, 610);
 			this->panel1->TabIndex = 0;
-			this->panel1->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseClick);
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseUp);
@@ -115,7 +133,7 @@ namespace pokemonGUI {
 			// 
 			// timerMouseDrag
 			// 
-			this->timerMouseDrag->Interval = 50;
+			this->timerMouseDrag->Interval = 10;
 			this->timerMouseDrag->Tick += gcnew System::EventHandler(this, &frmAdventrureMap::timerMouseDrag_Tick);
 			// 
 			// btnSaveMap
@@ -140,18 +158,6 @@ namespace pokemonGUI {
 			this->btnLoadMap->Visible = false;
 			this->btnLoadMap->Click += gcnew System::EventHandler(this, &frmAdventrureMap::btnLoadMap_Click);
 			// 
-			// cbBrush
-			// 
-			this->cbBrush->FormattingEnabled = true;
-			this->cbBrush->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Eraser", L"Water", L"Wall" });
-			this->cbBrush->Location = System::Drawing::Point(1376, 275);
-			this->cbBrush->Name = L"cbBrush";
-			this->cbBrush->Size = System::Drawing::Size(121, 24);
-			this->cbBrush->TabIndex = 1;
-			this->cbBrush->Text = L"Wall";
-			this->cbBrush->Visible = false;
-			this->cbBrush->SelectedIndexChanged += gcnew System::EventHandler(this, &frmAdventrureMap::cbBrush_SelectedIndexChanged);
-			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
@@ -174,22 +180,93 @@ namespace pokemonGUI {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(1373, 255);
+			this->label2->Location = System::Drawing::Point(1373, 267);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(96, 17);
+			this->label2->Size = System::Drawing::Size(100, 17);
 			this->label2->TabIndex = 2;
-			this->label2->Text = L"Choose brush";
+			this->label2->Text = L"Choose brush:";
 			this->label2->Visible = false;
+			// 
+			// timerEraser
+			// 
+			this->timerEraser->Interval = 10;
+			this->timerEraser->Tick += gcnew System::EventHandler(this, &frmAdventrureMap::timerEraser_Tick);
+			// 
+			// panelWall
+			// 
+			this->panelWall->BackColor = System::Drawing::SystemColors::InfoText;
+			this->panelWall->Location = System::Drawing::Point(1376, 296);
+			this->panelWall->Name = L"panelWall";
+			this->panelWall->Size = System::Drawing::Size(65, 65);
+			this->panelWall->TabIndex = 5;
+			this->panelWall->Tag = L"";
+			this->panelWall->Visible = false;
+			this->panelWall->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panelWall_MouseClick);
+			// 
+			// panelWater
+			// 
+			this->panelWater->BackColor = System::Drawing::SystemColors::Highlight;
+			this->panelWater->Location = System::Drawing::Point(1376, 367);
+			this->panelWater->Name = L"panelWater";
+			this->panelWater->Size = System::Drawing::Size(65, 65);
+			this->panelWater->TabIndex = 5;
+			this->panelWater->Visible = false;
+			this->panelWater->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panelWater_MouseClick);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(1447, 317);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(35, 17);
+			this->label3->TabIndex = 6;
+			this->label3->Text = L"Wall";
+			this->label3->Visible = false;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(1447, 392);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(46, 17);
+			this->label4->TabIndex = 6;
+			this->label4->Text = L"Water";
+			this->label4->Visible = false;
+			// 
+			// panelMoney
+			// 
+			this->panelMoney->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->panelMoney->Location = System::Drawing::Point(1376, 438);
+			this->panelMoney->Name = L"panelMoney";
+			this->panelMoney->Size = System::Drawing::Size(65, 65);
+			this->panelMoney->TabIndex = 5;
+			this->panelMoney->Visible = false;
+			this->panelMoney->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panelMoney_MouseClick);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(1447, 463);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(50, 17);
+			this->label5->TabIndex = 6;
+			this->label5->Text = L"Money";
+			this->label5->Visible = false;
 			// 
 			// frmAdventrureMap
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1924, 652);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->panelMoney);
+			this->Controls->Add(this->panelWater);
+			this->Controls->Add(this->panelWall);
 			this->Controls->Add(this->textBoxWorldName);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->cbBrush);
 			this->Controls->Add(this->btnLoadMap);
 			this->Controls->Add(this->btnSaveMap);
 			this->Controls->Add(this->btnMapMaker);
@@ -203,14 +280,11 @@ namespace pokemonGUI {
 
 		}
 #pragma endregion
-	private: System::Void panel1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		if (mapMaking) {
-
-		}
-
-	}
 	private: System::Void btnMapMaker_Click(System::Object^  sender, System::EventArgs^  e) { //Button Start Map Maker
 		//Draws grid
+		world.blocks.clear();
+		graphics = panel1->CreateGraphics();
+		graphics->Clear(Color::White);
 		drawGrid();
 		mapMaking = true;
 		btnLoadMap->Visible = true;
@@ -220,37 +294,47 @@ namespace pokemonGUI {
 		textBoxWorldName->Visible = true;
 		label1->Visible = true;
 		label2->Visible = true;
-		cbBrush->Visible = true;
+		label3->Visible = true;
+		label4->Visible = true;
+		label5->Visible = true;
+		panelWall->Visible = true;
+		panelWater->Visible = true;
+		panelMoney->Visible = true;
+		panelMoney->BackColor = Color::Gold;
+		btnMapMaker->Text = "New Map";
 	}
 
 
 private: System::Void panel1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 	//Mouse down. Start timer to draw with mouse drag
 	if (mapMaking) {
-		timerMouseDrag->Start();
+		if (e->Button.ToString() == "Left") {
+			timerMouseDrag->Start();
+		}
+		else if (e->Button.ToString() == "Right") {
+			timerEraser->Start();
+		}
+		
 	}
 }
 
 private: System::Void timerMouseDrag_Tick(System::Object^  sender, System::EventArgs^  e) {
-	//Every 50 ms captures block and draws
+	//Every 10 ms captures block and draws on it
 	if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
 		int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
 		int x = block % (X_MAX / X_STEP) * X_STEP;
 		int y = block / (X_MAX / X_STEP) * Y_STEP;
-		//cout << block << " x:" << x << " y:" << y << endl;
 		Block b;
 		b.id = block;
 		b.color = world.colorName;
-		if (world.colorName=="white") { //If our selected brush is eraser
-			world.blocks.erase(b);
+		SolidBrush^ brush = gcnew SolidBrush(color);
+		if (world.colorName=="gold") { //If our selected brush is money
+			graphics->FillEllipse(brush, x, y, X_STEP, Y_STEP);
 		}
 		else {
-			world.blocks.insert(b);
+			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 		}
-		SolidBrush^ brush = gcnew SolidBrush(color);
-		graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
-
-
+		world.blocks.insert(b);
 	}
 }
 private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
@@ -260,21 +344,7 @@ private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows:
 private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 	//Release mouse and stop drawing and capturing blocks
 	timerMouseDrag->Stop();
-}
-private: System::Void cbBrush_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-	if (cbBrush->Text == "Wall") {
-		color = Color::Black;
-		world.colorName = "black";
-	}
-	else if (cbBrush->Text == "Water") {
-		color = Color::Blue;
-		world.colorName = "blue";
-	}
-	else {
-		color = Color::White;
-		world.colorName = "white";
-	}
-
+	timerEraser->Stop();
 }
 private: System::Void btnSaveMap_Click(System::Object^  sender, System::EventArgs^  e) {
 	//Save world
@@ -330,5 +400,38 @@ private: void drawGrid() { //Draw grid
 				 graphics->DrawLine(pen, p1, p2);
 			 }
 		 }
+private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
+	//Timer for erasing what has been drawn with holding right click
+	if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
+		int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
+		int x = block % (X_MAX / X_STEP) * X_STEP;
+		int y = block / (X_MAX / X_STEP) * Y_STEP;
+		Block b;
+		b.id = block;
+		b.color = world.colorName;
+		world.blocks.erase(b);
+
+		SolidBrush^ brush = gcnew SolidBrush(Color::White);
+		graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
+
+
+	}
+}
+
+private: System::Void panelWall_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	//Chosen Wall brush
+	color = Color::Black;
+	world.colorName = "black";
+}
+private: System::Void panelWater_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	//Chosen Water brush
+	color = Color::Blue;
+	world.colorName = "blue";
+}
+private: System::Void panelMoney_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	//Chosen Money brush
+	color = Color::Gold;
+	world.colorName = "gold";
+}
 };
 }

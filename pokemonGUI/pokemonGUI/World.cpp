@@ -17,7 +17,7 @@ World::~World()
 
 void World::saveWorld(string fileName) {
 	ofstream worldFile;
-	worldFile.open(fileName+".txt");
+	worldFile.open("Maps/"+fileName+".txt");
 	for (Block b : world.blocks) {
 		worldFile << b.id << " " << b.color.c_str() << "\n";
 	}
@@ -26,7 +26,7 @@ void World::saveWorld(string fileName) {
 void World::loadWorld(string fileName) {
 	world.blocks.clear();
 	string line;
-	ifstream worldFile(fileName+".txt");
+	ifstream worldFile("Maps/"+fileName+".txt");
 	if (worldFile.is_open())
 	{
 		while (getline(worldFile, line))
