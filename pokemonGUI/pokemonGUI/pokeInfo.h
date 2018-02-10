@@ -3,6 +3,7 @@
 #include "Fight.h"
 #include "protoGUI.h"
 #include "Game.h"
+#include "frmAddUser.h"
 
 namespace pokemonGUI {
 
@@ -187,7 +188,9 @@ namespace pokemonGUI {
 					game.getPlayer().setPokemon(Zizi);
 				}
 			}
+
 			game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
+			this->Hide();
 			pokemonGUI::protoGUI gui;
 			gui.ShowDialog(); //Launch fight GUI
 
@@ -221,6 +224,11 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	updateLabel();
+
+
+	this->Hide();
+	pokemonGUI::frmAddUser frmAddUser;
+	frmAddUser.ShowDialog(); //Launch fight GUI
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 	

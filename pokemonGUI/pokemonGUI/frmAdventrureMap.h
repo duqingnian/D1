@@ -76,6 +76,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->panel1);
 			this->Name = L"frmAdventrureMap";
 			this->Text = L"frmAdventrureMap";
+			this->Load += gcnew System::EventHandler(this, &frmAdventrureMap::frmAdventrureMap_Load);
 			this->ResumeLayout(false);
 
 		}
@@ -94,6 +95,8 @@ namespace pokemonGUI {
 			Point p2(1000, i);
 			graphics->DrawLine(penCurrent, p1, p2);
 		}
+	}
+	private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
 	}
 	};
 }
