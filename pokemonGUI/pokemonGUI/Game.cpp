@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <time.h>
 
 Game game{ Player("You") };
 
@@ -19,9 +20,10 @@ Game::Game(Player& player) {
 	this->enemyTurn = false;
 }
 
-void Game::enemyAttack() {
+string Game::enemyAttack() {
 	if (this->enemyTurn) {// Only when enenmy turn is set to true
-		//System::Threading::Thread::Sleep(2000);
+		string out;
+		srand(time(NULL));
 		int attack = rand() % 3 + 1; // attack = 0-3
 		Pokemon& enemy = this->onGoingFight.getEnemy();
 		Pokemon& player = this->player.getPokemon();
@@ -33,18 +35,20 @@ void Game::enemyAttack() {
 		}
 		switch (attack) {
 		case 2:
-			cout << this->onGoingFight.useAbility2(enemy, player) << endl;
+			out = this->onGoingFight.useAbility2(enemy, player);
 			break;
 		case 3:
-			cout << this->onGoingFight.useAbility3(enemy, player) << endl;
+			out = this->onGoingFight.useAbility3(enemy, player);
 			break;
 		default:
-			cout << this->onGoingFight.useAbility1(enemy, player) << endl;
+			out = this->onGoingFight.useAbility1(enemy, player);
 			break;
 
 		}
 		this->enemyTurn = false; //end enemy turn
+		return out;
 	}
+	return "";
 }
 
 System::String^ Game::systemString(string s) {

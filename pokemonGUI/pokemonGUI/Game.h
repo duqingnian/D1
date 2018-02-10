@@ -16,7 +16,7 @@ public:
 	Game(Player& player);
 
 	//Functions
-	void enemyAttack();
+	string enemyAttack();
 	System::String^ systemString(string s);
 
 	//Getters
@@ -26,7 +26,7 @@ public:
 
 	//Setters
 	inline void setPlayer(Player& player) { this->player = player; }
-	void setNewFight(Fight& fight) { this->onGoingFight = fight; }
+	inline void setNewFight(Fight& fight) { this->onGoingFight = fight; }
 	inline void setEnemyTurn(bool turn) { this->enemyTurn = turn; }
 
 };
