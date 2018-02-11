@@ -135,6 +135,8 @@ create table Power (
 
 Describe Power;
 
+--- EVERYTHING BELOW HAS BEEN WRITTEN AS IF THERE ARE 20 LEVELS OF EACH POKEMON - THIS CAN BE CHANGED IF NEEDED
+
 ---CATTER---
 
 insert into Power values (1, 1, 90, 90, 5, 60, 12, 100);
