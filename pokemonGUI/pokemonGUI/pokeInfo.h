@@ -3,6 +3,7 @@
 #include "Fight.h"
 #include "protoGUI.h"
 #include "Game.h"
+#include "frmAddUser.h"
 
 namespace pokemonGUI {
 
@@ -170,8 +171,24 @@ namespace pokemonGUI {
 		//--------------------------------------------------------------------------------------------------------------------------------
 	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { //Start Game button clicked
 
-		if (game.getPlayer().getPokemon().getHP() > 0) {
+		if (cbPokemonSelect->SelectedIndex == -1)
+		{
+			MessageBox::Show("Select a Pokemon", "Alert");
+		}
+		else
+		{
+			
+			//Start Game button clicked
+			if (game.getPlayer().getPokemon().getName() == "") {
+				if (cbPokemonSelect->Text == "Catter") {
+					game.getPlayer().setPokemon(Catter);
+				}
+				else if (cbPokemonSelect->Text == "Zizi") {
+					game.getPlayer().setPokemon(Zizi);
+				}
+			}
 			game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
+			this->Hide();
 			pokemonGUI::protoGUI gui;
 			gui.ShowDialog(); //Launch fight GUI
 		}
@@ -200,6 +217,11 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	updateLabel();
+
+
+	this->Hide();
+	pokemonGUI::frmAddUser frmAddUser;
+	frmAddUser.ShowDialog(); //Launch fight GUI
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 }
