@@ -4,13 +4,13 @@
 struct Block {
 	std::string color;
 	int id;
-	
+
 };
 
 inline bool operator < (const Block& lhs, const Block& rhs)
 {//We need to overload "<" to put our struct into a set
-	return lhs.id < rhs.id; 
-} 
+	return lhs.id < rhs.id;
+}
 
 
 
@@ -22,6 +22,7 @@ public:
 
 	std::set<Block> blocks;
 	std::string colorName = "black";
+	std::set<int> obstacles;
 
 	void saveWorld(std::string fileName);
 	void loadWorld(std::string fileName);
