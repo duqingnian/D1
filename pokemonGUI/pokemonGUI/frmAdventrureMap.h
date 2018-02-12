@@ -27,6 +27,8 @@ namespace pokemonGUI {
 		int Y_MAX = 500;
 		int Y_STEP = 20;
 		Color color = Color::Black;
+		int characterX = 100;
+		int characterY = 100;
 	private: System::Windows::Forms::Button^  btnSaveMap;
 	private: System::Windows::Forms::Button^  btnLoadMap;
 
@@ -46,10 +48,11 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Panel^  panelMoney;
 	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::PictureBox^  pictureCharacter;
 	private: System::Windows::Forms::Timer^  timerMouseDrag;
 
 
-		
+
 	public:
 		frmAdventrureMap(void)
 		{
@@ -59,8 +62,10 @@ namespace pokemonGUI {
 			//
 			//TODO: Add the constructor code here
 			//
+			frmAdventrureMap::KeyPreview = true;
+
 		}
-		
+
 
 	protected:
 		/// <summary>
@@ -92,7 +97,9 @@ namespace pokemonGUI {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(frmAdventrureMap::typeid));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->pictureCharacter = (gcnew System::Windows::Forms::PictureBox());
 			this->btnMapMaker = (gcnew System::Windows::Forms::Button());
 			this->timerMouseDrag = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnSaveMap = (gcnew System::Windows::Forms::Button());
@@ -107,19 +114,33 @@ namespace pokemonGUI {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->panelMoney = (gcnew System::Windows::Forms::Panel());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->panel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->panel1->Controls->Add(this->pictureCharacter);
 			this->panel1->Location = System::Drawing::Point(9, 9);
 			this->panel1->Margin = System::Windows::Forms::Padding(0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1330, 610);
 			this->panel1->TabIndex = 0;
+			this->panel1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDoubleClick);
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseUp);
+			// 
+			// pictureCharacter
+			// 
+			this->pictureCharacter->BackColor = System::Drawing::Color::Transparent;
+			this->pictureCharacter->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureCharacter.Image")));
+			this->pictureCharacter->Location = System::Drawing::Point(85, 95);
+			this->pictureCharacter->Name = L"pictureCharacter";
+			this->pictureCharacter->Size = System::Drawing::Size(25, 25);
+			this->pictureCharacter->TabIndex = 0;
+			this->pictureCharacter->TabStop = false;
 			// 
 			// btnMapMaker
 			// 
@@ -275,13 +296,17 @@ namespace pokemonGUI {
 			this->Name = L"frmAdventrureMap";
 			this->ShowIcon = false;
 			this->Text = L"Adventure Map";
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &frmAdventrureMap::frmAdventrureMap_KeyDown);
+			this->panel1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void btnMapMaker_Click(System::Object^  sender, System::EventArgs^  e) { //Button Start Map Maker
-		//Draws grid
+																							  //Draws grid
+		pictureCharacter->Location = Point(characterX, characterY);
 		world.blocks.clear();
 		graphics = panel1->CreateGraphics();
 		graphics->Clear(Color::White);
@@ -305,134 +330,162 @@ namespace pokemonGUI {
 	}
 
 
-private: System::Void panel1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Mouse down. Start timer to draw with mouse drag
-	if (mapMaking) {
-		if (e->Button.ToString() == "Left") {
-			timerMouseDrag->Start();
-		}
-		else if (e->Button.ToString() == "Right") {
-			timerEraser->Start();
-		}
-		
-	}
-}
+	private: System::Void panel1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Mouse down. Start timer to draw with mouse drag
+		if (mapMaking) {
+			if (e->Button.ToString() == "Left") {
+				timerMouseDrag->Start();
+			}
+			else if (e->Button.ToString() == "Right") {
+				timerEraser->Start();
+			}
 
-private: System::Void timerMouseDrag_Tick(System::Object^  sender, System::EventArgs^  e) {
-	//Every 10 ms captures block and draws on it
-	if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
-		int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
-		int x = block % (X_MAX / X_STEP) * X_STEP;
-		int y = block / (X_MAX / X_STEP) * Y_STEP;
-		Block b;
-		b.id = block;
-		b.color = world.colorName;
-		SolidBrush^ brush = gcnew SolidBrush(color);
-		if (world.colorName=="gold") { //If our selected brush is money
-			graphics->FillEllipse(brush, x, y, X_STEP, Y_STEP);
+		}
+	}
+
+	private: System::Void timerMouseDrag_Tick(System::Object^  sender, System::EventArgs^  e) {
+		//Every 10 ms captures block and draws on it
+		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
+			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
+			int x = block % (X_MAX / X_STEP) * X_STEP;
+			int y = block / (X_MAX / X_STEP) * Y_STEP;
+			Block b;
+			b.id = block;
+			b.color = world.colorName;
+			SolidBrush^ brush = gcnew SolidBrush(color);
+			if (world.colorName == "gold") { //If our selected brush is money
+				graphics->FillEllipse(brush, x, y, X_STEP, Y_STEP);
+			}
+			else {
+				graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
+			}
+			world.blocks.insert(b);
+		}
+	}
+	private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Update mouse coordinates
+		mouse = e;
+	}
+	private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Release mouse and stop drawing and capturing blocks
+		timerMouseDrag->Stop();
+		timerEraser->Stop();
+	}
+	private: System::Void btnSaveMap_Click(System::Object^  sender, System::EventArgs^  e) {
+		//Save world
+		msclr::interop::marshal_context context;
+		std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
+		world.saveWorld(worldName);
+	}
+	private: System::Void textBoxWorldName_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		//If World name box is empty, grey out Save and Load buttons
+		if (textBoxWorldName->Text == "") {
+			btnSaveMap->Enabled = false;
+			btnLoadMap->Enabled = false;
 		}
 		else {
+			btnSaveMap->Enabled = true;
+			btnLoadMap->Enabled = true;
+		}
+	}
+	private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
+		//Load world from a file
+		msclr::interop::marshal_context context;
+		std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
+		world.loadWorld(worldName); //Loads set with the new world
+
+									//Display the new world
+		graphics->Clear(Color::White);
+		drawGrid();
+		for (Block b : world.blocks) {
+			int x = b.id % (X_MAX / X_STEP) * X_STEP;
+			int y = b.id / (X_MAX / X_STEP) * Y_STEP;
+			world.obstacles.insert(b.id); // Insert blocks id into obstacles to prevent player movement over them
+
+			if (b.color == "blue") {
+				color = Color::Blue;
+			}
+			else {
+				color = Color::Black;
+			}
+			SolidBrush^ brush = gcnew SolidBrush(color);
 			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 		}
-		world.blocks.insert(b);
 	}
-}
-private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Update mouse coordinates
-	mouse = e;
-}
-private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Release mouse and stop drawing and capturing blocks
-	timerMouseDrag->Stop();
-	timerEraser->Stop();
-}
-private: System::Void btnSaveMap_Click(System::Object^  sender, System::EventArgs^  e) {
-	//Save world
-	msclr::interop::marshal_context context;
-	std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
-	world.saveWorld(worldName);
-}
-private: System::Void textBoxWorldName_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	//If World name box is empty, grey out Save and Load buttons
-	if (textBoxWorldName->Text == "") {
-		btnSaveMap->Enabled = false;
-		btnLoadMap->Enabled = false;
-	}
-	else {
-		btnSaveMap->Enabled = true;
-		btnLoadMap->Enabled = true;
-	}
-}
-private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
-	//Load world from a file
-	msclr::interop::marshal_context context;
-	std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
-	world.loadWorld(worldName); //Loads set with the new world
-
-	//Display the new world
-	graphics->Clear(Color::White);
-	drawGrid();
-	for (Block b : world.blocks) {
-		int x = b.id % (X_MAX / X_STEP) * X_STEP;
-		int y = b.id / (X_MAX / X_STEP) * Y_STEP;
-
-		if (b.color == "blue") {
-			color = Color::Blue;
+	private: void drawGrid() { //Draw grid
+		graphics = panel1->CreateGraphics();
+		Pen^ pen = gcnew Pen(Color::LightGray);
+		for (int i = 0; i <= X_MAX; i += X_STEP) {
+			Point p1(i, 0);
+			Point p2(i, 500);
+			graphics->DrawLine(pen, p1, p2);
 		}
-		else {
-			color = Color::Black;
+		for (int i = 0; i <= Y_MAX; i += Y_STEP) {
+			Point p1(0, i);
+			Point p2(1000, i);
+			graphics->DrawLine(pen, p1, p2);
 		}
-		SolidBrush^ brush = gcnew SolidBrush(color);
-		graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 	}
-}
-private: void drawGrid() { //Draw grid
-			 graphics = panel1->CreateGraphics();
-			 Pen^ pen = gcnew Pen(Color::LightGray);
-			 for (int i = 0; i <= X_MAX; i += X_STEP) {
-				 Point p1(i, 0);
-				 Point p2(i, 500);
-				 graphics->DrawLine(pen, p1, p2);
-			 }
-			 for (int i = 0; i <= Y_MAX; i += Y_STEP) {
-				 Point p1(0, i);
-				 Point p2(1000, i);
-				 graphics->DrawLine(pen, p1, p2);
-			 }
-		 }
-private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
-	//Timer for erasing what has been drawn with holding right click
-	if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
-		int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
-		int x = block % (X_MAX / X_STEP) * X_STEP;
-		int y = block / (X_MAX / X_STEP) * Y_STEP;
-		Block b;
-		b.id = block;
-		b.color = world.colorName;
-		world.blocks.erase(b);
+	private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
+		//Timer for erasing what has been drawn with holding right click
+		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
+			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
+			int x = block % (X_MAX / X_STEP) * X_STEP;
+			int y = block / (X_MAX / X_STEP) * Y_STEP;
+			Block b;
+			b.id = block;
+			b.color = world.colorName;
+			world.blocks.erase(b);
 
-		SolidBrush^ brush = gcnew SolidBrush(Color::White);
-		graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
+			SolidBrush^ brush = gcnew SolidBrush(Color::White);
+			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 
+
+		}
+	}
+
+	private: System::Void panelWall_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Chosen Wall brush
+		color = Color::Black;
+		world.colorName = "black";
+	}
+	private: System::Void panelWater_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Chosen Water brush
+		color = Color::Blue;
+		world.colorName = "blue";
+	}
+	private: System::Void panelMoney_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Chosen Money brush
+		color = Color::Gold;
+		world.colorName = "gold";
+	}
+
+	private: System::Void frmAdventrureMap_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+		//Character move keys pressed
+		int X = characterX;
+		int Y = characterY;
+		if (e->KeyCode == Keys::Right) {
+			X += 20;
+		}
+		if (e->KeyCode == Keys::Left) {
+			X -= 20;
+		}
+		if (e->KeyCode == Keys::Up) {
+			Y -= 20;
+		}
+		if (e->KeyCode == Keys::Down) {
+			Y += 20;
+		}
+		int block = X / X_STEP + Y / Y_STEP * (X_MAX / X_STEP);
+		if (world.obstacles.count(block) == 0) { //If new position is not an obstacle
+			characterX = X;
+			characterY = Y;
+			pictureCharacter->Location = Point(characterX, characterY); //Move character
+		}
 
 	}
-}
-
-private: System::Void panelWall_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Chosen Wall brush
-	color = Color::Black;
-	world.colorName = "black";
-
-}
-private: System::Void panelWater_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Chosen Water brush
-	color = Color::Blue;
-	world.colorName = "blue";
-}
-private: System::Void panelMoney_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	//Chosen Money brush
-	color = Color::Gold;
-	world.colorName = "gold";
-}
+	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	
+	}
 };
 }

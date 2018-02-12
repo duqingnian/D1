@@ -117,6 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureCharacter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
+        dAAAEnQB3mYfeAAAAQlJREFUOE+FkbERwjAMRV1kDEr2ICVMwBQsQBNmYQNKaloGoaGhpTBf/ory7fiO
+        d8InS3rIHCmvuJ+P3fC20MoxejsdIo/woZmODI3hJflGv89UcmhqEpgpyfDH8krWdrq+4iRLF2YJu+/2
+        Txar717R36wyQX4ZR8S6rlQywdBjhg54b7beFvqbVcsXT9TH1U58ILMNYhQgjyDwPVPZlssoY5omnDZX
+        riRy7q96hBWtN1fgcjwbd5Y4x80qALw8frw/mxeCCToRAH8btf8ywNqAle8wQONJ32X1G5OgyOWtDEIu
+        OxY5ctb18TZMJ2immwrkzmZQhg01WacMkIdvLU6AMl/RrbNo5PwD1N+wyZmsZs4AAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="timerMouseDrag.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
