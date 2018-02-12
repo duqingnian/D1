@@ -246,7 +246,7 @@ insert into Power values (5, 9, 83, 83, 45, 92, 55, 80);
 insert into Power values (5, 10, 85, 85, 50, 92, 58, 80);
 insert into Power values (5, 11, 87, 87, 55, 93, 60, 82);
 insert into Power values (5, 12, 88, 88, 60, 94, 64, 84);
-insert into Power values (5, 13, 90, 90, 65, 94, 68, 85)
+insert into Power values (5, 13, 90, 90, 65, 94, 68, 85);
 insert into Power values (5, 14, 91, 91, 70, 94, 71, 85);
 insert into Power values (5, 15, 92, 92, 75, 94, 74, 85);
 insert into Power values (5, 16, 93, 93, 80, 95, 77, 85);
