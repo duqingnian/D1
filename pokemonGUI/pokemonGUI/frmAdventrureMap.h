@@ -27,6 +27,9 @@ namespace pokemonGUI {
 		int Y_MAX = 500;
 		int Y_STEP = 20;
 		Color color = Color::Black;
+
+
+
 	private: System::Windows::Forms::Button^  btnSaveMap;
 	private: System::Windows::Forms::Button^  btnLoadMap;
 
@@ -117,6 +120,8 @@ namespace pokemonGUI {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1330, 610);
 			this->panel1->TabIndex = 0;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &frmAdventrureMap::panel1_Paint);
+			this->panel1->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseClick);
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseUp);
@@ -275,6 +280,7 @@ namespace pokemonGUI {
 			this->Name = L"frmAdventrureMap";
 			this->ShowIcon = false;
 			this->Text = L"Adventure Map";
+			this->Load += gcnew System::EventHandler(this, &frmAdventrureMap::frmAdventrureMap_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -434,5 +440,30 @@ private: System::Void panelMoney_MouseClick(System::Object^  sender, System::Win
 	color = Color::Gold;
 	world.colorName = "gold";
 }
+private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+}
+private: System::Void panel1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+		
+
+
 };
 }
