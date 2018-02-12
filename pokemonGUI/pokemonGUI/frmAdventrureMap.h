@@ -422,6 +422,7 @@ private: System::Void panelWall_MouseClick(System::Object^  sender, System::Wind
 	//Chosen Wall brush
 	color = Color::Black;
 	world.colorName = "black";
+
 }
 private: System::Void panelWater_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 	//Chosen Water brush
