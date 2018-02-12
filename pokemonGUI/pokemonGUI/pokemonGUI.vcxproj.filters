@@ -45,6 +45,15 @@
     <ClCompile Include="frmAdventrureMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="frmAddUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="frmShop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="protoGUI.h">
@@ -80,6 +89,15 @@
     <ClInclude Include="frmAdventrureMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="frmAddUser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="frmShop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="protoGUI.resx">
@@ -89,6 +107,9 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAdventrureMap.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddUser.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

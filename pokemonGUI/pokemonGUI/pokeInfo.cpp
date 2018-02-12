@@ -2,6 +2,7 @@
 #include "pokeInfo.h"
 #include "Game.h"
 #include "frmAdventrureMap.h"
+#include "frmShop.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -17,4 +18,6 @@ void main() {
 	Application::Run(%form);
 	pokemonGUI::frmAdventrureMap map;
 	Application::Run(%map);
+	pokemonGUI::frmShop shop;
+	Application::Run(%shop);
 }
