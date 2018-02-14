@@ -188,10 +188,10 @@ insert into Power values (2, 20, 98, 98, 100, 95, 94, 97);
 ---PYRO---
 
 insert into Power values (3, 1, 80, 80, 5, 70, 18, 90);
-insert into Power values (3, 2, 83, 83, 10, 74, 21, 90);
-insert into Power values (3, 3, 85, 85, 15, 79, 25, 90);
-insert into Power values (3, 4, 87, 87, 20, 70, 30, 92);
-insert into Power values (3, 5, 89, 89, 25, 74, 35, 90);
+insert into Power values (3, 2, 83, 83, 10, 72, 21, 90);
+insert into Power values (3, 3, 85, 85, 15, 73, 25, 90);
+insert into Power values (3, 4, 87, 87, 20, 74, 30, 92);
+insert into Power values (3, 5, 89, 89, 25, 75, 35, 90);
 insert into Power values (3, 6, 89, 89, 30, 77, 40, 90);
 insert into Power values (3, 7, 90, 90, 35, 79, 46, 91);
 insert into Power values (3, 8, 90, 90, 40, 81, 50, 91);
@@ -211,11 +211,11 @@ insert into Power values (3, 20, 98, 98, 100, 96, 94, 95);
 ---THUNDERSHOCK---
 
 insert into Power values (4, 1, 80, 80, 5, 75, 20, 90);
-insert into Power values (4, 2, 83, 83, 10, 78, 24, 90);
-insert into Power values (4, 3, 86, 86, 15, 82, 29, 92);
-insert into Power values (4, 4, 88, 88, 20, 75, 34, 94);
-insert into Power values (4, 5, 89, 89, 25, 78, 37, 90);
-insert into Power values (4, 6, 90, 90, 30, 80, 40, 90);
+insert into Power values (4, 2, 83, 83, 10, 76, 24, 90);
+insert into Power values (4, 3, 86, 86, 15, 78, 29, 92);
+insert into Power values (4, 4, 88, 88, 20, 79, 34, 94);
+insert into Power values (4, 5, 89, 89, 25, 80, 37, 90);
+insert into Power values (4, 6, 90, 90, 30, 81, 40, 90);
 insert into Power values (4, 7, 91, 91, 35, 82, 46, 91);
 insert into Power values (4, 8, 91, 91, 40, 83, 51, 91);
 insert into Power values (4, 9, 91, 91, 45, 85, 57, 90);
