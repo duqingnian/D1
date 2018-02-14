@@ -479,6 +479,10 @@ namespace pokemonGUI {
 
 	private: System::Void frmAdventrureMap_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		//Character move keys pressed
+		if (e->KeyCode == Keys::Escape) {
+			pokemonGUI::frmMainMenu mainMenu;
+			mainMenu.ShowDialog(); //Launch Main Menu
+		}
 		int X = characterX;
 		int Y = characterY;
 		if (e->KeyCode == Keys::Right) {
