@@ -1,6 +1,5 @@
 -- To run this file after saving, use the'@' symbol followed by the location of the file (and file name) in your area...
 
-
 -- Eg:             @\\coventry\csv\Students\Personal\k\thankik\Yr1\ALL\SQL\Pokemon
 
 -- THE TABLE MUST BE DROPPED BEFORE BEING CREATED
@@ -37,7 +36,9 @@ insert into Type values (5, 'WIND', 'WATER');
 select * from Type;
 
 
+
 ------------------- POKEMONTABLE ----------------------
+
 
 
 -- CREATE THE TABLE
@@ -56,8 +57,6 @@ insert into PokemonTable values (2, 2, 'LEMONGRASS', 2);
 insert into PokemonTable values (3, 3, 'PYRO', 3);
 insert into PokemonTable values (4, 4, 'THUNDERSHOCK',4);
 insert into PokemonTable values (5, 5, 'ZIZI',5);
-
-
 
 
 select * from PokemonTable;
@@ -113,8 +112,10 @@ insert into Ability values (10, 'CLAW', 10, 0);
 insert into Ability values (11, 'BOLT', 30, 20);
 insert into Ability values (12, 'LIGHTNINGBLAST', 60, 50);
 
-
 select * from Ability;
+
+
+
 
 
 ------------------- POWER ----------------------
@@ -132,13 +133,9 @@ create table Power (
    MaxMana int not null            
 );
 
-
-
 Describe Power;
 
-
 --- EVERYTHING BELOW HAS BEEN WRITTEN AS IF THERE ARE 20 LEVELS OF EACH POKEMON - THIS CAN BE CHANGED IF NEEDED
-
 
 ---CATTER---
 
@@ -162,6 +159,7 @@ insert into Power values (1, 17, 98, 98, 85, 93, 85, 100);
 insert into Power values (1, 18, 98, 98, 90, 94, 88, 100);
 insert into Power values (1, 19, 99, 99, 95, 95, 92, 100);
 insert into Power values (1, 20, 99, 99, 100, 96, 93, 100);
+
 
 ---LEMONGRASS---
 
@@ -190,10 +188,10 @@ insert into Power values (2, 20, 98, 98, 100, 95, 94, 97);
 ---PYRO---
 
 insert into Power values (3, 1, 80, 80, 5, 70, 18, 90);
-insert into Power values (3, 2, 83, 83, 10, 74, 21, 90);
-insert into Power values (3, 3, 85, 85, 15, 79, 25, 90);
-insert into Power values (3, 4, 87, 87, 20, 70, 30, 92);
-insert into Power values (3, 5, 89, 89, 25, 74, 35, 90);
+insert into Power values (3, 2, 83, 83, 10, 72, 21, 90);
+insert into Power values (3, 3, 85, 85, 15, 73, 25, 90);
+insert into Power values (3, 4, 87, 87, 20, 74, 30, 92);
+insert into Power values (3, 5, 89, 89, 25, 75, 35, 90);
 insert into Power values (3, 6, 89, 89, 30, 77, 40, 90);
 insert into Power values (3, 7, 90, 90, 35, 79, 46, 91);
 insert into Power values (3, 8, 90, 90, 40, 81, 50, 91);
@@ -210,15 +208,14 @@ insert into Power values (3, 18, 96, 96, 90, 94, 92, 92);
 insert into Power values (3, 19, 97, 97, 95, 95, 93, 94);
 insert into Power values (3, 20, 98, 98, 100, 96, 94, 95);
 
-
 ---THUNDERSHOCK---
 
 insert into Power values (4, 1, 80, 80, 5, 75, 20, 90);
-insert into Power values (4, 2, 83, 83, 10, 78, 24, 90);
-insert into Power values (4, 3, 86, 86, 15, 82, 29, 92);
-insert into Power values (4, 4, 88, 88, 20, 75, 34, 94);
-insert into Power values (4, 5, 89, 89, 25, 78, 37, 90);
-insert into Power values (4, 6, 90, 90, 30, 80, 40, 90);
+insert into Power values (4, 2, 83, 83, 10, 76, 24, 90);
+insert into Power values (4, 3, 86, 86, 15, 78, 29, 92);
+insert into Power values (4, 4, 88, 88, 20, 79, 34, 94);
+insert into Power values (4, 5, 89, 89, 25, 80, 37, 90);
+insert into Power values (4, 6, 90, 90, 30, 81, 40, 90);
 insert into Power values (4, 7, 91, 91, 35, 82, 46, 91);
 insert into Power values (4, 8, 91, 91, 40, 83, 51, 91);
 insert into Power values (4, 9, 91, 91, 45, 85, 57, 90);
@@ -227,7 +224,7 @@ insert into Power values (4, 11, 92, 92, 55, 89, 67, 91);
 insert into Power values (4, 12, 93, 93, 60, 90, 70, 91);
 insert into Power values (4, 13, 94, 94, 65, 91, 73, 92);
 insert into Power values (4, 14, 94, 94, 70, 91, 76, 92);
-insert into Power values (4, 15, 94, 94, 75, 91, 79, 92); 
+insert into Power values (4, 15, 94, 94, 75, 91, 79, 92);
 insert into Power values (4, 16, 95, 95, 80, 92, 82, 92);
 insert into Power values (4, 17, 96, 95, 85, 93, 84, 92);
 insert into Power values (4, 18, 96, 96, 90, 94, 87, 92);
@@ -257,11 +254,9 @@ insert into Power values (5, 17, 94, 94, 85, 96, 79, 85);
 insert into Power values (5, 18, 95, 95, 90, 97, 83, 85);
 insert into Power values (5, 19, 96, 96, 95, 98, 95, 90);
 insert into Power values (5, 20, 97, 97, 100, 99, 96, 91)
-         
 
 
 select * from Power;
-
 
 ------------------JOINING DATABASES TOGETHER-----------------------------
 
