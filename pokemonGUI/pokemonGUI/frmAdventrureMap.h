@@ -346,9 +346,9 @@ namespace pokemonGUI {
 	private: System::Void timerMouseDrag_Tick(System::Object^  sender, System::EventArgs^  e) {
 		//Every 10 ms captures block and draws on it
 		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
-			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
-			int x = block % (X_MAX / X_STEP) * X_STEP;
-			int y = block / (X_MAX / X_STEP) * Y_STEP;
+			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP); // Coordinates 0-1249
+			int x = block % (X_MAX / X_STEP) * X_STEP;// From 0-1249 get X cord
+			int y = block / (X_MAX / X_STEP) * Y_STEP;// From the weird one number get the Y cord
 			Block b;
 			b.id = block;
 			b.color = world.colorName;
@@ -485,7 +485,10 @@ namespace pokemonGUI {
 
 	}
 	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	
+		Point p1(0, 0);
+		Point p2(e->X, e->Y);
+		Pen^ brush = gcnew Pen(Color::Olive);
+		graphics->DrawLine(brush, p1, p2);
 	}
 };
 }
