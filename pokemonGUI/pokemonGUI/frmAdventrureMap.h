@@ -122,11 +122,12 @@ namespace pokemonGUI {
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::ButtonHighlight;
 			this->panel1->Controls->Add(this->pictureCharacter);
-			this->panel1->Location = System::Drawing::Point(9, 9);
+			this->panel1->Location = System::Drawing::Point(7, 7);
 			this->panel1->Margin = System::Windows::Forms::Padding(0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1330, 610);
+			this->panel1->Size = System::Drawing::Size(998, 496);
 			this->panel1->TabIndex = 0;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &frmAdventrureMap::panel1_Paint);
 			this->panel1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDoubleClick);
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
@@ -136,17 +137,19 @@ namespace pokemonGUI {
 			// 
 			this->pictureCharacter->BackColor = System::Drawing::Color::Transparent;
 			this->pictureCharacter->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureCharacter.Image")));
-			this->pictureCharacter->Location = System::Drawing::Point(85, 95);
+			this->pictureCharacter->Location = System::Drawing::Point(64, 77);
+			this->pictureCharacter->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->pictureCharacter->Name = L"pictureCharacter";
-			this->pictureCharacter->Size = System::Drawing::Size(25, 25);
+			this->pictureCharacter->Size = System::Drawing::Size(19, 20);
 			this->pictureCharacter->TabIndex = 0;
 			this->pictureCharacter->TabStop = false;
 			// 
 			// btnMapMaker
 			// 
-			this->btnMapMaker->Location = System::Drawing::Point(1376, 12);
+			this->btnMapMaker->Location = System::Drawing::Point(1032, 10);
+			this->btnMapMaker->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->btnMapMaker->Name = L"btnMapMaker";
-			this->btnMapMaker->Size = System::Drawing::Size(135, 48);
+			this->btnMapMaker->Size = System::Drawing::Size(101, 39);
 			this->btnMapMaker->TabIndex = 0;
 			this->btnMapMaker->Text = L"Start map making";
 			this->btnMapMaker->UseVisualStyleBackColor = true;
@@ -159,9 +162,10 @@ namespace pokemonGUI {
 			// 
 			// btnSaveMap
 			// 
-			this->btnSaveMap->Location = System::Drawing::Point(1376, 66);
+			this->btnSaveMap->Location = System::Drawing::Point(1032, 54);
+			this->btnSaveMap->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->btnSaveMap->Name = L"btnSaveMap";
-			this->btnSaveMap->Size = System::Drawing::Size(135, 48);
+			this->btnSaveMap->Size = System::Drawing::Size(101, 39);
 			this->btnSaveMap->TabIndex = 0;
 			this->btnSaveMap->Text = L"Save map";
 			this->btnSaveMap->UseVisualStyleBackColor = true;
@@ -170,9 +174,10 @@ namespace pokemonGUI {
 			// 
 			// btnLoadMap
 			// 
-			this->btnLoadMap->Location = System::Drawing::Point(1376, 120);
+			this->btnLoadMap->Location = System::Drawing::Point(1032, 98);
+			this->btnLoadMap->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->btnLoadMap->Name = L"btnLoadMap";
-			this->btnLoadMap->Size = System::Drawing::Size(135, 48);
+			this->btnLoadMap->Size = System::Drawing::Size(101, 39);
 			this->btnLoadMap->TabIndex = 0;
 			this->btnLoadMap->Text = L"Load map";
 			this->btnLoadMap->UseVisualStyleBackColor = true;
@@ -182,18 +187,20 @@ namespace pokemonGUI {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(1373, 196);
+			this->label1->Location = System::Drawing::Point(1030, 159);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(84, 17);
+			this->label1->Size = System::Drawing::Size(64, 13);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"World name";
 			this->label1->Visible = false;
 			// 
 			// textBoxWorldName
 			// 
-			this->textBoxWorldName->Location = System::Drawing::Point(1376, 216);
+			this->textBoxWorldName->Location = System::Drawing::Point(1032, 176);
+			this->textBoxWorldName->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->textBoxWorldName->Name = L"textBoxWorldName";
-			this->textBoxWorldName->Size = System::Drawing::Size(121, 22);
+			this->textBoxWorldName->Size = System::Drawing::Size(92, 20);
 			this->textBoxWorldName->TabIndex = 3;
 			this->textBoxWorldName->Visible = false;
 			this->textBoxWorldName->TextChanged += gcnew System::EventHandler(this, &frmAdventrureMap::textBoxWorldName_TextChanged);
@@ -201,9 +208,10 @@ namespace pokemonGUI {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(1373, 267);
+			this->label2->Location = System::Drawing::Point(1030, 217);
+			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(100, 17);
+			this->label2->Size = System::Drawing::Size(75, 13);
 			this->label2->TabIndex = 2;
 			this->label2->Text = L"Choose brush:";
 			this->label2->Visible = false;
@@ -216,9 +224,10 @@ namespace pokemonGUI {
 			// panelWall
 			// 
 			this->panelWall->BackColor = System::Drawing::SystemColors::InfoText;
-			this->panelWall->Location = System::Drawing::Point(1376, 296);
+			this->panelWall->Location = System::Drawing::Point(1032, 240);
+			this->panelWall->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panelWall->Name = L"panelWall";
-			this->panelWall->Size = System::Drawing::Size(65, 65);
+			this->panelWall->Size = System::Drawing::Size(49, 53);
 			this->panelWall->TabIndex = 5;
 			this->panelWall->Tag = L"";
 			this->panelWall->Visible = false;
@@ -227,9 +236,10 @@ namespace pokemonGUI {
 			// panelWater
 			// 
 			this->panelWater->BackColor = System::Drawing::SystemColors::Highlight;
-			this->panelWater->Location = System::Drawing::Point(1376, 367);
+			this->panelWater->Location = System::Drawing::Point(1032, 298);
+			this->panelWater->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panelWater->Name = L"panelWater";
-			this->panelWater->Size = System::Drawing::Size(65, 65);
+			this->panelWater->Size = System::Drawing::Size(49, 53);
 			this->panelWater->TabIndex = 5;
 			this->panelWater->Visible = false;
 			this->panelWater->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panelWater_MouseClick);
@@ -237,9 +247,10 @@ namespace pokemonGUI {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(1447, 317);
+			this->label3->Location = System::Drawing::Point(1085, 258);
+			this->label3->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(35, 17);
+			this->label3->Size = System::Drawing::Size(28, 13);
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"Wall";
 			this->label3->Visible = false;
@@ -247,9 +258,10 @@ namespace pokemonGUI {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(1447, 392);
+			this->label4->Location = System::Drawing::Point(1085, 318);
+			this->label4->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(46, 17);
+			this->label4->Size = System::Drawing::Size(36, 13);
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"Water";
 			this->label4->Visible = false;
@@ -257,9 +269,10 @@ namespace pokemonGUI {
 			// panelMoney
 			// 
 			this->panelMoney->BackColor = System::Drawing::SystemColors::ActiveBorder;
-			this->panelMoney->Location = System::Drawing::Point(1376, 438);
+			this->panelMoney->Location = System::Drawing::Point(1032, 356);
+			this->panelMoney->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panelMoney->Name = L"panelMoney";
-			this->panelMoney->Size = System::Drawing::Size(65, 65);
+			this->panelMoney->Size = System::Drawing::Size(49, 53);
 			this->panelMoney->TabIndex = 5;
 			this->panelMoney->Visible = false;
 			this->panelMoney->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panelMoney_MouseClick);
@@ -267,18 +280,19 @@ namespace pokemonGUI {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(1447, 463);
+			this->label5->Location = System::Drawing::Point(1085, 376);
+			this->label5->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(50, 17);
+			this->label5->Size = System::Drawing::Size(39, 13);
 			this->label5->TabIndex = 6;
 			this->label5->Text = L"Money";
 			this->label5->Visible = false;
 			// 
 			// frmAdventrureMap
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1924, 652);
+			this->ClientSize = System::Drawing::Size(1431, 530);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -292,6 +306,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->btnSaveMap);
 			this->Controls->Add(this->btnMapMaker);
 			this->Controls->Add(this->panel1);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->MaximizeBox = false;
 			this->Name = L"frmAdventrureMap";
 			this->ShowIcon = false;
@@ -490,5 +505,7 @@ namespace pokemonGUI {
 		Pen^ brush = gcnew Pen(Color::Olive);
 		graphics->DrawLine(brush, p1, p2);
 	}
+private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+}
 };
 }
