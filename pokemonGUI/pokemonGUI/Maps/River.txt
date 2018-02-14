@@ -349,6 +349,7 @@
 1050 black
 1087 black
 1095 black
+1098 gold
 1099 black
 1100 black
 1102 black

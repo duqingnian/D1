@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>pokemonGUI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -136,7 +136,7 @@
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="frmAddUser.cpp" />
     <ClCompile Include="frmAdventrureMap.cpp" />
-    <ClCompile Include="frmHelpFacility.cpp" />
+    <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
@@ -156,7 +156,7 @@
     <ClInclude Include="frmAdventrureMap.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="frmHelpFacility.h">
+    <ClInclude Include="frmMainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmShop.h">
@@ -183,8 +183,8 @@
     <EmbeddedResource Include="frmAdventrureMap.resx">
       <DependentUpon>frmAdventrureMap.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmHelpFacility.resx">
-      <DependentUpon>frmHelpFacility.h</DependentUpon>
+    <EmbeddedResource Include="frmMainMenu.resx">
+      <DependentUpon>frmMainMenu.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmShop.resx">
       <DependentUpon>frmShop.h</DependentUpon>
