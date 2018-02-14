@@ -4,7 +4,7 @@
 #include "Game.h"
 
 
-Fight::Fight() : player(Player()), pokemon(Pokemon()){
+Fight::Fight() : player(&Player()), pokemon(&Pokemon()){
 	this->enemy = Pokemon();
 	this->fighting = true;
 }
@@ -12,7 +12,7 @@ Fight::~Fight()
 {
 }
 
-Fight::Fight(Player& playerIN, Pokemon& enemy) : player(playerIN), pokemon(playerIN.getPokemon()){
+Fight::Fight(Player& playerIN, Pokemon& enemy) : player(&playerIN), pokemon(&playerIN.getPokemon()){
 	this->enemy = enemy;
 	this->fighting = true;
 }
@@ -81,7 +81,7 @@ string Fight::useAbility3(Pokemon& dealer, Pokemon& receiver) { //Ability 3 used
 	return ("You don't have enough stamina for " + dealer.getAbility3().getName());
 }
 string Fight::declareWinner(Pokemon& winner) { // When other pokemon's HP is 0
-	if (winner.getName() == this->pokemon.getName()) {
+	if (winner.getName() == this->pokemon->getName()) {
 		game.getPlayer().addMoney(MONEY_FOR_WIN); //Updated in Fight.h
 		winner.gainExp(EXPERIENCE_FOR_WIN); //Updated in Fight.h
 		return ("You have beated " + this->enemy.getName() + " and earned yourself 100$");

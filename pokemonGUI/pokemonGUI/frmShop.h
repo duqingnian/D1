@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h"
+#include "frmMainMenu.h"
 
 namespace pokemonGUI {
 
@@ -74,9 +75,10 @@ namespace pokemonGUI {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(108, 60);
+			this->button1->Location = System::Drawing::Point(144, 74);
+			this->button1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->Size = System::Drawing::Size(100, 28);
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Buy";
 			this->button1->UseVisualStyleBackColor = true;
@@ -87,17 +89,19 @@ namespace pokemonGUI {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(62, 26);
+			this->label1->Location = System::Drawing::Point(83, 32);
+			this->label1->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(84, 13);
+			this->label1->Size = System::Drawing::Size(106, 17);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Health Potion";
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(108, 159);
+			this->button2->Location = System::Drawing::Point(144, 196);
+			this->button2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->Size = System::Drawing::Size(100, 28);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Buy";
 			this->button2->UseVisualStyleBackColor = true;
@@ -108,9 +112,10 @@ namespace pokemonGUI {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(62, 118);
+			this->label2->Location = System::Drawing::Point(83, 145);
+			this->label2->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(92, 13);
+			this->label2->Size = System::Drawing::Size(117, 17);
 			this->label2->TabIndex = 3;
 			this->label2->Text = L"Stamina Potion";
 			// 
@@ -121,9 +126,10 @@ namespace pokemonGUI {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::Black;
-			this->label3->Location = System::Drawing::Point(237, 18);
+			this->label3->Location = System::Drawing::Point(316, 22);
+			this->label3->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(59, 24);
+			this->label3->Size = System::Drawing::Size(74, 29);
 			this->label3->TabIndex = 4;
 			this->label3->Text = L"Shop";
 			this->label3->Click += gcnew System::EventHandler(this, &frmShop::label3_Click);
@@ -131,9 +137,10 @@ namespace pokemonGUI {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(42, 48);
+			this->pictureBox1->Location = System::Drawing::Point(56, 59);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(44, 35);
+			this->pictureBox1->Size = System::Drawing::Size(59, 43);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 5;
 			this->pictureBox1->TabStop = false;
@@ -142,9 +149,10 @@ namespace pokemonGUI {
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(42, 145);
+			this->pictureBox2->Location = System::Drawing::Point(56, 178);
+			this->pictureBox2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(49, 37);
+			this->pictureBox2->Size = System::Drawing::Size(65, 46);
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox2->TabIndex = 6;
 			this->pictureBox2->TabStop = false;
@@ -154,18 +162,19 @@ namespace pokemonGUI {
 			this->labelMoney->AutoSize = true;
 			this->labelMoney->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->labelMoney->Location = System::Drawing::Point(377, 48);
+			this->labelMoney->Location = System::Drawing::Point(503, 59);
+			this->labelMoney->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelMoney->Name = L"labelMoney";
-			this->labelMoney->Size = System::Drawing::Size(44, 13);
+			this->labelMoney->Size = System::Drawing::Size(55, 17);
 			this->labelMoney->TabIndex = 1;
 			this->labelMoney->Text = L"Money";
 			// 
 			// frmShop
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::DarkTurquoise;
-			this->ClientSize = System::Drawing::Size(547, 317);
+			this->ClientSize = System::Drawing::Size(729, 390);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label3);
@@ -174,9 +183,11 @@ namespace pokemonGUI {
 			this->Controls->Add(this->labelMoney);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button1);
+			this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->Name = L"frmShop";
 			this->Text = L"frmShop";
 			this->Load += gcnew System::EventHandler(this, &frmShop::frmShop_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &frmShop::frmShop_KeyDown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
@@ -209,5 +220,11 @@ private: System::Void frmShop_Load(System::Object^  sender, System::EventArgs^  
 }
 
 
+private: System::Void frmShop_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+	if (e->KeyCode == Keys::Escape) {
+		pokemonGUI::frmMainMenu mainMenu;
+		mainMenu.ShowDialog(); //Launch Main Menu
+	}
+}
 };
 }

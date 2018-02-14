@@ -14,6 +14,7 @@ public:
 	Game();
 	~Game();
 	Game(Player& player);
+	
 
 	//Functions
 	string enemyAttack();

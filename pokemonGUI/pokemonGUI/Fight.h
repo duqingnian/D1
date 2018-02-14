@@ -7,8 +7,8 @@ class Fight
 {
 private:
 	bool fighting;
-	Player player;
-	Pokemon pokemon;
+	Player *player;
+	Pokemon *pokemon;
 	Pokemon enemy;
 
 public:
@@ -18,7 +18,7 @@ public:
 
 
 	int MONEY_FOR_WIN = 50 + 10 * this->enemy.getLevel();
-	int EXPERIENCE_FOR_WIN = this->pokemon.getHP()*0.5 + (rand() % 20);
+	int EXPERIENCE_FOR_WIN = this->pokemon->getHP()*0.5 + (rand() % 20);
 	int POTION_HEAL_AMOUNT = 50;
 
 	//Functions
@@ -31,13 +31,13 @@ public:
 	string useStaminaPotion();
 
 	//Getters
-	inline Player& getPlayer() { return this->player; }
-	inline Pokemon& getPokemon() { return this->player.getPokemon(); }
+	inline Player& getPlayer() { return *this->player; }
+	inline Pokemon& getPokemon() { return this->player->getPokemon(); }
 	inline Pokemon& getEnemy() { return this->enemy; }
 	inline bool isFighting() { return this->fighting; }
 
 	//Setters
-	inline void setPokemon(Pokemon& pokemon) { this->pokemon = pokemon; }
+	inline void setPokemon(Pokemon& pokemon) { this->pokemon = &pokemon; }
 	inline void setPlayer(Player& pokemon) { this->player = player; }
 	inline void setEnemy(Pokemon& pokemon) { this->enemy = pokemon; }
 	inline void setFighting(bool fighting) { this->fighting = fighting; }

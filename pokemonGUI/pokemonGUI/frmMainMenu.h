@@ -69,6 +69,7 @@ namespace pokemonGUI {
 			this->btnResume->TabIndex = 0;
 			this->btnResume->Text = L"Resume";
 			this->btnResume->UseVisualStyleBackColor = true;
+			this->btnResume->Click += gcnew System::EventHandler(this, &frmMainMenu::btnResume_Click);
 			// 
 			// btnSave
 			// 
@@ -124,5 +125,8 @@ namespace pokemonGUI {
 
 		}
 #pragma endregion
-	};
+	private: System::Void btnResume_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Close();
+	}
+};
 }

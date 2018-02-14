@@ -4,6 +4,7 @@
 #include "protoGUI.h"
 #include "Game.h"
 #include "frmAddUser.h"
+#include "frmMainMenu.h"
 
 namespace pokemonGUI {
 
@@ -137,7 +138,7 @@ namespace pokemonGUI {
 			this->cbPokemonSelect->Name = L"cbPokemonSelect";
 			this->cbPokemonSelect->Size = System::Drawing::Size(146, 24);
 			this->cbPokemonSelect->TabIndex = 6;
-			this->cbPokemonSelect->Text= L"Select pokemon";
+			this->cbPokemonSelect->Text = L"Select pokemon";
 			this->cbPokemonSelect->SelectedIndexChanged += gcnew System::EventHandler(this, &pokeInfo::cbPokemonSelect_SelectedIndexChanged);
 			// 
 			// labelStats
@@ -163,6 +164,7 @@ namespace pokemonGUI {
 			this->Name = L"pokeInfo";
 			this->Text = L"pokeInfo";
 			this->Load += gcnew System::EventHandler(this, &pokeInfo::pokeInfo_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &pokeInfo::pokeInfo_KeyDown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
@@ -188,7 +190,6 @@ namespace pokemonGUI {
 				}
 			}
 			game.setNewFight(Fight(game.getPlayer(), Catter)); //Start a new fight
-			this->Hide();
 			pokemonGUI::protoGUI gui;
 			gui.ShowDialog(); //Launch fight GUI
 		}
@@ -219,11 +220,17 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	updateLabel();
 
 
-	this->Hide();
+	
 	pokemonGUI::frmAddUser frmAddUser;
 	frmAddUser.ShowDialog(); //Launch fight GUI
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+	if (e->KeyCode == Keys::Escape) {
+		pokemonGUI::frmMainMenu mainMenu;
+		mainMenu.ShowDialog(); //Launch Main Menu
+	}
 }
 };
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "World.h"
 #include <msclr\marshal_cppstd.h>
+#include "frmMainMenu.h"
 
 namespace pokemonGUI {
 
@@ -479,6 +480,10 @@ namespace pokemonGUI {
 		//Character move keys pressed
 		int X = characterX;
 		int Y = characterY;
+		if (e->KeyCode == Keys::Escape) {
+			pokemonGUI::frmMainMenu mainMenu;
+			mainMenu.ShowDialog(); //Launch Main Menu
+		}
 		if (e->KeyCode == Keys::Right) {
 			X += 20;
 		}
