@@ -2,7 +2,7 @@
 #include <iostream>
 #include "World.h"
 #include <msclr\marshal_cppstd.h>
-#include "frmMainMenu.h"
+#include <vector>
 
 namespace pokemonGUI {
 
@@ -30,6 +30,7 @@ namespace pokemonGUI {
 		Color color = Color::Black;
 		int characterX = 100;
 		int characterY = 100;
+
 	private: System::Windows::Forms::Button^  btnSaveMap;
 	private: System::Windows::Forms::Button^  btnLoadMap;
 
@@ -480,10 +481,6 @@ namespace pokemonGUI {
 		//Character move keys pressed
 		int X = characterX;
 		int Y = characterY;
-		if (e->KeyCode == Keys::Escape) {
-			pokemonGUI::frmMainMenu mainMenu;
-			mainMenu.ShowDialog(); //Launch Main Menu
-		}
 		if (e->KeyCode == Keys::Right) {
 			X += 20;
 		}
@@ -505,10 +502,70 @@ namespace pokemonGUI {
 
 	}
 	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		Point p1(0, 0);
-		Point p2(e->X, e->Y);
-		Pen^ brush = gcnew Pen(Color::Olive);
-		graphics->DrawLine(brush, p1, p2);
+		//Point p1(0, 0);
+		//Point p2(e->X, e->Y);
+		//Pen^ brush = gcnew Pen(Color::Olive);
+		//graphics->DrawLine(brush, p1, p2);
+
+		int charX, charY;
+		charX=characterX/20+1;
+		charY=characterY/20+1;
+
+		int distanceX = 0;
+		int distanceY = 0;
+		int distanceOverall = 0;
+		int i = 0;
+
+		int targetX = e->X/20+1;
+		int targetY = e->Y/20+1;
+
+		if (charX > targetX) {    //math adjustments not to get negative X values
+			distanceX = charX - targetX;
+		}
+		else if (charX < targetX) {
+			distanceX = targetX - charX;
+		}
+		else {
+			distanceX = 0;
+		}
+		
+		if (charY > targetY) {    //math adjustments not to get negative y values
+			distanceY = charY - targetY;
+		}
+		else if (charY < targetY) {
+			distanceY = targetY - charY;
+		}
+		else {
+			distanceY = 0;
+		}
+
+		while (distanceX > 0 && distanceY > 0) {
+			cout << "cycle test distance X" <<endl;
+		
+			distanceOverall + 14;
+			distanceX--;
+			distanceY--;
+
+			while (distanceX > 0 && distanceY <= 0 || distanceX <= 0 && distanceY > 0) {
+				distanceOverall + 10;
+				distanceX--;
+				distanceY--;
+
+
+
+			}
+		}
+
+		cout << "Distance overall " << distanceX << endl << "charX " << charX << endl << "targetX" << targetX << endl;
+
+
+
+		//vector<array<int, 2>> grid;
+
+		//int x = grid[i][0]; //x
+		//int y = grid[i][1]; //y
+
+
 	}
 private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 }
