@@ -54,6 +54,9 @@
     <ClCompile Include="frmShop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="frmHelpFacility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="protoGUI.h">
@@ -98,6 +101,9 @@
     <ClInclude Include="frmShop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="frmHelpFacility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="protoGUI.resx">
@@ -110,6 +116,9 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAddUser.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmShop.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

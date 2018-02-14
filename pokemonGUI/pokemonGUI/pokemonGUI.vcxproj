@@ -136,6 +136,7 @@
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="frmAddUser.cpp" />
     <ClCompile Include="frmAdventrureMap.cpp" />
+    <ClCompile Include="frmHelpFacility.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
@@ -153,6 +154,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmAdventrureMap.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="frmHelpFacility.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmShop.h">
@@ -178,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAdventrureMap.resx">
       <DependentUpon>frmAdventrureMap.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHelpFacility.resx">
+      <DependentUpon>frmHelpFacility.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmShop.resx">
       <DependentUpon>frmShop.h</DependentUpon>
