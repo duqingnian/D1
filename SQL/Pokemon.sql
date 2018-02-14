@@ -31,7 +31,7 @@ insert into Type values (3, 'FIRE', 'WATER');
 insert into Type values (4, 'ELECTRIC', 'EARTH');
 insert into Type values (5, 'WIND', 'WATER');
 
---- "SELECT * FROM TYPE" will throw the table 'Type' and it's contents onto the terminal.
+--- "SELECT * FROM TYPE" will throw the table 'Type' and its contents onto the terminal.
 
 select * from Type;
 
