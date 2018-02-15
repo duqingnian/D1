@@ -49,6 +49,10 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Panel^  panelMoney;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::PictureBox^  pictureCharacter;
+	private: System::Windows::Forms::Label^  lblCordDispl;
+	private: System::Windows::Forms::Label^  lblXCordDisp;
+	private: System::Windows::Forms::Label^  lblYCordDisp;
+
 	private: System::Windows::Forms::Timer^  timerMouseDrag;
 
 
@@ -114,6 +118,9 @@ namespace pokemonGUI {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->panelMoney = (gcnew System::Windows::Forms::Panel());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->lblCordDispl = (gcnew System::Windows::Forms::Label());
+			this->lblXCordDisp = (gcnew System::Windows::Forms::Label());
+			this->lblYCordDisp = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->BeginInit();
 			this->SuspendLayout();
@@ -127,6 +134,7 @@ namespace pokemonGUI {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1330, 610);
 			this->panel1->TabIndex = 0;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &frmAdventrureMap::panel1_Paint);
 			this->panel1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDoubleClick);
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
@@ -274,11 +282,40 @@ namespace pokemonGUI {
 			this->label5->Text = L"Money";
 			this->label5->Visible = false;
 			// 
+			// lblCordDispl
+			// 
+			this->lblCordDispl->AutoSize = true;
+			this->lblCordDispl->Location = System::Drawing::Point(1376, 523);
+			this->lblCordDispl->Name = L"lblCordDispl";
+			this->lblCordDispl->Size = System::Drawing::Size(0, 17);
+			this->lblCordDispl->TabIndex = 7;
+			// 
+			// lblXCordDisp
+			// 
+			this->lblXCordDisp->AutoSize = true;
+			this->lblXCordDisp->Location = System::Drawing::Point(1373, 523);
+			this->lblXCordDisp->Name = L"lblXCordDisp";
+			this->lblXCordDisp->Size = System::Drawing::Size(46, 17);
+			this->lblXCordDisp->TabIndex = 8;
+			this->lblXCordDisp->Text = L"label6";
+			// 
+			// lblYCordDisp
+			// 
+			this->lblYCordDisp->AutoSize = true;
+			this->lblYCordDisp->Location = System::Drawing::Point(1373, 563);
+			this->lblYCordDisp->Name = L"lblYCordDisp";
+			this->lblYCordDisp->Size = System::Drawing::Size(46, 17);
+			this->lblYCordDisp->TabIndex = 9;
+			this->lblYCordDisp->Text = L"label6";
+			// 
 			// frmAdventrureMap
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1924, 652);
+			this->Controls->Add(this->lblYCordDisp);
+			this->Controls->Add(this->lblXCordDisp);
+			this->Controls->Add(this->lblCordDispl);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -296,7 +333,9 @@ namespace pokemonGUI {
 			this->Name = L"frmAdventrureMap";
 			this->ShowIcon = false;
 			this->Text = L"Adventure Map";
+			this->Load += gcnew System::EventHandler(this, &frmAdventrureMap::frmAdventrureMap_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &frmAdventrureMap::frmAdventrureMap_KeyDown);
+			this->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::frmAdventrureMap_MouseDoubleClick);
 			this->panel1->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->EndInit();
 			this->ResumeLayout(false);
@@ -440,7 +479,6 @@ namespace pokemonGUI {
 			SolidBrush^ brush = gcnew SolidBrush(Color::White);
 			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 
-
 		}
 	}
 
@@ -481,14 +519,12 @@ namespace pokemonGUI {
 			characterX = X;
 			characterY = Y;
 			pictureCharacter->Location = Point(characterX, characterY); //Move character
+			playerCord();
 		}
 
 	}
 	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		Point p1(0, 0);
-		Point p2(e->X, e->Y);
-		Pen^ brush = gcnew Pen(Color::Olive);
-		graphics->DrawLine(brush, p1, p2);
+	
 	}
 };
 }
