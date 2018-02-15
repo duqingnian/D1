@@ -1,6 +1,6 @@
 #pragma once
 #include <set>
-
+#include <vector>
 struct Block {
 	std::string color;
 	int id;
