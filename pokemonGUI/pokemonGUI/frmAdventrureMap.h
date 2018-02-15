@@ -478,10 +478,10 @@ namespace pokemonGUI {
 
 	private: System::Void frmAdventrureMap_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		//Character move keys pressed
-		if (e->KeyCode == Keys::Escape) {
-			pokemonGUI::frmMainMenu mainMenu;
-			mainMenu.ShowDialog(); //Launch Main Menu
-		}
+		//if (e->KeyCode == Keys::Escape) {
+		//	pokemonGUI::frmMainMenu mainMenu;
+		//	mainMenu.ShowDialog(); //Launch Main Menu
+		//}
 		int X = characterX;
 		int Y = characterY;
 		if (e->KeyCode == Keys::Right) {
@@ -517,6 +517,7 @@ namespace pokemonGUI {
 		int distanceX = 0;
 		int distanceY = 0;
 		int distanceOverall = 0;
+		int tempDistanceX, tempDistanceY;
 		int i = 0;
 
 		int targetX = e->X/20+1;
@@ -524,9 +525,12 @@ namespace pokemonGUI {
 
 		if (charX > targetX) {    //math adjustments not to get negative X values
 			distanceX = charX - targetX;
+			//cout << "CharX > Target X" << endl;
+			//cout << charX << " - " << targetX << " = " << distanceX <<endl <<"______";
 		}
 		else if (charX < targetX) {
 			distanceX = targetX - charX;
+			//cout << "CharX < Target X" << endl;
 		}
 		else {
 			distanceX = 0;
@@ -534,33 +538,47 @@ namespace pokemonGUI {
 		
 		if (charY > targetY) {    //math adjustments not to get negative y values
 			distanceY = charY - targetY;
+			//cout << "CharY > Target Y" << endl;
 		}
 		else if (charY < targetY) {
+			//cout << "CharY < Target Y" << endl;
 			distanceY = targetY - charY;
 		}
 		else {
 			distanceY = 0;
 		}
-
+		//tempDistanceX=
 		while (distanceX > 0 && distanceY > 0) {
-			cout << "cycle test distance X" <<endl;
-		
-			distanceOverall + 14;
+			//cout << "cycle test distance X" <<endl;
+
+			distanceOverall = distanceOverall + 14;
+			//cout << distanceOverall << endl;
 			distanceX--;
+			//cout << distanceX << endl;
 			distanceY--;
+			//cout << distanceY << endl << "___________" << endl;
+		}
 
-			while (distanceX > 0 && distanceY <= 0 || distanceX <= 0 && distanceY > 0) {
-				distanceOverall + 10;
+			while (distanceX > 0 && distanceY <= 0){ //|| distanceX < 0 && distanceY >= 0) {
+				distanceOverall = distanceOverall + 10;
+				//cout << distanceOverall <<endl;
 				distanceX--;
-				distanceY--;
 
+				//cout << distanceX << endl;
+				//cout << distanceY << endl <<"---------" <<endl;
 
 
 			}
-		}
+			while (distanceX <= 0 && distanceY > 0) {
+				distanceOverall = distanceOverall + 10;
+				//cout << distanceOverall << endl;
+				distanceY--;
+			}
+			cout << distanceOverall << endl;
+		
 
-		cout << "Distance overall " << distanceX << endl << "charX " << charX << endl << "targetX" << targetX << endl;
-
+		//cout << "charX " << charX << endl << "charY " << charY << endl << "targetX" << targetX << endl << "targetY" << targetY << endl;
+		//cout << endl << endl << "distanceX= " << distanceX <<endl;
 
 
 		//vector<array<int, 2>> grid;
