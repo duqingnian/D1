@@ -607,7 +607,7 @@ namespace pokemonGUI {
 
 				 Node southNeighCord;
 				 southNeighCord.x = currX;
-				 southNeighCord.y = currY -1;
+				 southNeighCord.y = currY +1;
 				 southNeighCord.hCost = findingHcost(distanceOverall, southNeighCord.x, southNeighCord.y, targetX, targetY);
 				 southNeighCord.gCost = 10;
 				 southNeighCord.fCost = southNeighCord.hCost + southNeighCord.gCost;
@@ -615,7 +615,7 @@ namespace pokemonGUI {
 
 				 Node northNeighCord;
 				 northNeighCord.x = currX;
-				 northNeighCord.y = currY + 1;
+				 northNeighCord.y = currY - 1;
 				 northNeighCord.hCost = findingHcost( distanceOverall, northNeighCord.x, northNeighCord.y, targetX, targetY);
 				 northNeighCord.gCost = 10;
 				 northNeighCord.fCost = northNeighCord.hCost + northNeighCord.gCost;
@@ -623,7 +623,7 @@ namespace pokemonGUI {
 
 				 Node neNeighCord;
 				 neNeighCord.x = currX + 1;
-				 neNeighCord.y = currY + 1;
+				 neNeighCord.y = currY - 1;
 				 neNeighCord.hCost = findingHcost( distanceOverall, neNeighCord.x, neNeighCord.y, targetX, targetY);
 				 neNeighCord.gCost = 14;
 				 neNeighCord.fCost = neNeighCord.hCost + neNeighCord.gCost;
@@ -631,7 +631,7 @@ namespace pokemonGUI {
 
 				 Node nwNeighCord;
 				 nwNeighCord.x = currX - 1;
-				 nwNeighCord.y = currY + 1;
+				 nwNeighCord.y = currY - 1;
 				 nwNeighCord.hCost = findingHcost( distanceOverall, nwNeighCord.x, nwNeighCord.y, targetX, targetY);
 				 nwNeighCord.gCost = 14;
 				 nwNeighCord.fCost = nwNeighCord.hCost + nwNeighCord.gCost;
@@ -639,7 +639,7 @@ namespace pokemonGUI {
 
 				 Node seNeighCord;
 				 seNeighCord.x = currX +1;
-				 seNeighCord.y = currY- 1;
+				 seNeighCord.y = currY+ 1;
 				 seNeighCord.hCost = findingHcost( distanceOverall, seNeighCord.x, seNeighCord.y, targetX, targetY);
 				 seNeighCord.gCost = 14;
 				 seNeighCord.fCost = seNeighCord.hCost + seNeighCord.gCost;
@@ -647,11 +647,11 @@ namespace pokemonGUI {
 
 				 Node swNeighCord;
 				 swNeighCord.x = currX - 1;
-				 swNeighCord.y = currY -1;
+				 swNeighCord.y = currY + 1;
 				 swNeighCord.hCost = findingHcost( distanceOverall, swNeighCord.x, swNeighCord.y, targetX, targetY);
 				 swNeighCord.gCost = 14;
 				 swNeighCord.fCost = swNeighCord.hCost + swNeighCord.gCost;
-				 cout << " south west:" << swNeighCord.fCost << endl;
+				 cout << "South west:" << swNeighCord.fCost << endl;
 				 cout << endl;
 				 cout << endl;
 				 cout << endl;
