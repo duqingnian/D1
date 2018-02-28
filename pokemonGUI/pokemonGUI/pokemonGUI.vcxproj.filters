@@ -16,7 +16,6 @@
     <ClCompile Include="World.cpp" />
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="frmHelpFacility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ability.h" />
@@ -35,7 +34,6 @@
     <ClInclude Include="World.h" />
     <ClInclude Include="frmMainMenu.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="frmHelpFacility.h" />
     <ClInclude Include="Cordinate.h" />
   </ItemGroup>
   <ItemGroup>

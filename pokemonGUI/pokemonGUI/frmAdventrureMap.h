@@ -515,7 +515,6 @@ namespace pokemonGUI {
 		int distanceY = 0;
 		int distanceOverall = 0;
 		int tempDistanceX, tempDistanceY;
-		
 
 		int targetX = e->X/20+1;
 		int targetY = e->Y/20+1;
@@ -530,6 +529,8 @@ namespace pokemonGUI {
 		lowestCord = charCord;
 		vector<Node> openCord;
 
+		openCord[0].x;
+		openCord[0].y;
 		int i = 0;
 		
 		//at the moment it will loop 5 times to find the lowest node
@@ -543,6 +544,7 @@ namespace pokemonGUI {
 		//Display all the X and Y cordinate of the lowest Fcost Node
 		for (int i = 0; i< openCord.size(); i++)
 		{
+	
 			cout <<" X Cordinate" << openCord[i].x << endl;
 			cout <<" Y Cordinate" << openCord[i].y << endl;
 		}
@@ -644,7 +646,7 @@ namespace pokemonGUI {
 
 				 //add all the nodes to a list
 				 int fCostList[8]= { northNeighCord.fCost, southNeighCord.fCost, westNeighCord.fCost, eastNeighCord.fCost,nwNeighCord.fCost,
-					 neNeighCord.fCost,seNeighCord.fCost, swNeighCord.fCost }; 
+				neNeighCord.fCost,seNeighCord.fCost, swNeighCord.fCost }; 
 
 				 //sort the list to find the lowest
 				 sort(fCostList, fCostList + 8);

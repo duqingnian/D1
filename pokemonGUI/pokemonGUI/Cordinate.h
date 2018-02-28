@@ -2,6 +2,7 @@
 
 struct Node
 {
+	//properties of all class properties
 	int x;
 	int y;
 	int gCost
