@@ -505,6 +505,8 @@ namespace pokemonGUI {
 
 	}
 	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+
+		//character Cordinates
 		Node charCord;
 		charCord.x = characterX / 20 + 1;
 		charCord.y = characterY / 20 + 1;
@@ -518,16 +520,19 @@ namespace pokemonGUI {
 		int targetX = e->X/20+1;
 		int targetY = e->Y/20+1;
 
+		//destination Node
 		Node targetCord;
 		targetCord.x = targetX;
 		targetCord.y = targetY;
 
+		//lowest fCost cord that will be added to the  list
 		Node lowestCord;
 		lowestCord = charCord;
 		vector<Node> openCord;
 
 		int i = 0;
 		
+		//at the moment it will loop 5 times to find the lowest node
 		while ( i < 5 )
 		{
 			lowestCord = findingFCostNeigh(distanceOverall, lowestCord.x, lowestCord.y, targetX, targetY);
@@ -535,48 +540,14 @@ namespace pokemonGUI {
 			i++;
 		}
 
+		//Display all the X and Y cordinate of the lowest Fcost Node
 		for (int i = 0; i< openCord.size(); i++)
 		{
 			cout <<" X Cordinate" << openCord[i].x << endl;
 			cout <<" Y Cordinate" << openCord[i].y << endl;
-			cout <<"fCost" << openCord[i].fCost << endl;
-			cout <<"gCost" << openCord[i].gCost << endl;
-			cout <<"hCost" << openCord[i].hCost << endl;
 		}
-
-
-		
-
-		cout << "lowest f Cost" << lowestCord.fCost<<endl;
-		cout << "lowest g Cost" << lowestCord.gCost << endl;
-		cout << "lowest h Cost" << lowestCord.hCost << endl;
-		cout << "lowest x " << lowestCord.x<< endl;
-		cout << "lowest y " << lowestCord.y << endl;
-
-
-
-
-		
-		
-
-
-
-
-
-		
-
-
-
-
-
-		
-
-			
-		
-
-
-
 	}
+			 //Finding the lowest FCost Node
 			 int findingHcost( int distanceOverall, int charX, int charY, int targetX, int targetY) {
 				 int distanceX, distanceY;
 				 if (charX > targetX) {    //math adjustments not to get negative X values
@@ -611,12 +582,6 @@ namespace pokemonGUI {
 					 distanceY--;
 				 }
 				 return distanceOverall;
-			 }
-			 int idLowestFCost()
-			 {
-				 
-
-				 return 0;
 			 }
 			 Node findingFCostNeigh( int distanceOverall, int currX, int currY, int targetX, int targetY)
 			 {
@@ -677,10 +642,15 @@ namespace pokemonGUI {
 				 swNeighCord.gCost = 14;
 				 swNeighCord.fCost = swNeighCord.hCost + swNeighCord.gCost;
 
+				 //add all the nodes to a list
 				 int fCostList[8]= { northNeighCord.fCost, southNeighCord.fCost, westNeighCord.fCost, eastNeighCord.fCost,nwNeighCord.fCost,
 					 neNeighCord.fCost,seNeighCord.fCost, swNeighCord.fCost }; 
+
+				 //sort the list to find the lowest
 				 sort(fCostList, fCostList + 8);
 
+
+				 //return the lowest Cord
 				 if (northNeighCord.fCost == fCostList[0])
 				 {
 					 return northNeighCord;
