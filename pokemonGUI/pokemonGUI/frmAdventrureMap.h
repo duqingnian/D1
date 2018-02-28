@@ -5,6 +5,7 @@
 #include <vector>
 #include "Cordinate.h"
 #include <set>
+#include <algorithm>
 
 namespace pokemonGUI {
 
@@ -504,26 +505,56 @@ namespace pokemonGUI {
 
 	}
 	private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		
-		int charX, charY;
-		charX=characterX/20+1;
-		charY=characterY/20+1;
+		Node charCord;
+		charCord.x = characterX / 20 + 1;
+		charCord.y = characterY / 20 + 1;
 
 		int distanceX = 0;
 		int distanceY = 0;
 		int distanceOverall = 0;
 		int tempDistanceX, tempDistanceY;
+		
 
 		int targetX = e->X/20+1;
 		int targetY = e->Y/20+1;
 
-		Node startCord;
-		startCord.x = charX;
-		startCord.y = charY;
+		Node targetCord;
+		targetCord.x = targetX;
+		targetCord.y = targetY;
 
-		//startCord.hCost = findingHcost(distanceX, distanceY, distanceOverall,charX,charY,targetX,targetY);
+		Node lowestCord;
+		lowestCord = charCord;
+		vector<Node> openCord;
 
-		findingFCostNeigh( distanceOverall, charX, charY, targetX, targetY);
+		int i = 0;
+		
+		while ( i < 5 )
+		{
+			lowestCord = findingFCostNeigh(distanceOverall, lowestCord.x, lowestCord.y, targetX, targetY);
+			openCord.push_back(lowestCord);
+			i++;
+		}
+
+		for (int i = 0; i< openCord.size(); i++)
+		{
+			cout <<" X Cordinate" << openCord[i].x << endl;
+			cout <<" Y Cordinate" << openCord[i].y << endl;
+			cout <<"fCost" << openCord[i].fCost << endl;
+			cout <<"gCost" << openCord[i].gCost << endl;
+			cout <<"hCost" << openCord[i].hCost << endl;
+		}
+
+
+		
+
+		cout << "lowest f Cost" << lowestCord.fCost<<endl;
+		cout << "lowest g Cost" << lowestCord.gCost << endl;
+		cout << "lowest h Cost" << lowestCord.hCost << endl;
+		cout << "lowest x " << lowestCord.x<< endl;
+		cout << "lowest y " << lowestCord.y << endl;
+
+
+
 
 		
 		
@@ -587,15 +618,15 @@ namespace pokemonGUI {
 
 				 return 0;
 			 }
-			 int findingFCostNeigh( int distanceOverall, int currX, int currY, int targetX, int targetY)
+			 Node findingFCostNeigh( int distanceOverall, int currX, int currY, int targetX, int targetY)
 			 {
+				 //finding the fcost of the current node of each neighbour around it
 				 Node westNeighCord;
 				 westNeighCord.x = currX -1;
 				 westNeighCord.y = currY;
 				 westNeighCord.hCost = findingHcost( distanceOverall, westNeighCord.x, westNeighCord.y, targetX, targetY);
 				 westNeighCord.gCost = 10;
 				 westNeighCord.fCost =  westNeighCord.hCost + westNeighCord.gCost;
-				 cout << "west:" << westNeighCord.fCost << endl;
 
 				 Node eastNeighCord;
 				 eastNeighCord.x = currX + 1;
@@ -603,7 +634,6 @@ namespace pokemonGUI {
 				 eastNeighCord.hCost = findingHcost(distanceOverall, eastNeighCord.x, eastNeighCord.y, targetX, targetY);
 				 eastNeighCord.gCost = 10;
 				 eastNeighCord.fCost = eastNeighCord.hCost + eastNeighCord.gCost;
-				 cout << "east:" << eastNeighCord.fCost << endl;
 
 				 Node southNeighCord;
 				 southNeighCord.x = currX;
@@ -611,7 +641,6 @@ namespace pokemonGUI {
 				 southNeighCord.hCost = findingHcost(distanceOverall, southNeighCord.x, southNeighCord.y, targetX, targetY);
 				 southNeighCord.gCost = 10;
 				 southNeighCord.fCost = southNeighCord.hCost + southNeighCord.gCost;
-				 cout << "South:" << southNeighCord.fCost << endl;
 
 				 Node northNeighCord;
 				 northNeighCord.x = currX;
@@ -619,7 +648,6 @@ namespace pokemonGUI {
 				 northNeighCord.hCost = findingHcost( distanceOverall, northNeighCord.x, northNeighCord.y, targetX, targetY);
 				 northNeighCord.gCost = 10;
 				 northNeighCord.fCost = northNeighCord.hCost + northNeighCord.gCost;
-				 cout << "north:" << northNeighCord.fCost << endl;
 
 				 Node neNeighCord;
 				 neNeighCord.x = currX + 1;
@@ -627,7 +655,6 @@ namespace pokemonGUI {
 				 neNeighCord.hCost = findingHcost( distanceOverall, neNeighCord.x, neNeighCord.y, targetX, targetY);
 				 neNeighCord.gCost = 14;
 				 neNeighCord.fCost = neNeighCord.hCost + neNeighCord.gCost;
-				 cout << "North East:" << neNeighCord.fCost << endl;
 
 				 Node nwNeighCord;
 				 nwNeighCord.x = currX - 1;
@@ -635,29 +662,57 @@ namespace pokemonGUI {
 				 nwNeighCord.hCost = findingHcost( distanceOverall, nwNeighCord.x, nwNeighCord.y, targetX, targetY);
 				 nwNeighCord.gCost = 14;
 				 nwNeighCord.fCost = nwNeighCord.hCost + nwNeighCord.gCost;
-				 cout << "North West:" << nwNeighCord.fCost << endl;
 
 				 Node seNeighCord;
 				 seNeighCord.x = currX +1;
 				 seNeighCord.y = currY+ 1;
-				 seNeighCord.hCost = findingHcost( distanceOverall, seNeighCord.x, seNeighCord.y, targetX, targetY);
+				 seNeighCord.hCost = findingHcost(distanceOverall, seNeighCord.x, seNeighCord.y, targetX, targetY);
 				 seNeighCord.gCost = 14;
 				 seNeighCord.fCost = seNeighCord.hCost + seNeighCord.gCost;
-				 cout << "South east:" << seNeighCord.fCost << endl;
 
 				 Node swNeighCord;
 				 swNeighCord.x = currX - 1;
 				 swNeighCord.y = currY + 1;
-				 swNeighCord.hCost = findingHcost( distanceOverall, swNeighCord.x, swNeighCord.y, targetX, targetY);
+				 swNeighCord.hCost = findingHcost(distanceOverall, swNeighCord.x, swNeighCord.y, targetX, targetY);
 				 swNeighCord.gCost = 14;
 				 swNeighCord.fCost = swNeighCord.hCost + swNeighCord.gCost;
-				 cout << "South west:" << swNeighCord.fCost << endl;
-				 cout << endl;
-				 cout << endl;
-				 cout << endl;
-				 cout << endl;
 
-				 return 0;
+				 int fCostList[8]= { northNeighCord.fCost, southNeighCord.fCost, westNeighCord.fCost, eastNeighCord.fCost,nwNeighCord.fCost,
+					 neNeighCord.fCost,seNeighCord.fCost, swNeighCord.fCost }; 
+				 sort(fCostList, fCostList + 8);
+
+				 if (northNeighCord.fCost == fCostList[0])
+				 {
+					 return northNeighCord;
+				 }
+				 if (southNeighCord.fCost == fCostList[0])
+				 {
+					 return southNeighCord;
+				 }
+				 if (eastNeighCord.fCost == fCostList[0])
+				 {
+					 return eastNeighCord;
+				 }
+				 if (westNeighCord.fCost == fCostList[0])
+				 {
+					 return westNeighCord;
+				 }
+				 if (neNeighCord.fCost == fCostList[0])
+				 {
+					 return neNeighCord;
+				 }
+				 if (nwNeighCord.fCost == fCostList[0])
+				 {
+					 return nwNeighCord;
+				 }
+				 if (seNeighCord.fCost == fCostList[0])
+				 {
+					 return seNeighCord;
+				 }
+				 if (swNeighCord.fCost == fCostList[0])
+				 {
+					 return swNeighCord;
+				 }	 
 			 }
 			 
 			
