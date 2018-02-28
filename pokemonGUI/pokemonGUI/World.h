@@ -37,6 +37,7 @@ public:
 	set<int> obstacles;
 
 
+
 	static void saveWorld(std::string fileName);
 	static void loadWorld(std::string fileName);
 
