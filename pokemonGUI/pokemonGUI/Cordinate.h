@@ -8,6 +8,7 @@ struct Node
 	int gCost
 		, hCost; // distance from starting node, distance from end cost and total cost
 	int fCost;
+	bool obstacle=false;
 
 };
 
