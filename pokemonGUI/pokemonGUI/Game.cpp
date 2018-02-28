@@ -8,6 +8,7 @@ Game::Game()
 	this->player = Player();
 	this->onGoingFight = Fight();
 	this->enemyTurn = false;
+	this->world = new World();
 }
 
 
@@ -18,6 +19,7 @@ Game::~Game()
 Game::Game(Player& player) {
 	this->player = player;
 	this->enemyTurn = false;
+	this->world = new World();
 }
 
 string Game::enemyAttack() {

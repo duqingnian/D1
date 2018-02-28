@@ -137,6 +137,7 @@
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="frmAddUser.cpp" />
     <ClCompile Include="frmAdventrureMap.cpp" />
+    <ClCompile Include="frmHelpFacility.cpp" />
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ability.h" />
+    <ClInclude Include="Cordinate.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="frmAddUser.h">
@@ -158,6 +160,7 @@
     <ClInclude Include="frmAdventrureMap.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="frmHelpFacility.h" />
     <ClInclude Include="frmMainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>

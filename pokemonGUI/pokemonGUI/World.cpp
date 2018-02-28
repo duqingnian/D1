@@ -9,8 +9,20 @@ using namespace std;
 World world;
 
 World::World()
-{}
+{
+	this->name = "";
+	this->id = 0;
+	this->spawnPoint = 51;
 
+}
+World::World(string name, int id, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits) {
+	this->name = name;
+	this->id = id;
+	this->spawnPoint = spawnPoint;
+	this->enemies = enemies;
+	this->exits = exits;
+
+}
 
 World::~World()
 {
