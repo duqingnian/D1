@@ -1,16 +1,4 @@
--- Joins the PokemonTable and Type table together
-Select TYPE.TYPEID
-         , TYPE.TYPE
-         , TYPE.WEAKNESS
-         , POKEMONTABLE.TYPEID
-         , POKEMONTABLE.NAME
-      from Type,
-           PokemonTable
-     where Type.TypeID = PokemonTable.TypeID;
-
-
-
--- Joins the PokemonTable and Power tables together
+--Combines Power and PokemonTable
 Select P.POWERID      
          , PT.NAME
          , P.LVL
@@ -20,12 +8,11 @@ Select P.POWERID
          , P.AGILITY
          , P.STRENGTH
          , P.MAXMANA
-      from POWER        P,
+      from POWER P,
            PokemonTable PT
      where P.PowerID = PT.PowerID;
 
-
--- Joins the PokemonTable and Ability Tables together
+--Combines PokemonTable, Ability and AbilityIdent
 Select P.POKEMONID      
          , P.NAME
          , A.AbilityID
@@ -38,10 +25,7 @@ Select P.POKEMONID
        and A.AbilityID = AI.AbilityID 
 ;
 
-
-
-
--- Joins Ability - Pokemon - Type 
+--Combines PokemonTable, Ability, AbilityIdent and Type
 Select P.POKEMONID      
          , P.NAME
          , A.AbilityID
@@ -59,8 +43,7 @@ Select P.POKEMONID
 ;
 
 
-
--- Joins Ability - Pokemon - Type - Power
+--Combines PokemonTable, Ability, AbilityIdent, Type and Power
 Select P.POKEMONID      
          , P.NAME
          , A.AbilityID

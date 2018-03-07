@@ -132,7 +132,7 @@ namespace pokemonGUI {
 			this->cbPokemonSelect->FormattingEnabled = true;
 			this->cbPokemonSelect->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
 				L"Catter", L"Zizi", L"Pyro", L"Lemongrass",
-					L"Thundershock"
+					L"Thundershock", L"Wail", L"Blaze", L"Flyff", L"Jolt", L"Treehouse", L"Deeria", L"Hydros", L"Flop"
 			});
 			this->cbPokemonSelect->Location = System::Drawing::Point(12, 240);
 			this->cbPokemonSelect->Name = L"cbPokemonSelect";
@@ -213,6 +213,36 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 	} else 	if (cbPokemonSelect->Text == "Thundershock") {
 		labelStats->Text = Thundershock.labelStats();
 		game.getPlayer().setPokemon(Thundershock);
+	} else if (cbPokemonSelect->Text == "Wail") {
+		labelStats->Text = Wail.labelStats();
+		game.getPlayer().setPokemon(Wail);
+	} else if (cbPokemonSelect->Text == "Blaze") {
+		labelStats->Text = Blaze.labelStats();
+		game.getPlayer().setPokemon(Blaze);
+	}
+	else if (cbPokemonSelect->Text == "Flyff") {
+		labelStats->Text = Flyff.labelStats();
+		game.getPlayer().setPokemon(Flyff);
+	}
+	else if (cbPokemonSelect->Text == "Jolt") {
+		labelStats->Text = Jolt.labelStats();
+		game.getPlayer().setPokemon(Jolt);
+	}
+	else if (cbPokemonSelect->Text == "Treehouse") {
+		labelStats->Text = Treehouse.labelStats();
+		game.getPlayer().setPokemon(Treehouse);
+	}
+	else if (cbPokemonSelect->Text == "Deeria") {
+		labelStats->Text = Deeria.labelStats();
+		game.getPlayer().setPokemon(Deeria);
+	}
+	else if (cbPokemonSelect->Text == "Hydros") {
+		labelStats->Text = Hydros.labelStats();
+		game.getPlayer().setPokemon(Hydros);
+	}
+	else if (cbPokemonSelect->Text == "Flop") {
+		labelStats->Text = Flop.labelStats();
+		game.getPlayer().setPokemon(Flop);
 	}
 }
 		 //----------------------------------------------------------------------------------------------------------------------------
