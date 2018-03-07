@@ -132,7 +132,7 @@ namespace pokemonGUI {
 			this->cbPokemonSelect->FormattingEnabled = true;
 			this->cbPokemonSelect->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
 				L"Catter", L"Zizi", L"Pyro", L"Lemongrass",
-					L"Thundershock"
+					L"Thundershock", L"Wail", L"Blaze", L"Flyff", L"Jolt", L"Treehouse", L"Deeria", L"Hydros", L"Flop"
 			});
 			this->cbPokemonSelect->Location = System::Drawing::Point(12, 240);
 			this->cbPokemonSelect->Name = L"cbPokemonSelect";
