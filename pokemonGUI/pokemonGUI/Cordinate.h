@@ -1,3 +1,5 @@
+#ifndef CORDINATE_H
+#define CORDINATE_H
 #pragma once
 #include <stack>
 #include <vector>
@@ -53,32 +55,36 @@ public:
 
 
 	static vector<Node> makePath(array<array<Node,25>,50> map, Node dest) {
+		try {
+			int x = dest.x;
+			int y = dest.y;
+			stack<Node> path;
+			vector<Node> usablePath;
 
-		int x = dest.x;
-		int y = dest.y;
-		stack<Node> path;
-		vector<Node> usablePath;
-		int i;
-		cout << x << " " << y << endl;
-		while (!(map[x][y].parentX == x && map[x][y].parentY == y)&&map[x][y].x!=-1&&map[x][y].y!=-1) {
-			i++;
+			
+			while (!(map[x][y].parentX == x && map[x][y].parentY == y) && map[x][y].x != -1 && map[x][y].y != -1) {
+
+				path.push(map[x][y]);
+				int tempX = map[x][y].parentX;
+				int tempY = map[x][y].parentY;
+				x = tempX;
+				y = tempY;
+				
+			}
+
 			path.push(map[x][y]);
-			int tempX = map[x][y].parentX;
-			int tempY = map[x][y].parentY;
-			x = tempX;
-			y = tempY;
-			cout << x << " " << y << endl;
-		}
 
-		path.push(map[x][y]);
-
-		while (!path.empty()) {
-			Node top = path.top();
-			path.pop();
-			//cout << top.x << " " << top.y << endl;
-			usablePath.emplace_back(top);
+			while (!path.empty()) {
+				Node top = path.top();
+				path.pop();
+				//cout << top.x << " " << top.y << endl;
+				usablePath.emplace_back(top);
+			}
+			return usablePath;
 		}
-		return usablePath;
+		catch(const exception& e){
+			cout << e.what() << endl;
+		}
 	}
 
 
@@ -173,320 +179,6 @@ public:
 			closedList[x][y] = true;
 
 
-			/*
-			double gNew, hNew, fNew;
-
-			//----------- (West) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x - 1, y) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x - 1, y, dest) == true)
-				{
-					allMap[x - 1][y].parentX = x;
-					allMap[x - 1][y].parentY = y;
-					cout << allMap[x - 1][y].parentX << "--" << allMap[x - 1][y].parentY << endl;
-					destinationFound = true;
-					return makePath(allMap, dest);
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x - 1][y] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x - 1, y, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x - 1][y].fCost == FLT_MAX ||
-						allMap[x - 1][y].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x - 1][y].fCost = fNew;
-						allMap[x - 1][y].gCost = gNew;
-						allMap[x - 1][y].hCost = hNew;
-						allMap[x - 1][y].parentX = x;
-						allMap[x - 1][y].parentY = y;
-						openList.insert(allMap[x - 1][y]);
-						cout << "W ";
-					}
-				}
-			}
-
-			//----------- (East) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x + 1, y) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x + 1, y, dest) == true)
-				{
-					allMap[x + 1][y].parentX = x;
-					allMap[x + 1][y].parentY = y;
-					cout << allMap[x + 1][y].parentX << "--" << allMap[x + 1][y].parentY << endl;
-					destinationFound = true;
-					return makePath(allMap, dest);
-
-					
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x + 1][y] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x + 1, y, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x + 1][y].fCost == FLT_MAX ||
-						allMap[x + 1][y].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x + 1][y].fCost = fNew;
-						allMap[x + 1][y].gCost = gNew;
-						allMap[x + 1][y].hCost = hNew;
-						allMap[x + 1][y].parentX = x;
-						allMap[x + 1][y].parentY = y;
-						openList.insert(allMap[x + 1][y]);
-						cout << "E ";
-					}
-				}
-			}
-
-			//----------- (South) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x, y + 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x, y + 1, dest) == true)
-				{
-					allMap[x][y + 1].parentX = x;
-					allMap[x][y + 1].parentY = y;
-					cout << allMap[x][y+1].parentX << "--" << allMap[x][y+1].parentY << endl;
-					destinationFound = true;
-					return makePath(allMap, dest);
-
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x][y + 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x, y + 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x][y + 1].fCost == FLT_MAX ||
-						allMap[x][y + 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x][y + 1].fCost = fNew;
-						allMap[x][y + 1].gCost = gNew;
-						allMap[x][y + 1].hCost = hNew;
-						allMap[x][y + 1].parentX = x;
-						allMap[x][y + 1].parentY = y;
-						openList.insert(allMap[x][y + 1]);
-						cout << "S ";
-					}
-				}
-			}
-
-			//----------- (North) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x, y - 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x, y - 1, dest) == true)
-				{
-
-					allMap[x][y - 1].parentX = x;
-					allMap[x][y - 1].parentY = y;
-					cout << allMap[x][y - 1].parentX << "--" << allMap[x][y - 1].parentY << endl;
-					destinationFound = true;
-					return makePath(allMap, dest);
-
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x][y - 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x, y - 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x][y - 1].fCost == FLT_MAX ||
-						allMap[x][y - 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x][y - 1].fCost = fNew;
-						allMap[x][y - 1].gCost = gNew;
-						allMap[x][y - 1].hCost = hNew;
-						allMap[x][y - 1].parentX = x;
-						allMap[x][y - 1].parentY = y;
-						openList.insert(allMap[x][y - 1]);
-						cout << "N ";
-					}
-				}
-			}
-			//----------- (North-West) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x - 1, y - 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x - 1, y - 1, dest) == true)
-				{
-					allMap[x - 1][y - 1].parentX = x;
-					allMap[x - 1][y - 1].parentY = y;
-
-					return makePath(allMap, dest);
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x - 1][y - 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x - 1, y - 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x - 1][y - 1].fCost == FLT_MAX ||
-						allMap[x - 1][y - 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x - 1][y - 1].fCost = fNew;
-						allMap[x - 1][y - 1].gCost = gNew;
-						allMap[x - 1][y - 1].hCost = hNew;
-						allMap[x - 1][y - 1].parentX = x;
-						allMap[x - 1][y - 1].parentY = y;
-						openList.insert(allMap[x - 1][y - 1]);
-						cout << "NW ";
-					}
-				}
-			}
-
-			//----------- (South-West) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x - 1, y + 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x - 1, y + 1, dest) == true)
-				{
-					allMap[x - 1][y + 1].parentX = x;
-					allMap[x - 1][y + 1].parentY = y;
-
-					return makePath(allMap, dest);
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x - 1][y + 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x - 1, y + 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x - 1][y + 1].fCost == FLT_MAX ||
-						allMap[x - 1][y + 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x - 1][y + 1].fCost = fNew;
-						allMap[x - 1][y + 1].gCost = gNew;
-						allMap[x - 1][y + 1].hCost = hNew;
-						allMap[x - 1][y + 1].parentX = x;
-						allMap[x - 1][y + 1].parentY = y;
-						openList.insert(allMap[x - 1][y + 1]);
-						cout << "SW ";
-					}
-				}
-			}
-
-			//----------- (North-East) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x + 1, y - 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x + 1, y - 1, dest) == true)
-				{
-					allMap[x + 1][y - 1].parentX = x;
-					allMap[x + 1][y - 1].parentY = y;
-
-					destinationFound = true;
-					return makePath(allMap, dest);
-
-
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x + 1][y - 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x + 1, y - 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x + 1][y - 1].fCost == FLT_MAX ||
-						allMap[x + 1][y - 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x + 1][y - 1].fCost = fNew;
-						allMap[x + 1][y - 1].gCost = gNew;
-						allMap[x + 1][y - 1].hCost = hNew;
-						allMap[x + 1][y - 1].parentX = x;
-						allMap[x + 1][y - 1].parentY = y;
-						openList.insert(allMap[x + 1][y - 1]);
-						cout << "NE ";
-					}
-				}
-			}
-
-			//----------- (South-East) ------------
-
-			// Check if it is not an obstacle
-			if (isValid(x + 1, y + 1) == true)
-			{
-				//If this node is our destination
-				if (isDestination(x + 1, y + 1, dest) == true)
-				{
-					allMap[x + 1][y + 1].parentX = x;
-					allMap[x + 1][y + 1].parentY = y;
-
-					destinationFound = true;
-					return makePath(allMap, dest);
-
-
-				}
-
-				// If it is not on the closedList, so it is not in our path already
-				else if (closedList[x + 1][y + 1] == false)
-				{
-					gNew = allMap[x][y].gCost + 1.0;
-					hNew = calculateH(x + 1, y + 1, dest);
-					fNew = gNew + hNew;
-
-					// Check if this path is better than the one already present
-					if (allMap[x + 1][y + 1].fCost == FLT_MAX ||
-						allMap[x + 1][y + 1].fCost > fNew)
-					{
-						// Update the details of this cell
-						allMap[x + 1][y + 1].fCost = fNew;
-						allMap[x + 1][y + 1].gCost = gNew;
-						allMap[x + 1][y + 1].hCost = hNew;
-						allMap[x + 1][y + 1].parentX = x;
-						allMap[x + 1][y + 1].parentY = y;
-						openList.insert(allMap[x + 1][y]);
-						cout << "SE ";
-					}
-				}
-			} 
-			*/
-
 			for (int newX = -1; newX <= 1; newX++) {
 				for (int newY = -1; newY <= 1; newY++) {
 
@@ -536,3 +228,4 @@ public:
 
 	}
 };
+#endif

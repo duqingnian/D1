@@ -1,3 +1,5 @@
+#ifndef ENEMY_H
+#define ENEMY_H
 #pragma once
 #include "Pokemon.h"
 #include "OurPokemons.h"
@@ -37,3 +39,4 @@ public:
 	inline void osetName(string name) { this->name = name; }
 };
 
+#endif

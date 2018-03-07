@@ -1,3 +1,5 @@
+#ifndef POKEMON_H
+#define POKEMON_H
 #pragma once
 #include "Ability.h"
 
@@ -63,3 +65,5 @@ public:
 	inline void changeName(string name) { this->name = name; }
 
 };
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 #include "Player.h"
 #include "Fight.h"
@@ -36,3 +38,4 @@ public:
 
 };
 extern Game game;
+#endif

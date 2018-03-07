@@ -75,6 +75,8 @@ namespace pokemonGUI {
 
 
 
+
+
 	private: System::Windows::Forms::Timer^  timerMouseDrag;
 
 
@@ -179,12 +181,15 @@ namespace pokemonGUI {
 			// pbMap
 			// 
 			this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
-			this->pbMap->Location = System::Drawing::Point(159, 479);
+			this->pbMap->Location = System::Drawing::Point(0, 0);
 			this->pbMap->Name = L"pbMap";
-			this->pbMap->Size = System::Drawing::Size(1012, 513);
+			this->pbMap->Size = System::Drawing::Size(1328, 607);
 			this->pbMap->TabIndex = 1;
 			this->pbMap->TabStop = false;
 			this->pbMap->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::aStar_MouseDoubleClick);
+			this->pbMap->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDown);
+			this->pbMap->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseMove);
+			this->pbMap->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseUp);
 			// 
 			// btnMapMaker
 			// 
@@ -367,9 +372,12 @@ namespace pokemonGUI {
 																							  //Draws grid
 		pictureCharacter->Location = Point(characterX, characterY);
 		world.blocks.clear();
-		graphics = panel1->CreateGraphics();
-		graphics->Clear(Color::White);
+		graphics = Graphics::FromImage(pbMap->Image);
+		//graphics = panel1->CreateGraphics();
+		//graphics->Clear(Color::White);
+		//this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
 		drawGrid();
+		pbMap->Refresh();
 		mapMaking = true;
 		btnLoadMap->Visible = true;
 		btnSaveMap->Visible = true;
@@ -418,6 +426,7 @@ namespace pokemonGUI {
 			else {
 				graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
 			}
+			pbMap->Refresh();
 			world.blocks.insert(b);
 		}
 	}
@@ -469,6 +478,7 @@ namespace pokemonGUI {
 			}
 			SolidBrush^ brush = gcnew SolidBrush(color);
 			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
+			pbMap->Refresh();
 		}
 	}
 	private: void drawGrid() { //Draw grid
@@ -539,6 +549,14 @@ namespace pokemonGUI {
 		if (e->KeyCode == Keys::Down) {
 			Y += 20;
 		}
+		if (e->KeyCode == Keys::Space) {
+			if (pbMap->Visible) {
+				pbMap->Visible = false;
+			}
+			else {
+				pbMap->Visible = true;
+			}
+		}
 		int block = X / X_STEP + Y / Y_STEP * (X_MAX / X_STEP);
 		if (world.obstacles.count(block) == 0) { //If new position is not an obstacle
 			characterX = X;
@@ -549,28 +567,31 @@ namespace pokemonGUI {
 	}
 
 	private: System::Void aStar_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		Node player;
-		player.x = characterX / 20;
-		player.y = characterY / 20;
+		try {
+			Node player;
+			player.x = characterX / 20;
+			player.y = characterY / 20;
 
-		Node destination;
-		destination.x = e->X / 20;
-		destination.y = e->Y / 20;
+			Node destination;
+			destination.x = e->X / 20;
+			destination.y = e->Y / 20;
 
-		timerEnd = 0;
-		timerIterator = 0;
-		listOfMoves.Clear();
+			timerEnd = 0;
+			timerIterator = 0;
+			listOfMoves.Clear();
 
-		for (Node node : Cordinate::aStar(player, destination)) {
-			listOfMoves.Add(node.x);
-			listOfMoves.Add(node.y);
-			timerEnd++;
+			for (Node node : Cordinate::aStar(player, destination)) {
+				listOfMoves.Add(node.x);
+				listOfMoves.Add(node.y);
+				timerEnd++;
 
-			characterX = node.x*20;
-			characterY = node.y*20;
-			pictureCharacter->Location = (Point(characterX, characterY));
+			}
+			timerMoveCharacter->Start();
 		}
-		//timerMoveCharacter->Start();
+		catch (const exception& e) {
+			cout << "aStarAdventureMap - Error " << e.what();
+		}
+		
 	}
 
 	/*private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
@@ -794,16 +815,21 @@ private: System::Void panel1_Paint(System::Object^  sender, System::Windows::For
 private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::EventArgs^  e) {
-	if (timerIterator/2 == timerEnd) {
-		timerMoveCharacter->Stop();
+	try {
+		if (timerIterator / 2 == timerEnd) {
+			timerMoveCharacter->Stop();
+		}
+		else {
+			int x = listOfMoves[timerIterator];
+			int y = listOfMoves[timerIterator + 1];
+			characterX = x * 20;
+			characterY = y * 20;
+			pictureCharacter->Location = (Point(characterX, characterY));
+			timerIterator += 2;
+		}
 	}
-	else {
-		int x = listOfMoves[timerIterator];
-		int y = listOfMoves[timerIterator+1];
-		characterX = x*20;
-		characterY = y*20;
-		pictureCharacter->Location = (Point(characterX, characterY));
-		timerIterator+=2;
+	catch (const exception& e) {
+		cout << "TimerMoveCharacter - Error " << e.what() << endl;
 	}
 }
 };
