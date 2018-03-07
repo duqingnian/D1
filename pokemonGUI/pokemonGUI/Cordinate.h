@@ -3,6 +3,7 @@
 #pragma once
 #include <stack>
 #include <vector>
+#include <array>
 
 
 
@@ -32,7 +33,7 @@ public:
 	static bool isValid(int x, int y) { //If our Node is an obstacle it is not valid
 		int id = x + y * (1000 / 20);
 		if (world.obstacles.count(id) == 0) {
-			if (x < 0 || y < 0) {
+			if (x < 0 || y < 0 || x >= 50 || y >= 25) {
 				return false;
 			}
 			return true;
@@ -56,6 +57,7 @@ public:
 
 	static vector<Node> makePath(array<array<Node,25>,50> map, Node dest) {
 		try {
+			cout << "Found a path" << endl;
 			int x = dest.x;
 			int y = dest.y;
 			stack<Node> path;
@@ -88,25 +90,6 @@ public:
 	}
 
 
-	struct PointComparatorCord
-	{
-		bool operator()(const Node& a, const Node& b)
-		{
-
-			if (a.x == b.x && a.y == b.y) {
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-
-		}
-
-	};
-
-
-
 	static vector<Node> aStar(Node player, Node dest) {
 		vector<Node> empty;
 		if (isValid(dest.x, dest.y) == false) {
@@ -119,7 +102,7 @@ public:
 			return empty;
 			//You clicked on yourself
 		}
-
+		cout << "1" << endl;
 		bool closedList[50][25];
 
 		//Initialize whole map
@@ -181,7 +164,6 @@ public:
 
 			for (int newX = -1; newX <= 1; newX++) {
 				for (int newY = -1; newY <= 1; newY++) {
-
 					double gNew, hNew, fNew;
 					if (isValid(x + newX, y + newY)) {
 						if (isDestination(x + newX, y + newY, dest))
