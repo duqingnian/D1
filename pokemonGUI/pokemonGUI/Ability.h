@@ -1,3 +1,5 @@
+#ifndef ABILITY_H
+#define ABILITY_H
 #pragma once
 #include <string>
 #include <map>
@@ -27,3 +29,4 @@ public:
 	inline void setStamina(const int stamina) { this->stamina = stamina; }
 };
 
+#endif

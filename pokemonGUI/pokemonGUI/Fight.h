@@ -1,3 +1,5 @@
+#ifndef FIGHT_H
+#define FIGHT_H
 #pragma once
 #include <stdlib.h>
 #include "OurPokemons.h"
@@ -45,3 +47,4 @@ public:
 
 };
 
+#endif

@@ -1,3 +1,5 @@
+#ifndef WORLD_H
+#define WORLD_H
 #pragma once
 #include "Enemy.h"
 #include <set>
@@ -47,3 +49,4 @@ private:
 
 extern World world;
 
+#endif
