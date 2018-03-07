@@ -3,6 +3,9 @@ drop table PokemonTable;
 drop table Ability;
 drop table AbilityIdent;
 drop table Power;
+--drop table User;
+--drop table UserIdent;
+--drop table Shop;
 
 CREATE TABLE `Type` (
 	`TypeID`	INTEGER NOT NULL,
@@ -154,6 +157,7 @@ insert into Power values (3, 11, 92, 92, 55, 87, 63, 91, 6);
 insert into Power values (3, 12, 93, 93, 60, 89, 73, 91, 6);
 insert into Power values (3, 13, 93, 93, 65, 90, 77, 92, 7);
 insert into Power values (3, 14, 94, 94, 70, 90, 80, 92, 7);
+
 insert into Power values (3, 15, 94, 94, 75, 91, 83, 92, 7);
 insert into Power values (3, 16, 95, 95, 80, 92, 86, 92, 8);
 insert into Power values (3, 17, 95, 95, 85, 93, 88, 92, 8);
@@ -208,3 +212,60 @@ insert into Power values (5, 19, 96, 96, 95, 98, 95, 99, 10);
 insert into Power values (5, 20, 97, 97, 100, 99, 96, 90, 10);
 
 select * from Power;
+
+
+-------------------- USER ----------------------
+
+-- CREATE THE TABLE
+
+--create table User (
+--   UserID int not null,
+--   Username int not null,
+--   TotalXP int not null,
+--   Total Coins int not null
+--);
+
+--alter table User add datatype ();
+--insert into User values ();
+--insert into User values ();
+--insert into User values ();
+--insert into User values ();
+
+--select * from User;
+
+-------------------- USERIdent ----------------------
+
+-- CREATE THE TABLE
+
+--create table UserIdent (
+--   UserID int not null,
+--   PokemonID int not null,
+--   LevelID int not null
+--);
+
+--alter table UserIdent add datatype ();
+--insert into UserIdent values ();
+--insert into UserIdent values ();
+--insert into UserIdent values ();
+--insert into UserIdent values ();
+
+--select * from User;
+
+-------------------- SHOP----------------------
+
+-- CREATE THE TABLE
+
+--create table Shop(
+--   UserID int not null;
+--   Item varchar(25),
+--   Amount int not null,
+--   Cost int not null,
+--   Owned int not null
+--);
+
+--insert into Shop values ();
+--insert into Shop values ();
+--insert into Shop values ();
+--insert into Shop values ();
+
+--select * from Shop;
