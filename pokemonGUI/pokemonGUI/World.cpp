@@ -21,7 +21,6 @@ World::World(string name, int id, int spawnPoint, vector<Enemy*> enemies, vector
 	this->spawnPoint = spawnPoint;
 	this->enemies = enemies;
 	this->exits = exits;
-
 }
 
 World::~World()
@@ -38,6 +37,7 @@ void World::saveWorld(string fileName) {
 }
 void World::loadWorld(string fileName) {
 	world.blocks.clear();
+	world.obstacles.clear();
 	string line;
 	ifstream worldFile("Maps/"+fileName+".txt");
 	if (worldFile.is_open())
