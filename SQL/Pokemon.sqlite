@@ -1,25 +1,15 @@
--- DROP THE TABLE BEFORE CREATING IT
-
 drop table Type;
 drop table PokemonTable;
-drop table AbilityIdent;
 drop table Ability;
+drop table AbilityIdent;
 drop table Power;
---drop table User;
---drop table UserIdent;
---drop table Shop;
 
--------------------- TYPE ----------------------
-
--- CREATE THE TABLE
-
-create table Type (
-   TypeID int not null,
-   Type varchar(25),
-   Weakness varchar(25)
+CREATE TABLE `Type` (
+	`TypeID`	INTEGER NOT NULL,
+	`Type`	VARCHAR ( 25 ),
+	`Weakness`	VARCHAR ( 25 )
 );
 
-Describe Type;   
 insert into Type values (1, 'EARTH', 'WATER');
 insert into Type values (2, 'GRASS', 'FIRE');
 insert into Type values (3, 'FIRE', 'WATER');
@@ -28,20 +18,15 @@ insert into Type values (5, 'WIND', 'WATER');
 
 select * from Type;
 
-------------------- POKEMONTABLE ----------------------
+-------------------------------------------------------------------
 
+CREATE TABLE `PokemonTable` (
+	`PokemonID`	int NOT NULL,
+	`TypeID`	int NOT NULL,
+	`Name`	varchar ( 25 ),
 
-
--- CREATE THE TABLE
-
-create table PokemonTable (
-   PokemonID int not null,
-   TypeID int not null,
-   Name varchar(25),
-   PowerID int not null
+   `PowerID`	int NOT NULL
 );
-
-Describe PokemonTable;
 
 insert into PokemonTable values (1, 1, 'CATTER', 1);
 insert into PokemonTable values (2, 2, 'LEMONGRASS', 2);
@@ -52,41 +37,14 @@ insert into PokemonTable values (5, 5, 'ZIZI',5);
 
 select * from PokemonTable;
 
+-------------------------------------------------------------------
 
-------------------- ABILITYIDENT ----------------------
-
-
--- CREATE THE TABLE
-
-create table AbilityIdent (
-   PokemonID int not null,
-   AbilityID int not null
+CREATE TABLE `Ability` (
+	`AbilityID`	int NOT NULL,
+	`Ability_Name`	varchar ( 25 ),
+	`Damage`	int,
+	`Mana`	int
 );
-
-Describe AbilityIdent;
-
-insert into AbilityIdent values (1, 1);
-insert into AbilityIdent values (2, 2);
-insert into AbilityIdent values (3, 3);
-insert into AbilityIdent values (4, 4);
-insert into AbilityIdent values (5, 5);
-
-select * from AbilityIdent;
-
-
-------------------- ABILITY ----------------------
-
-
--- CREATE THE TABLE
-
-create table Ability (
-   AbilityID int not null,
-   Ability_Name varchar(25),
-   Damage int,
-   Mana int
-);
-
-Describe Ability;
 
 insert into Ability values (1, 'SCRATCH', 10, 0);
 insert into Ability values (2, 'MEOW', 20, 20);
@@ -103,23 +61,34 @@ insert into Ability values (12, 'LIGHTNINGBLAST', 60, 50);
 
 select * from Ability;
 
-------------------- POWER ----------------------
+-------------------------------------------------------------------
 
--- CREATE THE TABLE
+CREATE TABLE `AbilityIdent` (
+	`PokemonID`	int NOT NULL,
+	`AbilityID`	int NOT NULL
+);
+insert into AbilityIdent values (1, 1);
+insert into AbilityIdent values (2, 2);
+insert into AbilityIdent values (3, 3);
+insert into AbilityIdent values (4, 4);
+insert into AbilityIdent values (5, 5);
 
-create table Power (
-   PowerID int not null,
-   Lvl int not null,
-   HP int not null,
-   MaxHP int not null,           
-   XP int not null,
-   Agility int not null,
-   Strength int not null,
-   MaxMana int not null,
-   Coins int not null
+select * from AbilityIdent;
+
+-------------------------------------------------------------------
+
+CREATE TABLE `Power` (
+	`PowerID`	int NOT NULL,
+	`Lvl`	int NOT NULL,
+	`HP`	int NOT NULL,
+	`MaxHP`	int NOT NULL,
+	`XP`	int NOT NULL,
+	`Agility`	int NOT NULL,
+	`Strength`	int NOT NULL,
+	`MaxMana`	int NOT NULL,
+	`Coins`	int NOT NULL
 );
 
-Describe Power;
 
 ---CATTER---
 
@@ -236,66 +205,6 @@ insert into Power values (5, 16, 93, 93, 80, 95, 77, 97, 9);
 insert into Power values (5, 17, 94, 94, 85, 96, 79, 98, 9);
 insert into Power values (5, 18, 95, 95, 90, 97, 83, 98, 9);
 insert into Power values (5, 19, 96, 96, 95, 98, 95, 99, 10);
-insert into Power values (5, 20, 97, 97, 100, 99, 96, 90, 10)
-
+insert into Power values (5, 20, 97, 97, 100, 99, 96, 90, 10);
 
 select * from Power;
-
--------------------- USER ----------------------
-
--- CREATE THE TABLE
-
---create table User (
---   UserID int not null,
---   Username int not null,
---   TotalXP int not null,
---   Total Coins int not null
---);
-
---Describe Username;
---alter table User add datatype ();
---insert into User values ();
---insert into User values ();
---insert into User values ();
---insert into User values ();
-
---select * from User;
-
--------------------- USERIdent ----------------------
-
--- CREATE THE TABLE
-
---create table UserIdent (
---   UserID int not null,
---   PokemonID int not null,
---   LevelID int not null
---);
-
---Describe Username;
---alter table UserIdent add datatype ();
---insert into UserIdent values ();
---insert into UserIdent values ();
---insert into UserIdent values ();
---insert into UserIdent values ();
-
---select * from User;
-
--------------------- SHOP----------------------
-
--- CREATE THE TABLE
-
---create table Shop(
---   UserID int not null;
---   Item varchar(25),
---   Amount int not null,
---   Cost int not null,
---   Owned int not null
---);
-
---Describe Shop;
---insert into Shop values ();
---insert into Shop values ();
---insert into Shop values ();
---insert into Shop values ();
-
---select * from Shop;
