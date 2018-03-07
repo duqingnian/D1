@@ -17,6 +17,8 @@ namespace pokemonGUI {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+
+
 	/// <summary>
 	/// Summary for frmAdventrureMap
 	/// </summary>
@@ -163,9 +165,9 @@ namespace pokemonGUI {
 			// pbMap
 			// 
 			this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
-			this->pbMap->Location = System::Drawing::Point(203, 148);
+			this->pbMap->Location = System::Drawing::Point(3, 3);
 			this->pbMap->Name = L"pbMap";
-			this->pbMap->Size = System::Drawing::Size(1012, 513);
+			this->pbMap->Size = System::Drawing::Size(1328, 607);
 			this->pbMap->TabIndex = 1;
 			this->pbMap->TabStop = false;
 			this->pbMap->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmAdventrureMap::panel1_MouseDoubleClick);
@@ -563,7 +565,7 @@ namespace pokemonGUI {
 		{
 			lowestCord = findingFCostNeigh(distanceOverall, lowestCord.x, lowestCord.y, targetX, targetY);
 			openCord.push_back(lowestCord);
-			//world.openCord.push_back(lowestCord);
+			
 			i++;
 		}
 
@@ -572,6 +574,7 @@ namespace pokemonGUI {
 		{
 			cout <<" X Cordinate" << openCord[i].x << endl;
 			cout <<" Y Cordinate" << openCord[i].y << endl;
+			cout << "-------------------" << endl;
 		}
 	}
 			 //Finding the lowest FCost Node
@@ -620,32 +623,19 @@ namespace pokemonGUI {
 				 westNeighCord.gCost = 10;
 				 westNeighCord.fCost =  westNeighCord.hCost + westNeighCord.gCost;
 
-				 /*int id = (currY - 1) * 50 + currX - 1 - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 westNeighCord.fCost = 99999;
-				 }*/
-
 				 Node eastNeighCord;
 				 eastNeighCord.x = currX + 1;
 				 eastNeighCord.y = currY;
 				 eastNeighCord.hCost = findingHcost(distanceOverall, eastNeighCord.x, eastNeighCord.y, targetX, targetY);
 				 eastNeighCord.gCost = 10;
 				 eastNeighCord.fCost = eastNeighCord.hCost + eastNeighCord.gCost;
-				 /*id = (currY - 1) * 50 + currX + 1 - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 eastNeighCord.fCost = 99999;
-				 }
-*/
+
 				 Node southNeighCord;
 				 southNeighCord.x = currX;
 				 southNeighCord.y = currY +1;
 				 southNeighCord.hCost = findingHcost(distanceOverall, southNeighCord.x, southNeighCord.y, targetX, targetY);
 				 southNeighCord.gCost = 10;
 				 southNeighCord.fCost = southNeighCord.hCost + southNeighCord.gCost;
-				 /*id = (currY + 1 - 1) * 50 + currX - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 southNeighCord.fCost += 500;
-				 }*/
 
 				 Node northNeighCord;
 				 northNeighCord.x = currX;
@@ -653,10 +643,6 @@ namespace pokemonGUI {
 				 northNeighCord.hCost = findingHcost( distanceOverall, northNeighCord.x, northNeighCord.y, targetX, targetY);
 				 northNeighCord.gCost = 10;
 				 northNeighCord.fCost = northNeighCord.hCost + northNeighCord.gCost;
-				/* id = (currY - 1 - 1) * 50 + currX - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 northNeighCord.fCost += 500;
-				 }*/
 
 				 Node neNeighCord;
 				 neNeighCord.x = currX + 1;
@@ -665,9 +651,6 @@ namespace pokemonGUI {
 				 neNeighCord.hCost = findingHcost( distanceOverall, neNeighCord.x, neNeighCord.y, targetX, targetY);
 				 neNeighCord.gCost = 14;
 				 neNeighCord.fCost = neNeighCord.hCost + neNeighCord.gCost;
-				 /*if (world.obstacles.count(id) == 1) {
-					 neNeighCord.fCost += 500;
-				 }*/
 
 				 Node nwNeighCord;
 				 nwNeighCord.x = currX - 1;
@@ -676,9 +659,6 @@ namespace pokemonGUI {
 				 nwNeighCord.hCost = findingHcost( distanceOverall, nwNeighCord.x, nwNeighCord.y, targetX, targetY);
 				 nwNeighCord.gCost = 14;
 				 nwNeighCord.fCost = nwNeighCord.hCost + nwNeighCord.gCost;
-				 /*if (world.obstacles.count(id) == 1) {
-					 nwNeighCord.fCost += 500;
-				 }*/
 
 				 Node seNeighCord;
 				 seNeighCord.x = currX +1;
