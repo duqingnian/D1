@@ -27,68 +27,68 @@ namespace pokemonGUI {
 
 	bool isOpenDB = false;
 
-	
+
 
 
 	/*static int callback(void *data, int argc, char **argv, char **azColName) {
-		int i;
-		fprintf(stderr, "%s: ", (const char*)data);
+	int i;
+	fprintf(stderr, "%s: ", (const char*)data);
 
-		for (i = 0; i<argc; i++) {
-			printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-		}
+	for (i = 0; i<argc; i++) {
+	printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
 
-		printf("\n");
-		return 0;
+	printf("\n");
+	return 0;
 	}
 
 	void displayTable(string tableName)
 	{
 
 
-		char *zErrMsg = 0;
-		int rc;
-		const char *sql;
-		const char* data = "Callback function called";
+	char *zErrMsg = 0;
+	int rc;
+	const char *sql;
+	const char* data = "Callback function called";
 
-		sql = "SELECT * from ", tableName;
-		rc = sqlite3_exec(dbFile, sql, callback, (void*)data, &zErrMsg);
+	sql = "SELECT * from ", tableName;
+	rc = sqlite3_exec(dbFile, sql, callback, (void*)data, &zErrMsg);
 
-		if (rc != SQLITE_OK) {
-			fprintf(stderr, "SQL error: %s\n", zErrMsg);
-			sqlite3_free(zErrMsg);
-		}
-		else {
-			fprintf(stdout, "operation done succesfully \n");
-		}
-		sqlite3_close(dbFile);
+	if (rc != SQLITE_OK) {
+	fprintf(stderr, "SQL error: %s\n", zErrMsg);
+	sqlite3_free(zErrMsg);
+	}
+	else {
+	fprintf(stdout, "operation done succesfully \n");
+	}
+	sqlite3_close(dbFile);
 	}
 
 	bool ConnectDB()
 	{
-		if (sqlite3_open(DB, &dbFile) == SQLITE_OK)
-		{
-			isOpenDB = true;
-			return true;
-		}
+	if (sqlite3_open(DB, &dbFile) == SQLITE_OK)
+	{
+	isOpenDB = true;
+	return true;
+	}
 
-		return false;
+	return false;
 	}
 
 	void DisonnectDB()
 	{
-		if (isOpenDB == true)
-		{
-			sqlite3_close(dbFile);
-		}
+	if (isOpenDB == true)
+	{
+	sqlite3_close(dbFile);
+	}
 	}
 
 	void CheckConn()
 	{
 
-		if (isOpenDB)
-			cout << "Connected Successful" << endl;
-		else cout << "connection failed " << endl;
+	if (isOpenDB)
+	cout << "Connected Successful" << endl;
+	else cout << "connection failed " << endl;
 	}*/
 
 	/// <summary>
@@ -130,6 +130,7 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::ComboBox^  cbPokemonSelect;
 	private: System::Windows::Forms::Label^  labelStats;
+	private: System::Windows::Forms::Label^  label1;
 
 
 
@@ -153,6 +154,7 @@ namespace pokemonGUI {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->cbPokemonSelect = (gcnew System::Windows::Forms::ComboBox());
 			this->labelStats = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -189,10 +191,13 @@ namespace pokemonGUI {
 			// pictureBox1
 			// 
 			this->pictureBox1->Location = System::Drawing::Point(12, 12);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(146, 198);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &pokeInfo::pictureBox1_Click);
 			// 
 			// button3
 			// 
@@ -225,11 +230,21 @@ namespace pokemonGUI {
 			this->labelStats->TabIndex = 7;
 			this->labelStats->Click += gcnew System::EventHandler(this, &pokeInfo::label1_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(6, 10);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(113, 13);
+			this->label1->TabIndex = 8;
+			this->label1->Text = L"Click below to preview";
+			// 
 			// pokeInfo
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(802, 532);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->labelStats);
 			this->Controls->Add(this->cbPokemonSelect);
 			this->Controls->Add(this->button3);
@@ -255,7 +270,7 @@ namespace pokemonGUI {
 		}
 		else
 		{
-			
+
 			//Start Game button clicked
 			if (game.getPlayer().getPokemon().getName() == "") {
 				if (cbPokemonSelect->Text == "Catter") {
@@ -269,82 +284,90 @@ namespace pokemonGUI {
 			pokemonGUI::protoGUI gui;
 			gui.ShowDialog(); //Launch fight GUI
 		}
-		
+
 	}
-private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { //Pokemon selection made
-	if (cbPokemonSelect->Text == "Catter") {
-		labelStats->Text = Catter.labelStats();
-		game.getPlayer().setPokemon(Catter);
-	} else 	if (cbPokemonSelect->Text == "Zizi") {
-		labelStats->Text = Zizi.labelStats();
-		game.getPlayer().setPokemon(Zizi);
-	} else 	if (cbPokemonSelect->Text == "Pyro") {
-		labelStats->Text = Pyro.labelStats();
-		game.getPlayer().setPokemon(Pyro);
-	} else 	if (cbPokemonSelect->Text == "Lemongrass") {
-		labelStats->Text = Lemongrass.labelStats();
-		game.getPlayer().setPokemon(Lemongrass);
-	} else 	if (cbPokemonSelect->Text == "Thundershock") {
-		labelStats->Text = Thundershock.labelStats();
-		game.getPlayer().setPokemon(Thundershock);
-	} else if (cbPokemonSelect->Text == "Wail") {
-		labelStats->Text = Wail.labelStats();
-		game.getPlayer().setPokemon(Wail);
-	} else if (cbPokemonSelect->Text == "Blaze") {
-		labelStats->Text = Blaze.labelStats();
-		game.getPlayer().setPokemon(Blaze);
+	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
-	else if (cbPokemonSelect->Text == "Flyff") {
-		labelStats->Text = Flyff.labelStats();
-		game.getPlayer().setPokemon(Flyff);
+	private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { //Pokemon selection made
+		if (cbPokemonSelect->Text == "Catter") {
+			labelStats->Text = Catter.labelStats();
+			game.getPlayer().setPokemon(Catter);
+		}
+		else 	if (cbPokemonSelect->Text == "Zizi") {
+			labelStats->Text = Zizi.labelStats();
+			game.getPlayer().setPokemon(Zizi);
+		}
+		else 	if (cbPokemonSelect->Text == "Pyro") {
+			labelStats->Text = Pyro.labelStats();
+			game.getPlayer().setPokemon(Pyro);
+		}
+		else 	if (cbPokemonSelect->Text == "Lemongrass") {
+			labelStats->Text = Lemongrass.labelStats();
+			game.getPlayer().setPokemon(Lemongrass);
+		}
+		else 	if (cbPokemonSelect->Text == "Thundershock") {
+			labelStats->Text = Thundershock.labelStats();
+			game.getPlayer().setPokemon(Thundershock);
+		}
+		else if (cbPokemonSelect->Text == "Wail") {
+			labelStats->Text = Wail.labelStats();
+			game.getPlayer().setPokemon(Wail);
+		}
+		else if (cbPokemonSelect->Text == "Blaze") {
+			labelStats->Text = Blaze.labelStats();
+			game.getPlayer().setPokemon(Blaze);
+		}
+		else if (cbPokemonSelect->Text == "Flyff") {
+			labelStats->Text = Flyff.labelStats();
+			game.getPlayer().setPokemon(Flyff);
+		}
+		else if (cbPokemonSelect->Text == "Jolt") {
+			labelStats->Text = Jolt.labelStats();
+			game.getPlayer().setPokemon(Jolt);
+		}
+		else if (cbPokemonSelect->Text == "Treehouse") {
+			labelStats->Text = Treehouse.labelStats();
+			game.getPlayer().setPokemon(Treehouse);
+		}
+		else if (cbPokemonSelect->Text == "Deeria") {
+			labelStats->Text = Deeria.labelStats();
+			game.getPlayer().setPokemon(Deeria);
+		}
+		else if (cbPokemonSelect->Text == "Hydros") {
+			labelStats->Text = Hydros.labelStats();
+			game.getPlayer().setPokemon(Hydros);
+		}
+		else if (cbPokemonSelect->Text == "Flop") {
+			labelStats->Text = Flop.labelStats();
+			game.getPlayer().setPokemon(Flop);
+		}
 	}
-	else if (cbPokemonSelect->Text == "Jolt") {
-		labelStats->Text = Jolt.labelStats();
-		game.getPlayer().setPokemon(Jolt);
-	}
-	else if (cbPokemonSelect->Text == "Treehouse") {
-		labelStats->Text = Treehouse.labelStats();
-		game.getPlayer().setPokemon(Treehouse);
-	}
-	else if (cbPokemonSelect->Text == "Deeria") {
-		labelStats->Text = Deeria.labelStats();
-		game.getPlayer().setPokemon(Deeria);
-	}
-	else if (cbPokemonSelect->Text == "Hydros") {
-		labelStats->Text = Hydros.labelStats();
-		game.getPlayer().setPokemon(Hydros);
-	}
-	else if (cbPokemonSelect->Text == "Flop") {
-		labelStats->Text = Flop.labelStats();
-		game.getPlayer().setPokemon(Flop);
-	}
-}
-		 //----------------------------------------------------------------------------------------------------------------------------
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	updateLabel();
+			 //----------------------------------------------------------------------------------------------------------------------------
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		updateLabel();
 
 
-	
-	pokemonGUI::frmAddUser frmAddUser;
-	frmAddUser.ShowDialog(); //Launch fight GUI
-}
-private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
-	if (e->KeyCode == Keys::Escape) {
-		pokemonGUI::frmMainMenu mainMenu;
-		mainMenu.ShowDialog(); //Launch Main Menu
-	}
-}
-private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-	
-	isOpenDB = connectDB();
-	CheckConn();
-	
-	displayTable();
-}
 
-};
+		pokemonGUI::frmAddUser frmAddUser;
+		frmAddUser.ShowDialog(); //Launch fight GUI
+	}
+	private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
+	private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+		if (e->KeyCode == Keys::Escape) {
+			pokemonGUI::frmMainMenu mainMenu;
+			mainMenu.ShowDialog(); //Launch Main Menu
+		}
+	}
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		isOpenDB = connectDB();
+		CheckConn();
+
+		displayTable();
+	}
+	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+		pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
+	}
+	};
 }
