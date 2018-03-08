@@ -8,6 +8,10 @@
 #include <algorithm>
 
 
+
+
+
+
 namespace pokemonGUI {
 
 	using namespace std;
