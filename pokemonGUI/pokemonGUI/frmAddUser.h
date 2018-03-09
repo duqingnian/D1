@@ -1,4 +1,16 @@
 #pragma once
+//#include "Database.h"
+//#include "Database\sqlite3.h"
+#include <msclr/marshal.h>
+#include <iostream>
+//#include"pokeInfo.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#define DB "Pokemon.sqlite"
+#include "Database\sqlite3.h"
 
 namespace pokemonGUI {
 
@@ -8,6 +20,44 @@ namespace pokemonGUI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace msclr::interop;
+
+	using namespace std;
+	static int callback(void *data, int argc, char **argv, char **azColName) {
+		int i;
+		fprintf(stderr, "%s: ", (const char*)data);
+
+		for (i = 0; i<argc; i++) {
+			printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+		}
+
+		printf("\n");
+		return 0;
+	}
+	//void sqlExecute(const char *sql)
+	//{
+	//	bool isOpenDB = false;
+	//	sqlite3 *dbFile;
+	//	char *zErrMsg = 0;
+	//	int rc;
+
+	//	//sql = "SELECT * from ability";
+	//	const char* data = "Callback function called";
+
+	//	if (sqlite3_open(DB, &dbFile) == SQLITE_OK)
+	//	{
+
+	//		rc = sqlite3_exec(dbFile, sql, callback, (void*)data, &zErrMsg);
+
+	//	}
+	//	else
+	//	{
+	//		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+	//		sqlite3_free(zErrMsg);
+	//	}
+	//	sqlite3_close(dbFile);
+
+	//}
 
 	/// <summary>
 	/// Summary for frmAddUser
@@ -272,23 +322,108 @@ namespace pokemonGUI {
 		}
 #pragma endregion
 	private: System::Void frmAddUser_Load(System::Object^  sender, System::EventArgs^  e) {
+
 	}
 private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	String ^ fName;
+	String ^ lName;
+	String ^ userName;
+	String ^ EmailAdd;
+	String ^ Password;
 
-	if (txtPassword->Text != txtPasswordConf->Text)
-	{
 
-		lblPassNotCorrect->Visible = true;
 
-	}
+	msclr::interop::marshal_context ctx;
+		const char * charFName = ctx.marshal_as<const char*>(fName = txtFirstName->Text);
+		const char * charLName = ctx.marshal_as<const char*>(lName = txtLastName->Text);
+		const char * charEmailAdd = ctx.marshal_as<const char*>(EmailAdd = txtEmailAddress->Text);
+		const char * charUserName = ctx.marshal_as<const char*>(userName = txtUserName->Text);
+		const char * charPassword = ctx.marshal_as<const char*>(Password = txtPassword->Text);
 
+		sqlite3 *dbFile;
+
+		string str;
+		char *zErrMsg = 0;
+		sqlite3_stmt *stmt;
+		const char *pzTest;
+		char *szSQL;
+		char *fn = "power";
+
+		sqlite3_open(DB, &dbFile);
+		//runParamSQL(dbFile, strFName, strlen, strEmailAdd, strPass);
+		runParamSQL(dbFile,charFName,charLName, charEmailAdd, charPassword);
 		
 	
-
-
-
-
 			
 }
+		 bool passwordPass()
+		 {
+			 if (txtPassword->Text != txtPasswordConf->Text)
+			 {
+				 lblPassNotCorrect->Visible = true;
+				 return false;
+			 }
+			 return true;
+		 }
+		 bool connectDB(sqlite3 *dbFile, bool isOpenDB)
+		 {
+			 if (sqlite3_open(DB, &dbFile) == SQLITE_OK)
+			 {
+				 isOpenDB = true;
+				 return true;
+			 }
+
+			 return false;
+		 }
+
+		 void DisonnectDB(sqlite3 *dbFile, bool isOpenDB)
+		 {
+			 if (isOpenDB == true)
+			 {
+				 sqlite3_close(dbFile);
+			 }
+		 }
+
+		 void CheckConn(sqlite3 *dbFile, bool isOpenDB)
+		 {
+			 isOpenDB = false;
+			 isOpenDB = connectDB(dbFile, isOpenDB);
+			 if (isOpenDB)
+				 cout << "Connected Successful" << endl;
+			 else cout << "connection failed " << endl;
+		 }
+		 // A function to run parameterize query
+		 void runParamSQL(sqlite3 *db, const char *fn, const char *ln, const char *emailAdd, const char * pass)
+		 {
+			 
+
+			 char *zErrMsg = 0;
+			 sqlite3_stmt *stmt;
+			 const char *pzTest;
+			 char *szSQL;
+
+			 // Insert data item into myTable
+			 szSQL = "insert into Player (FirstName, LastName, EmailAddress, Password) values (?,?,?,?)";
+			
+			 int rc = sqlite3_prepare(db, szSQL, strlen(szSQL), &stmt, &pzTest);
+
+			 if (rc == SQLITE_OK) {
+				
+				 // bind the value 
+				 sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
+				 sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
+				 sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
+				 sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
+		
+
+				 // commit 
+				 sqlite3_step(stmt);
+				 sqlite3_finalize(stmt);
+
+				 sqlite3_close(db);
+
+			 }
+		 }
 };
 }

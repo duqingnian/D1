@@ -5,14 +5,7 @@
 #include "Game.h"
 #include "frmAddUser.h"
 #include "frmMainMenu.h"
-#include "Database.h"
-#include "Database\sqlite3.h"
-//#include <iostream>
-//#include <fstream>
-//#include <vector>
-//#include <string>
-//#include <sstream>
-//#define DB "Pokemon.sqlite"
+//#include "Database.h"
 //#include "Database\sqlite3.h"
 
 namespace pokemonGUI {
@@ -25,72 +18,12 @@ namespace pokemonGUI {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	bool isOpenDB = false;
+	//bool isOpenDB = false;
 
 	
 
 
-	/*static int callback(void *data, int argc, char **argv, char **azColName) {
-		int i;
-		fprintf(stderr, "%s: ", (const char*)data);
-
-		for (i = 0; i<argc; i++) {
-			printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-		}
-
-		printf("\n");
-		return 0;
-	}
-
-	void displayTable(string tableName)
-	{
-
-
-		char *zErrMsg = 0;
-		int rc;
-		const char *sql;
-		const char* data = "Callback function called";
-
-		sql = "SELECT * from ", tableName;
-		rc = sqlite3_exec(dbFile, sql, callback, (void*)data, &zErrMsg);
-
-		if (rc != SQLITE_OK) {
-			fprintf(stderr, "SQL error: %s\n", zErrMsg);
-			sqlite3_free(zErrMsg);
-		}
-		else {
-			fprintf(stdout, "operation done succesfully \n");
-		}
-		sqlite3_close(dbFile);
-	}
-
-	bool ConnectDB()
-	{
-		if (sqlite3_open(DB, &dbFile) == SQLITE_OK)
-		{
-			isOpenDB = true;
-			return true;
-		}
-
-		return false;
-	}
-
-	void DisonnectDB()
-	{
-		if (isOpenDB == true)
-		{
-			sqlite3_close(dbFile);
-		}
-	}
-
-	void CheckConn()
-	{
-
-		if (isOpenDB)
-			cout << "Connected Successful" << endl;
-		else cout << "connection failed " << endl;
-	}*/
-
+	
 	/// <summary>
 	/// Summary for pokeInfo
 	/// </summary>
@@ -339,11 +272,14 @@ private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows:
 	}
 }
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	/*const char *sql;
+	sql = "SELECT * from ability";
 	
 	isOpenDB = connectDB();
 	CheckConn();
 	
-	displayTable();
+
+	sqlExecute(sql);*/
 }
 
 };
