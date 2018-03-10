@@ -36,7 +36,9 @@
     <ClInclude Include="frmMainMenu.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Cordinate.h" />
-    <ClInclude Include="OurEnemies.h" />
+	<ClInclude Include="Database\sqlite3.h" />
+    <ClInclude Include="Database.h" />
+	<ClInclude Include="OurEnemies.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmAddUser.resx" />
@@ -45,5 +47,11 @@
     <EmbeddedResource Include="pokeInfo.resx" />
     <EmbeddedResource Include="protoGUI.resx" />
     <EmbeddedResource Include="frmMainMenu.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Database\sqlite3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Database\sqlite3.lib" />
   </ItemGroup>
 </Project>
