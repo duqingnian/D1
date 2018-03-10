@@ -236,6 +236,7 @@ namespace pokemonGUI {
 			this->btnLoadGame->TabIndex = 5;
 			this->btnLoadGame->Text = L"Load Game";
 			this->btnLoadGame->UseVisualStyleBackColor = true;
+			this->btnLoadGame->Click += gcnew System::EventHandler(this, &pokeInfo::btnLoadGame_Click);
 			// 
 			// labelMoney
 			// 
@@ -368,6 +369,8 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 }
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	game.getPlayer().savePlayer();
+
 	pokemonGUI::frmAddUser frmAddUser;
 	frmAddUser.ShowDialog(); //Launch fight GUI
 }
@@ -408,6 +411,11 @@ private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::Ev
 private: System::Void btnLevelUp_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getPlayer().getPokemon().levelUp();
 	updateLabel();
+}
+private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	Player::loadPlayer(574027118);
+	pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
 }
 };
 }

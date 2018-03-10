@@ -2,6 +2,11 @@
 #define PLAYER_H
 #pragma once
 #include "OurPokemons.h"
+#include "sqlite3.h"
+#define DB "Pokemon.sqlite"
+#include <time.h>
+
+
 class Player
 {
 private:
@@ -21,6 +26,8 @@ public:
 	Player(string name, Pokemon pokemon, int money, int healthPotions, int staminaPotions, int score, int x, int y);
 
 	//Functions
+	int savePlayer();
+	static void loadPlayer(int PlayerID);
 
 	//Getters
 	inline const string& getName() const { return this->name; }
