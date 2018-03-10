@@ -415,6 +415,15 @@ private: System::Void btnLevelUp_Click(System::Object^  sender, System::EventArg
 private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventArgs^  e) {
 	
 	Player::loadPlayer(574027118);
+
+	for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection
+		if (cbPokemonSelect->Items[i]->ToString() == game.systemString(game.getPlayer().getPokemon().getName())) {
+			cbPokemonSelect->SelectedIndex = i;
+			cbPokemonSelect->Enabled = false;
+			break;
+		}
+	}
+	updateLabel();
 	pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
 }
 };
