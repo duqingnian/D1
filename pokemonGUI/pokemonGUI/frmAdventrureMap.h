@@ -6,6 +6,9 @@
 #include "Cordinate.h"
 #include <set>
 #include <algorithm>
+#include "Game.h"
+#include "protoGUI.h"
+
 
 
 namespace pokemonGUI {
@@ -32,11 +35,16 @@ namespace pokemonGUI {
 		int Y_MAX = 500;
 		int Y_STEP = 20;
 		Color color = Color::Black;
-		int characterX = 100;
-		int characterY = 100;
+		int characterX = game.getPlayer().getX();
+		int characterY = game.getPlayer().getY();
 		List<double> listOfMoves;
 		int timerIterator;
 		int timerEnd;
+	private: System::Windows::Forms::Button^  btnStopMapMaking;
+			 Dictionary<String^, PictureBox^>^ enemiesPictureBox = gcnew Dictionary<String^, PictureBox^>();
+		void loadEnemies(World* w);
+		void loadMap(World* w);
+		void drawGrid();
 
 
 	private: System::Windows::Forms::Button^  btnSaveMap;
@@ -50,10 +58,6 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Panel^  panelWater;
 
 
-
-
-
-
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Panel^  panelMoney;
@@ -62,20 +66,6 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Timer^  timerMoveCharacter;
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::PictureBox^  pbMap;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	private: System::Windows::Forms::Timer^  timerMouseDrag;
 
@@ -145,6 +135,7 @@ namespace pokemonGUI {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->timerMoveCharacter = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->btnStopMapMaking = (gcnew System::Windows::Forms::Button());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbMap))->BeginInit();
@@ -170,6 +161,7 @@ namespace pokemonGUI {
 			// pictureCharacter
 			// 
 			this->pictureCharacter->BackColor = System::Drawing::Color::Transparent;
+			this->pictureCharacter->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->pictureCharacter->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureCharacter.Image")));
 			this->pictureCharacter->Location = System::Drawing::Point(85, 95);
 			this->pictureCharacter->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
@@ -180,6 +172,7 @@ namespace pokemonGUI {
 			// 
 			// pbMap
 			// 
+			this->pbMap->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
 			this->pbMap->Location = System::Drawing::Point(0, 0);
 			this->pbMap->Name = L"pbMap";
@@ -335,11 +328,23 @@ namespace pokemonGUI {
 			this->timerMoveCharacter->Interval = 200;
 			this->timerMoveCharacter->Tick += gcnew System::EventHandler(this, &frmAdventrureMap::timerMoveCharacter_Tick);
 			// 
+			// btnStopMapMaking
+			// 
+			this->btnStopMapMaking->Location = System::Drawing::Point(1376, 568);
+			this->btnStopMapMaking->Name = L"btnStopMapMaking";
+			this->btnStopMapMaking->Size = System::Drawing::Size(135, 48);
+			this->btnStopMapMaking->TabIndex = 7;
+			this->btnStopMapMaking->Text = L"Stop map making";
+			this->btnStopMapMaking->UseVisualStyleBackColor = true;
+			this->btnStopMapMaking->Visible = false;
+			this->btnStopMapMaking->Click += gcnew System::EventHandler(this, &frmAdventrureMap::btnStopMapMaking_Click);
+			// 
 			// frmAdventrureMap
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1908, 652);
+			this->Controls->Add(this->btnStopMapMaking);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -370,6 +375,7 @@ namespace pokemonGUI {
 #pragma endregion
 	private: System::Void btnMapMaker_Click(System::Object^  sender, System::EventArgs^  e) { //Button Start Map Maker
 																							  //Draws grid
+		
 		pictureCharacter->Location = Point(characterX, characterY);
 		world.blocks.clear();
 		graphics = Graphics::FromImage(pbMap->Image);
@@ -377,12 +383,12 @@ namespace pokemonGUI {
 		//graphics->Clear(Color::White);
 		//this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
 		drawGrid();
-		pbMap->Refresh();
 		mapMaking = true;
 		btnLoadMap->Visible = true;
 		btnSaveMap->Visible = true;
 		btnLoadMap->Enabled = false;
 		btnSaveMap->Enabled = false;
+		btnStopMapMaking->Visible = true;
 		textBoxWorldName->Visible = true;
 		label1->Visible = true;
 		label2->Visible = true;
@@ -407,6 +413,23 @@ namespace pokemonGUI {
 				timerEraser->Start();
 			}
 
+			for (Enemy *en : world.enemies) {
+				if (en->isDragging()) {
+					for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
+						if (game.systemString(en->getName())==pair->Key) {
+							en->setDragging(false);
+							int tempX = e->X / 20;
+							int tempY = e->Y / 20;
+							pair->Value->BorderStyle = BorderStyle::None;
+							pair->Value->Location = Point(tempX * 20 + 7, tempY * 20 + 7);
+							en->setX(tempX * 20);
+							en->setY(tempY * 20);
+							break;
+						}
+					}
+					break;
+				}
+			}
 		}
 	}
 
@@ -432,12 +455,16 @@ namespace pokemonGUI {
 	}
 	private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		//Update mouse coordinates
-		mouse = e;
+		if (mapMaking) {
+			mouse = e;
+		}
 	}
 	private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		//Release mouse and stop drawing and capturing blocks
-		timerMouseDrag->Stop();
-		timerEraser->Stop();
+		if (mapMaking) {
+			timerMouseDrag->Stop();
+			timerEraser->Stop();
+		}
 	}
 	private: System::Void btnSaveMap_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Save world
@@ -457,44 +484,10 @@ namespace pokemonGUI {
 		}
 	}
 	private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
-		//Load world from a file
-		msclr::interop::marshal_context context;
-		std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
-		world.loadWorld(worldName); //Loads set with the new world
-
-									//Display the new world
-		graphics->Clear(Color::White);
-		drawGrid();
-		for (Block b : world.blocks) {
-			int x = b.id % (X_MAX / X_STEP) * X_STEP;
-			int y = b.id / (X_MAX / X_STEP) * Y_STEP;
-			world.obstacles.insert(b.id); // Insert blocks id into obstacles to prevent player movement over them
-
-			if (b.color == "blue") {
-				color = Color::Blue;
-			}
-			else {
-				color = Color::Black;
-			}
-			SolidBrush^ brush = gcnew SolidBrush(color);
-			graphics->FillRectangle(brush, x, y, X_STEP, Y_STEP);
-			pbMap->Refresh();
-		}
+		loadEnemies(&world);
+		loadMap(&world);
 	}
-	private: void drawGrid() { //Draw grid
-		graphics = panel1->CreateGraphics();
-		Pen^ pen = gcnew Pen(Color::LightGray);
-		for (int i = 0; i <= X_MAX; i += X_STEP) {
-			Point p1(i, 0);
-			Point p2(i, 500);
-			graphics->DrawLine(pen, p1, p2);
-		}
-		for (int i = 0; i <= Y_MAX; i += Y_STEP) {
-			Point p1(0, i);
-			Point p2(1000, i);
-			graphics->DrawLine(pen, p1, p2);
-		}
-	}
+
 	private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
 		//Timer for erasing what has been drawn with holding right click
 		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
@@ -531,10 +524,11 @@ namespace pokemonGUI {
 
 	private: System::Void frmAdventrureMap_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		//Character move keys pressed
-		//if (e->KeyCode == Keys::Escape) {
-		//	pokemonGUI::frmMainMenu mainMenu;
-		//	mainMenu.ShowDialog(); //Launch Main Menu
-		//}
+		if (e->KeyCode == Keys::Escape) {
+			//pokemonGUI::frmMainMenu mainMenu;
+			//mainMenu.ShowDialog(); //Launch Main Menu
+			loadEnemies(&World()); //Move this afterwards
+		}
 		int X = characterX;
 		int Y = characterY;
 		if (e->KeyCode == Keys::Right) {
@@ -549,7 +543,7 @@ namespace pokemonGUI {
 		if (e->KeyCode == Keys::Down) {
 			Y += 20;
 		}
-		if (e->KeyCode == Keys::Space) {
+		if (e->KeyCode == Keys::ShiftKey) {
 			if (pbMap->Visible) {
 				pbMap->Visible = false;
 			}
@@ -562,10 +556,12 @@ namespace pokemonGUI {
 			characterX = X;
 			characterY = Y;
 			pictureCharacter->Location = Point(characterX, characterY); //Move character
+			game.getPlayer().setX(characterX);
+			game.getPlayer().setY(characterY);
 		}
 
 	}
-
+// Use A* alghorithm to figure out the best path from yourself to the double click position
 	private: System::Void aStar_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		try {
 			Node player;
@@ -594,225 +590,15 @@ namespace pokemonGUI {
 		
 	}
 
-	/*private: System::Void panel1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 
-		//character Cordinates
-		Node charCord;
-		charCord.x = characterX / 20 + 1;
-		charCord.y = characterY / 20 + 1;
-
-		int distanceX = 0;
-		int distanceY = 0;
-		int distanceOverall = 0;
-		int tempDistanceX, tempDistanceY;
-
-		int targetX = e->X/20+1;
-		int targetY = e->Y/20+1;
-
-		//destination Node
-		Node targetCord;
-		targetCord.x = targetX;
-		targetCord.y = targetY;
-
-		//lowest fCost cord that will be added to the  list
-		Node lowestCord;
-		lowestCord = charCord;
-		vector<Node> openCord;
-
-		int i = 0;
-		
-		//at the moment it will loop 5 times to find the lowest node
-		while ( lowestCord.x!=targetCord.x || lowestCord.y!=targetCord.y )
-		{
-			lowestCord = findingFCostNeigh(distanceOverall, lowestCord.x, lowestCord.y, targetX, targetY);
-			openCord.push_back(lowestCord);
-			//world.openCord.push_back(lowestCord);
-			i++;
-		}
-
-		//Display all the X and Y cordinate of the lowest Fcost Node
-		for (int i = 0; i< openCord.size(); i++)
-		{
-			cout <<" X Cordinate" << openCord[i].x << endl;
-			cout <<" Y Cordinate" << openCord[i].y << endl;
-		}
-	}
-			 //Finding the lowest FCost Node
-			 int findingHcost( int distanceOverall, int charX, int charY, int targetX, int targetY) {
-				 int distanceX, distanceY;
-				 if (charX > targetX) {    //math adjustments not to get negative X values
-					 distanceX = charX - targetX;
-				 }
-				 else if (charX < targetX) {
-					 distanceX = targetX - charX;
-				 }
-				 else {
-					 distanceX = 0;
-				 }
-				 if (charY > targetY) {    //math adjustments not to get negative y values
-					 distanceY = charY - targetY;
-				 }
-				 else if (charY < targetY) {
-					 distanceY = targetY - charY;
-				 }
-				 else {
-					 distanceY = 0;
-				 }
-				 while (distanceX > 0 && distanceY > 0) {
-					 distanceOverall = distanceOverall + 14;
-					 distanceX--;
-					 distanceY--;
-				 }
-				 while (distanceX > 0 && distanceY <= 0) { 
-					 distanceOverall = distanceOverall + 10;
-					 distanceX--;
-				 }
-				 while (distanceX <= 0 && distanceY > 0) {
-					 distanceOverall = distanceOverall + 10;
-					 distanceY--;
-				 }
-				 return distanceOverall;
-			 }
-			 Node findingFCostNeigh( int distanceOverall, int currX, int currY, int targetX, int targetY)
-			 {
-				 //finding the fcost of the current node of each neighbour around it
-				 Node westNeighCord;
-				 westNeighCord.x = currX -1;
-				 westNeighCord.y = currY;
-				 westNeighCord.hCost = findingHcost( distanceOverall, westNeighCord.x, westNeighCord.y, targetX, targetY);
-				 westNeighCord.gCost = 10;
-				 westNeighCord.fCost =  westNeighCord.hCost + westNeighCord.gCost;
-
-				 int id = (currY - 1) * 50 + currX - 1 - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 westNeighCord.fCost = 99999;
-				 }
-
-				 Node eastNeighCord;
-				 eastNeighCord.x = currX + 1;
-				 eastNeighCord.y = currY;
-				 eastNeighCord.hCost = findingHcost(distanceOverall, eastNeighCord.x, eastNeighCord.y, targetX, targetY);
-				 eastNeighCord.gCost = 10;
-				 eastNeighCord.fCost = eastNeighCord.hCost + eastNeighCord.gCost;
-				 id = (currY - 1) * 50 + currX + 1 - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 eastNeighCord.fCost = 99999;
-				 }
-
-				 Node southNeighCord;
-				 southNeighCord.x = currX;
-				 southNeighCord.y = currY +1;
-				 southNeighCord.hCost = findingHcost(distanceOverall, southNeighCord.x, southNeighCord.y, targetX, targetY);
-				 southNeighCord.gCost = 10;
-				 southNeighCord.fCost = southNeighCord.hCost + southNeighCord.gCost;
-				 id = (currY + 1 - 1) * 50 + currX - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 southNeighCord.fCost += 500;
-				 }
-
-				 Node northNeighCord;
-				 northNeighCord.x = currX;
-				 northNeighCord.y = currY - 1;
-				 northNeighCord.hCost = findingHcost( distanceOverall, northNeighCord.x, northNeighCord.y, targetX, targetY);
-				 northNeighCord.gCost = 10;
-				 northNeighCord.fCost = northNeighCord.hCost + northNeighCord.gCost;
-				 id = (currY - 1 - 1) * 50 + currX - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 northNeighCord.fCost += 500;
-				 }
-
-				 Node neNeighCord;
-				 neNeighCord.x = currX + 1;
-				 neNeighCord.y = currY - 1;
-				 id = (currY - 1 - 1) * 50 + currX + 1 - 1;
-				 neNeighCord.hCost = findingHcost( distanceOverall, neNeighCord.x, neNeighCord.y, targetX, targetY);
-				 neNeighCord.gCost = 14;
-				 neNeighCord.fCost = neNeighCord.hCost + neNeighCord.gCost;
-				 if (world.obstacles.count(id) == 1) {
-					 neNeighCord.fCost += 500;
-				 }
-
-				 Node nwNeighCord;
-				 nwNeighCord.x = currX - 1;
-				 nwNeighCord.y = currY - 1;
-				 id = (currY - 1 - 1) * 50 + currX - 1 - 1;
-				 nwNeighCord.hCost = findingHcost( distanceOverall, nwNeighCord.x, nwNeighCord.y, targetX, targetY);
-				 nwNeighCord.gCost = 14;
-				 nwNeighCord.fCost = nwNeighCord.hCost + nwNeighCord.gCost;
-				 if (world.obstacles.count(id) == 1) {
-					 nwNeighCord.fCost += 500;
-				 }
-
-				 Node seNeighCord;
-				 seNeighCord.x = currX +1;
-				 seNeighCord.y = currY+ 1;
-				 seNeighCord.hCost = findingHcost(distanceOverall, seNeighCord.x, seNeighCord.y, targetX, targetY);
-				 seNeighCord.gCost = 14;
-				 seNeighCord.fCost = seNeighCord.hCost + seNeighCord.gCost;
-				 id = (currY - 1 + 1) * 50 + currX + 1 - 1;
-					if (world.obstacles.count(id) == 1) {
-						seNeighCord.fCost += 500;
-					}
-
-				 Node swNeighCord;
-				 swNeighCord.x = currX - 1;
-				 swNeighCord.y = currY + 1;
-				 swNeighCord.hCost = findingHcost(distanceOverall, swNeighCord.x, swNeighCord.y, targetX, targetY);
-				 swNeighCord.gCost = 14;
-				 swNeighCord.fCost = swNeighCord.hCost + swNeighCord.gCost;
-				 id = (currY + 1 - 1) * 50 + currX - 1 - 1;
-				 if (world.obstacles.count(id) == 1) {
-					 swNeighCord.fCost += 500;
-				 }
-
-				 //add all the nodes to a list
-				 
-				 int fCostList[8]= { northNeighCord.fCost, southNeighCord.fCost, westNeighCord.fCost, eastNeighCord.fCost,nwNeighCord.fCost,
-				neNeighCord.fCost,seNeighCord.fCost, swNeighCord.fCost }; 
-
-				 //sort the list to find the lowest
-				 sort(fCostList, fCostList + 8);
-
-
-				 //return the lowest Cord
-				 if (northNeighCord.fCost == fCostList[0])
-				 {
-					 return northNeighCord;
-				 }
-				 if (southNeighCord.fCost == fCostList[0])
-				 {
-					 return southNeighCord;
-				 }
-				 if (eastNeighCord.fCost == fCostList[0])
-				 {
-					 return eastNeighCord;
-				 }
-				 if (westNeighCord.fCost == fCostList[0])
-				 {
-					 return westNeighCord;
-				 }
-				 if (neNeighCord.fCost == fCostList[0])
-				 {
-					 return neNeighCord;
-				 }
-				 if (nwNeighCord.fCost == fCostList[0])
-				 {
-					 return nwNeighCord;
-				 }
-				 if (seNeighCord.fCost == fCostList[0])
-				 {
-					 return seNeighCord;
-				 }
-				 if (swNeighCord.fCost == fCostList[0])
-				 {
-					 return swNeighCord;
-				 }	 
-			 }
-			 
-			*/
 private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 }
+
+		 //Map load
 private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
+	pictureCharacter->Location = Point(game.getPlayer().getX(), game.getPlayer().getY());
+	loadMap(game.getWorld());
+	loadEnemies(game.getWorld());
 }
 private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::EventArgs^  e) {
 	try {
@@ -826,11 +612,92 @@ private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::E
 			characterY = y * 20;
 			pictureCharacter->Location = (Point(characterX, characterY));
 			timerIterator += 2;
+			game.getPlayer().setX(characterX);
+			game.getPlayer().setY(characterY);
 		}
 	}
 	catch (const exception& e) {
 		cout << "TimerMoveCharacter - Error " << e.what() << endl;
 	}
+}
+	//Double click enemy character to open up fight window
+	private: System::Void pbEnemy_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		if (!mapMaking) {
+			if (game.getPlayer().getPokemon().getHP() != 0) {
+				for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
+					PictureBox^ thisBox = safe_cast<PictureBox^>(sender);
+					if (thisBox->Location == pair->Value->Location) {
+						if (!sender->Equals(pair->Value)) {
+							thisBox->Visible = false;
+						}
+						for (Enemy* en : world.enemies) {
+							if (game.systemString(en->getName()) == pair->Key) {
+								for (Pokemon* pk : pokemonArray) {
+									if (en->getPokemonName() == pk->getName()) {
+										en->setPokemon(*pk); //Assign pokemon to enemy
+										break;
+									}
+								}
+								const Fight fight(&game.getPlayer(), en);
+								game.setNewFight(fight);
+								pokemonGUI::protoGUI fightGui;
+								fightGui.ShowDialog(); //Launch fight gui
+								if (en->isAlive() == false) {
+
+								 //Remove enemy from the screen
+									pair->Value->Visible = false;
+									int block = en->getX() / X_STEP + en->getY() / Y_STEP * (X_MAX / X_STEP);
+									world.obstacles.erase(block);
+								}
+								break;
+							}
+						}
+
+						break;
+					}
+				}
+			}
+		}
+	}
+		 //Clicked on enemy character to start moving it
+private: System::Void pbEnemy_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	if (mapMaking) {
+		for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
+			PictureBox^ thisBox = safe_cast<PictureBox^>(sender);
+			thisBox->Visible = false;
+			if (thisBox->Location == pair->Value->Location) {
+				for (Enemy *en : world.enemies) {
+					if (game.systemString(en->getName()) == pair->Key) {
+						if (en->isDragging()) {
+							en->setDragging(false);
+							pair->Value->BorderStyle = BorderStyle::None;
+						} //Toggles selected border and let's you move the enemy
+						en->setDragging(true);
+						pair->Value->BorderStyle = BorderStyle::Fixed3D;
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+}
+		 //Button stop map making. 
+private: System::Void btnStopMapMaking_Click(System::Object^  sender, System::EventArgs^  e) {
+	mapMaking = false;
+	btnLoadMap->Visible =false;
+	btnSaveMap->Visible = false;
+	btnStopMapMaking->Visible = false;
+	textBoxWorldName->Visible = false;
+	label1->Visible = false;
+	label2->Visible = false;
+	label3->Visible = false;
+	label4->Visible = false;
+	label5->Visible = false;
+	panelWall->Visible = false;
+	panelWater->Visible = false;
+	panelMoney->Visible = false;
+	btnMapMaker->Text = "Start map making";
 }
 };
 }

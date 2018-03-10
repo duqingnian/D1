@@ -102,7 +102,6 @@ public:
 			return empty;
 			//You clicked on yourself
 		}
-		cout << "1" << endl;
 		bool closedList[50][25];
 
 		//Initialize whole map
@@ -136,7 +135,7 @@ public:
 		openList.emplace_back(allMap[x][y]);
 		bool destinationFound = false;
 
-		while (!openList.empty()) {
+		while (!openList.empty()&&openList.size()<1250) {
 			Node node;
 			do {
 				if (openList.empty()) {

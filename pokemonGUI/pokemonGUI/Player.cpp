@@ -23,12 +23,16 @@ Player::Player(string name) {
 	this->healthPotions = 3;
 	this->staminaPotions = 3;
 	this->score = 0;
+	this->x = 100;
+	this->y = 100;
 }
-Player::Player(string name, Pokemon pokemon, int money, int healthPotions, int staminaPotions, int score) {
+Player::Player(string name, Pokemon pokemon, int money, int healthPotions, int staminaPotions, int score, int x, int y) {
 	this->name = name;
 	this->money = money;
 	this->pokemon = pokemon;
 	this->healthPotions = healthPotions;
 	this->staminaPotions = staminaPotions;
 	this->score = score;
+	this->x = x;
+	this->y = y;
 }
