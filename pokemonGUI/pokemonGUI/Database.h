@@ -50,11 +50,11 @@ void sqlExecute(const char *sql)
 
 
 
-void CheckConn()
-{
-	bool isOpenDB = false;
-	isOpenDB = connectDB();
-	if (isOpenDB)
-		cout << "Connected Successful" << endl;
-	else cout << "connection failed " << endl;
-}
+//void CheckConn()
+//{
+//	bool isOpenDB = false;
+//	isOpenDB = connectDB();
+//	if (isOpenDB)
+//		cout << "Connected Successful" << endl;
+//	else cout << "connection failed " << endl;
+//}

@@ -668,8 +668,10 @@ private: System::Void pbEnemy_MouseDown(System::Object^  sender, System::Windows
 	if (mapMaking) {
 		for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
 			PictureBox^ thisBox = safe_cast<PictureBox^>(sender);
-			thisBox->Visible = false;
 			if (thisBox->Location == pair->Value->Location) {
+				if (!sender->Equals(pair->Value)) {
+					thisBox->Visible = false;
+				}
 				for (Enemy *en : world.enemies) {
 					if (game.systemString(en->getName()) == pair->Key) {
 						if (en->isDragging()) {
