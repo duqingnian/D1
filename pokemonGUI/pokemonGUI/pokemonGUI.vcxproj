@@ -137,6 +137,7 @@
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="frmAddUser.cpp" />
     <ClCompile Include="frmAdventrureMap.cpp" />
+    <ClCompile Include="frmLogin.cpp" />
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -159,6 +160,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmAdventrureMap.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="frmLogin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmMainMenu.h">
@@ -187,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAdventrureMap.resx">
       <DependentUpon>frmAdventrureMap.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.h</DependentUpon>

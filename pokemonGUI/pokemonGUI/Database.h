@@ -22,6 +22,35 @@ static int callback(void *data, int argc, char **argv, char **azColName) {
 	printf("\n");
 	return 0;
 }
+void runParamSQL(sqlite3 *db, const char *fn, const char *ln, const char *emailAdd, const char * pass)
+{
+
+
+	char *zErrMsg = 0;
+	sqlite3_stmt *stmt;
+	const char *pzTest;
+	char *szSQL;
+
+	// Insert data item into myTable
+	szSQL = "insert into Player (FirstName, LastName, EmailAddress, Password) values (?,?,?,?)";
+
+	int rc = sqlite3_prepare(db, szSQL, strlen(szSQL), &stmt, &pzTest);
+
+	if (rc == SQLITE_OK) {
+
+		// bind the value 
+		sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
+		sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
+		sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
+		sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
+
+
+		// commit 
+		sqlite3_step(stmt);
+		sqlite3_finalize(stmt);
+
+	}
+}
 
 void sqlExecute(const char *sql)
 {
@@ -48,13 +77,3 @@ void sqlExecute(const char *sql)
 	
 }
 
-
-
-void CheckConn()
-{
-	bool isOpenDB = false;
-	isOpenDB = connectDB();
-	if (isOpenDB)
-		cout << "Connected Successful" << endl;
-	else cout << "connection failed " << endl;
-}
