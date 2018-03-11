@@ -16,7 +16,7 @@
     <ClCompile Include="World.cpp" />
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="frmLogin.cpp" />
+    <ClCompile Include="OurEnemies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ability.h" />
@@ -36,9 +36,9 @@
     <ClInclude Include="frmMainMenu.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Cordinate.h" />
-    <ClInclude Include="Database\sqlite3.h" />
+	<ClInclude Include="Database\sqlite3.h" />
     <ClInclude Include="Database.h" />
-    <ClInclude Include="frmLogin.h" />
+	<ClInclude Include="OurEnemies.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmAddUser.resx" />

@@ -141,6 +141,7 @@
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="OurEnemies.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pokeInfo.cpp" />
@@ -172,6 +173,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="OurEnemies.h" />
     <ClInclude Include="OurPokemons.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pokeInfo.h">
