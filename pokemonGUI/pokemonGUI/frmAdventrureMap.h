@@ -428,6 +428,8 @@ namespace pokemonGUI {
 							pair->Value->Location = Point(tempX * 20 + 7, tempY * 20 + 7);
 							en->setX(tempX * 20);
 							en->setY(tempY * 20);
+							cout << "X: " << tempX * 20;
+							cout << "Y: " << tempY * 20;
 							break;
 						}
 					}
