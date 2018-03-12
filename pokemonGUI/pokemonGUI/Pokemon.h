@@ -2,6 +2,8 @@
 #define POKEMON_H
 #pragma once
 #include "Ability.h"
+#define DB "Pokemon.sqlite"
+#include "sqlite3.h"
 
 class Pokemon {
 private:
@@ -39,6 +41,7 @@ public:
 	void addStamina(int staminaAmount);
 	void receiveDmg(const int dmg);
 	void printStats();
+	void savePokemon();
 	System::String^ labelStats();
 	
 	//Getters
