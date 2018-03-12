@@ -1,4 +1,5 @@
 #include "Pokemon.h"
+#include "OurPokemons.h"
 
 
 /* These are guidlines on how you create your pokemon
@@ -89,3 +90,6 @@ Pokemon Flop{ "Flop", 1, 0, 18, 70, 70, 70, 70,
 Ability("Flop", 10, 0),
 Ability("Flop", 10, 0),
 Ability("Flop", 10, 0) };
+
+
+array<Pokemon*, 13> pokemonArray = { &Catter, &Zizi, &Pyro, &Lemongrass, &Thundershock, &Wail, &Blaze, &Flyff, &Jolt, &Treehouse, &Deeria, &Hydros, &Flop };

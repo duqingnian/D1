@@ -137,9 +137,11 @@
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="frmAddUser.cpp" />
     <ClCompile Include="frmAdventrureMap.cpp" />
+    <ClCompile Include="frmLogin.cpp" />
     <ClCompile Include="frmMainMenu.cpp" />
     <ClCompile Include="frmShop.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="OurEnemies.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pokeInfo.cpp" />
@@ -151,12 +153,17 @@
   <ItemGroup>
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Cordinate.h" />
+    <ClInclude Include="Database.h" />
+    <ClInclude Include="Database\sqlite3.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="frmAddUser.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmAdventrureMap.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="frmLogin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="frmMainMenu.h">
@@ -166,6 +173,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="OurEnemies.h" />
     <ClInclude Include="OurPokemons.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pokeInfo.h">
@@ -186,6 +194,9 @@
     <EmbeddedResource Include="frmAdventrureMap.resx">
       <DependentUpon>frmAdventrureMap.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.h</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +209,12 @@
     <EmbeddedResource Include="protoGUI.resx">
       <DependentUpon>protoGUI.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Database\sqlite3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Database\sqlite3.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

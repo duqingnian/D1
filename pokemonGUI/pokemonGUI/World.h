@@ -1,3 +1,5 @@
+#ifndef WORLD_H
+#define WORLD_H
 #pragma once
 #include "Enemy.h"
 #include <set>
@@ -23,10 +25,11 @@ class World
 public:
 	World();
 	~World();
-	World(string name, int id, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits);
+	World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits);
 	vector<Enemy*> enemies;
 	vector<World*> exits;
 	int spawnPoint;
+	string pictureLocation;
 	string name;
 	int id;
 
@@ -47,3 +50,4 @@ private:
 
 extern World world;
 
+#endif

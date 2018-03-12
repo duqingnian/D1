@@ -5,6 +5,15 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pokemonGUI", "pokemonGUI\pokemonGUI.vcxproj", "{E0CCB32A-8C26-42F3-8A4D-EE7EF80046D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DEAEF6F7-983A-49FF-B6B4-14FF08C40207}"
+	ProjectSection(SolutionItems) = preProject
+		pokemonGUI\Database\Pokemon.sqlite = pokemonGUI\Database\Pokemon.sqlite
+		pokemonGUI\Pokemon.sqlite = pokemonGUI\Pokemon.sqlite
+		sqlite3.dll = sqlite3.dll
+		sqlite3.h = sqlite3.h
+		sqlite3.lib = sqlite3.lib
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

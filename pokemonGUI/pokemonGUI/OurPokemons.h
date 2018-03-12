@@ -1,3 +1,5 @@
+#ifndef OURPOKEMONS_H
+#define OURPOKEMONS_H
 #pragma once
 #include "Pokemon.h"
 #include <array>
@@ -16,5 +18,6 @@ extern Pokemon Deeria;
 extern Pokemon Hydros;
 extern Pokemon Flop;
 
-//extern array<Pokemon, 13> pokemonArray = { Catter, Zizi, Pyro, Lemongrass, Thundershock, Wail, Blaze, Flyff, Jolt, Treehouse, Deeria, Hydros, Flop };
+extern array<Pokemon*, 13> pokemonArray;
 
+#endif

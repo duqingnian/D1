@@ -23,15 +23,15 @@ void pokemonGUI::protoGUI::updateLabels() { //Update current status labels
 
 void pokemonGUI::protoGUI::initialize() { //Initializing button names
 	//Adding Ability1 name to button
-	string ability1 = game.getPlayer().getPokemon().getAbility1().getName();
+	string ability1 = game.getPlayer().getPokemon().getAbility1().getName() + " (" + to_string(game.getPlayer().getPokemon().getAbility1().getStamina()) + ")";
 	System::String^ s = gcnew System::String(ability1.c_str());
 	btnAbility1->Text = s;
 	//Adding Ability2 name to button
-	string ability2 = game.getPlayer().getPokemon().getAbility2().getName();
+	string ability2 = game.getPlayer().getPokemon().getAbility2().getName() + " (" + to_string(game.getPlayer().getPokemon().getAbility2().getStamina()) + ")";
 	s = gcnew System::String(ability2.c_str());
 	btnAbility2->Text = s;
 	//Adding Ability3 name to button
-	string ability3 = game.getPlayer().getPokemon().getAbility3().getName();
+	string ability3 = game.getPlayer().getPokemon().getAbility3().getName() + " (" + to_string(game.getPlayer().getPokemon().getAbility3().getStamina()) + ")";
 	s = gcnew System::String(ability3.c_str());
 	btnAbility3->Text = s;
 

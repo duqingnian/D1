@@ -1,3 +1,5 @@
+#ifndef GAME_H
+#define GAME_H
 #pragma once
 #include "Player.h"
 #include "Fight.h"
@@ -24,15 +26,16 @@ public:
 
 	//Getters
 	inline Player& getPlayer() { return this->player; }
-	inline Fight& getFight() { return this->onGoingFight; }
+	inline Fight getFight() { return this->onGoingFight; }
 	inline bool isEnemyTurn() { return this->enemyTurn; }
 	inline World* getWorld() { return this->world; }
 
 	//Setters
 	inline void setPlayer(Player& player) { this->player = player; }
-	inline void setNewFight(Fight& fight) { this->onGoingFight = fight; }
+	inline void setNewFight(Fight fight) { this->onGoingFight = fight; }
 	inline void setEnemyTurn(bool turn) { this->enemyTurn = turn; }
 	inline void setWorld(World* world) { this->world = world; }
 
 };
 extern Game game;
+#endif

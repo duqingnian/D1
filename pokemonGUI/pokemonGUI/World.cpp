@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "OurEnemies.h"
 using namespace std;
 
 World world;
@@ -13,15 +14,16 @@ World::World()
 	this->name = "";
 	this->id = 0;
 	this->spawnPoint = 51;
+	this->enemies = { &Enemy1, &Enemy2, &Enemy3 };
 
 }
-World::World(string name, int id, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits) {
+World::World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits) {
 	this->name = name;
 	this->id = id;
 	this->spawnPoint = spawnPoint;
+	this->pictureLocation = pictureLocation;
 	this->enemies = enemies;
 	this->exits = exits;
-
 }
 
 World::~World()
@@ -38,6 +40,7 @@ void World::saveWorld(string fileName) {
 }
 void World::loadWorld(string fileName) {
 	world.blocks.clear();
+	world.obstacles.clear();
 	string line;
 	ifstream worldFile("Maps/"+fileName+".txt");
 	if (worldFile.is_open())
@@ -53,7 +56,7 @@ void World::loadWorld(string fileName) {
 		worldFile.close();
 	}
 
-	else cout << "Unable to open file";
+	else cout << "Unable to open file" << endl;
 
 }
 
