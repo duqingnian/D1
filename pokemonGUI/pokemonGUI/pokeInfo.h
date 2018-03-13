@@ -413,7 +413,7 @@ private: System::Void btnLevelUp_Click(System::Object^  sender, System::EventArg
 	updateLabel();
 }
 private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventArgs^  e) {
-	
+	game.getPlayer().getPokemon().savePokemon();
 	Player::loadPlayer(574027118);
 
 	for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection

@@ -40,6 +40,7 @@ void pokemonGUI::frmAdventrureMap::loadMap(World * w)
 	msclr::interop::marshal_context context;
 	std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
 	world.loadWorld(worldName); //Loads set with the new world
+	pbMap->Load(game.systemString(world.pictureLocation));
 
 								//Display the new world
 	if (graphics == nullptr) {

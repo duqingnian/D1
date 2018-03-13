@@ -6,7 +6,6 @@
 #define DB "Pokemon.sqlite"
 #include <time.h>
 
-
 class Player
 {
 private:

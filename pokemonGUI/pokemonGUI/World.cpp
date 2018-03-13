@@ -15,6 +15,7 @@ World::World()
 	this->id = 0;
 	this->spawnPoint = 51;
 	this->enemies = { &Enemy1, &Enemy2, &Enemy3 };
+	this->pictureLocation = "./Maps/village.png";
 
 }
 World::World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits) {

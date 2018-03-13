@@ -117,3 +117,40 @@ System::String^ Pokemon::labelStats() {
 	ss << "Type: " << this->type << endl;
 	return gcnew System::String(ss.str().c_str());
 }
+void Pokemon::savePokemon() {
+	sqlite3 *dbp;
+	sqlite3_open(DB, &dbp);
+	
+
+	sqlite3_stmt * saving = nullptr;
+	string command = "SELECT MAX(PowerID) FROM Power";
+	sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+	sqlite3_step(saving);
+	int maxID = sqlite3_column_int(saving, 0);
+
+	sqlite3_finalize(saving);
+	saving = nullptr;
+
+	int check;
+
+	command = "INSERT INTO Power VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+	check = sqlite3_bind_int(saving, 1, maxID + 1);
+	
+	check = sqlite3_bind_int(saving, 2, this->level);
+	check = sqlite3_bind_int(saving, 3, this->HP);
+	check = sqlite3_bind_int(saving, 4, this->maxHP);
+	check = sqlite3_bind_int(saving, 5, this->exp);
+	check = sqlite3_bind_int(saving, 6, this->agility);
+	check = sqlite3_bind_int(saving, 7, this->strength);
+	check = sqlite3_bind_int(saving, 8, this->maxStamina);
+	check = sqlite3_bind_int(saving, 9, 0);
+
+	check = sqlite3_step(saving);
+	check = sqlite3_finalize(saving);
+	check = sqlite3_close(dbp);
+
+
+
+
+}
