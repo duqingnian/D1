@@ -128,6 +128,7 @@ void Player::loadPlayer(int PlayerID) {
 	sqlite3 *db;
 	sqlite3_stmt *statement;
 
+
 	if (sqlite3_open(DB, &db) == SQLITE_OK) {
 		string querry = "SELECT * FROM PlayerStats WHERE ID = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
