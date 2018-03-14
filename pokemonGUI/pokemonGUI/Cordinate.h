@@ -4,9 +4,6 @@
 #include <stack>
 #include <vector>
 #include <array>
-
-
-
 struct Node
 {
 	//properties of all class properties
@@ -53,7 +50,6 @@ public:
 			+ (y - dest.y)*(y - dest.y)));
 		return H;
 	}
-
 
 	static vector<Node> makePath(array<array<Node,25>,50> map, Node dest) {
 		try {

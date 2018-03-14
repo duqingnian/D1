@@ -305,6 +305,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 	msclr::interop::marshal_context ctx;
 
+	// converts system string to char
 		const char * charFName = ctx.marshal_as<const char*>(fName = txtFirstName->Text);
 		const char * charLName = ctx.marshal_as<const char*>(lName = txtLastName->Text);
 		const char * charEmailAdd = ctx.marshal_as<const char*>(EmailAdd = txtEmailAddress->Text);
@@ -320,6 +321,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 }
 		 bool passwordPass()
 		 {
+			 // checks whether database is compared 
 			 if (txtPassword->Text != txtPasswordConf->Text)
 			 {
 				 lblPassNotCorrect->Visible = true;
@@ -409,13 +411,14 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 }
 			 if (txtUserName->Text == "")
 			 {
-				 MessageBox::Show("user name has been taken", "Alert");
+				 MessageBox::Show("User Name is left blank", "Alert");
 				 return true;
 			 }
 			 return false;
 		 }
 		 bool userNameDup(sqlite3 *dbFile, const char * userName)
 		 {
+			 // prevent dulicate user names to be created in the database
 			 sqlite3_open(DB, &dbFile);
 
 			 char *zErrMsg = 0;
@@ -427,9 +430,9 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			cout<<  sqlite3_errmsg(dbFile);
 
-			 int rc = sqlite3_prepare(dbFile, sql, strlen(sql), &stmt, nullptr);
+			int rc = sqlite3_prepare(dbFile, sql, strlen(sql), &stmt, nullptr);
 
-			 if (rc == SQLITE_OK);
+			 if (rc != SQLITE_OK);
 			 {
 				 cout << "Database could not prepeare the statement" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -437,7 +440,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			 rc = sqlite3_bind_text(stmt, 1, userName, strlen(userName), 0);
 
-			 if (rc == SQLITE_OK);
+			 if (rc != SQLITE_OK);
 			 {
 				 cout << "Database could not bind text to sql" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -450,7 +453,6 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 				 cout << "Database could not execute it" << endl;
 				 cout << sqlite3_errmsg(dbFile);
 			 }
-
 			 int countCheck = sqlite3_column_int(stmt, 0);
 
 			 if (countCheck >= 1)
@@ -459,14 +461,12 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 				 return true;
 			 }
 			 rc = sqlite3_finalize(stmt);
+
 			 if (rc != SQLITE_OK);
 			 {
 				 cout << "Database could not clear statement";
 			 }
 			 return false;
-			 
-			 
-
 		 }
 };
 }
