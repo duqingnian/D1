@@ -2,6 +2,7 @@
 #include <msclr/marshal.h>
 #include "Database\sqlite3.h"
 #define DB "Pokemon.sqlite"
+#include "frmAddUser.h"
 namespace pokemonGUI {
 
 	using namespace System;
@@ -121,6 +122,7 @@ namespace pokemonGUI {
 			this->button2->TabIndex = 5;
 			this->button2->Text = L"Create Account";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &frmLogin::button2_Click);
 			// 
 			// frmLogin
 			// 
@@ -159,6 +161,11 @@ private: System::Void btnLogin_Click(System::Object^  sender, System::EventArgs^
 
 
 
+
+}
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	pokemonGUI::frmAddUser frmAddUser;
+	frmAddUser.ShowDialog();
 
 }
 };

@@ -311,19 +311,12 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 		const char * charUserName = ctx.marshal_as<const char*>(userName = txtUserName->Text);
 		const char * charPassword = ctx.marshal_as<const char*>(Password = txtPassword->Text);
 
-
 		sqlite3 *dbFile;
+		cout <<charUserName << endl;
 
-		string str;
-		char *zErrMsg = 0;
-		sqlite3_stmt *stmt;
-		const char *pzTest;
-		char *szSQL;
-		char *fn = "power";
-
-		sqlite3_open(DB, &dbFile);
-		userNameDup(dbFile, "Saeed");
-		//runParamSQL(dbFile,charFName,charLName, charEmailAdd, charPassword,charUserName);	
+		 if (!(userNameDup(dbFile, charUserName) != false || passwordPass() != true|| emptyTxt()== true)){
+			 runParamSQL(dbFile, charFName, charLName, charEmailAdd, charPassword, charUserName);
+		  }
 }
 		 bool passwordPass()
 		 {
@@ -343,7 +336,6 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 }
 			 return false;
 		 }
-
 		 //Disconnect Database
 		 void DisonnectDB(sqlite3 *dbFile, bool isOpenDB)
 		 {
@@ -364,6 +356,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 		 // A function to run parameterize query
 		 void runParamSQL(sqlite3 *db, const char *fn, const char *ln, const char *emailAdd, const char * pass, const char * userName)
 		 {
+			 sqlite3_open(DB, &db);
 			 char *zErrMsg = 0;
 			 sqlite3_stmt *stmt;
 			 const char *pzTest;
@@ -388,22 +381,91 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 				 sqlite3_finalize(stmt);
 			 }
 		 }
-		 void userNameDup(sqlite3 *db, const char * userName)
+		 bool emptyTxt() {
+			 if (txtEmailAddress->Text == "")
+			 {
+				 MessageBox::Show("Email address is left blank", "Alert");
+				 return true;
+			 }
+			 if (txtFirstName->Text == "")
+			 {
+				 MessageBox::Show("first name is left blank", "Alert");
+				 return true;
+			 }
+			 if (txtLastName->Text == "")
+			 {
+				 MessageBox::Show("Last name is left blank", "Alert");
+				 return true;
+			 }
+			 if (txtPassword->Text == "")
+			 {
+				 MessageBox::Show("Password is left blank", "Alert");
+				 return true;
+			 }
+			 if (txtPasswordConf->Text == "")
+			 {
+				 MessageBox::Show("Password Confirmation is left blank", "Alert");
+				 return true;
+			 }
+			 if (txtUserName->Text == "")
+			 {
+				 MessageBox::Show("user name has been taken", "Alert");
+				 return true;
+			 }
+			 return false;
+		 }
+		 bool userNameDup(sqlite3 *dbFile, const char * userName)
 		 {
+			 sqlite3_open(DB, &dbFile);
+
 			 char *zErrMsg = 0;
 			 sqlite3_stmt *stmt;
 			 const char *pzTest;
-			 char *SQL;
+			 char * sql;
 
-			 SQL = "select UserName from Player where UserName = ? ";
-			 sqlite3_bind_text(stmt, 1, userName, strlen(userName), 0);
-			 
-			 if (sqlite3_step(stmt) != SQLITE_OK);
+			 sql = "select count(UserName) from Player where UserName = ? ";
+
+			cout<<  sqlite3_errmsg(dbFile);
+
+			 int rc = sqlite3_prepare(dbFile, sql, strlen(sql), &stmt, nullptr);
+
+			 if (rc == SQLITE_OK);
 			 {
-				 cout << "saeed";
+				 cout << "Database could not prepeare the statement" << endl;
+				 cout << sqlite3_errmsg(dbFile);
 			 }
+
+			 rc = sqlite3_bind_text(stmt, 1, userName, strlen(userName), 0);
+
+			 if (rc == SQLITE_OK);
+			 {
+				 cout << "Database could not bind text to sql" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 rc = sqlite3_step(stmt);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not execute it" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 int countCheck = sqlite3_column_int(stmt, 0);
+
+			 if (countCheck >= 1)
+			 {
+				 MessageBox::Show("user name has been taken", "Alert");
+				 return true;
+			 }
+			 rc = sqlite3_finalize(stmt);
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not clear statement";
+			 }
+			 return false;
 			 
-			 sqlite3_finalize(stmt);
+			 
 
 		 }
 };

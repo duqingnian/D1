@@ -18,6 +18,7 @@ void main() {
 	pokemonGUI::pokeInfo form;
 	Application::Run(%form);
 
+
 }
 
 void pokemonGUI::pokeInfo::updateLabel() {

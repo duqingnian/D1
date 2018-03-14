@@ -6,6 +6,7 @@
 #include "frmAddUser.h"
 #include "frmMainMenu.h"
 #include "frmShop.h"
+#include "frmLogin.h"
 #include "frmAdventrureMap.h"
 
 namespace pokemonGUI {
@@ -371,8 +372,8 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	game.getPlayer().savePlayer();
 
-	pokemonGUI::frmAddUser frmAddUser;
-	frmAddUser.ShowDialog(); //Launch fight GUI
+	pokemonGUI::frmLogin frmLogin;
+	frmLogin.ShowDialog(); //Launch fight GUI
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 }
@@ -413,7 +414,7 @@ private: System::Void btnLevelUp_Click(System::Object^  sender, System::EventArg
 	updateLabel();
 }
 private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventArgs^  e) {
-	game.getPlayer().getPokemon().savePokemon();
+	//game.getPlayer().getPokemon().savePokemon();
 	Player::loadPlayer(574027118);
 
 	for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection
