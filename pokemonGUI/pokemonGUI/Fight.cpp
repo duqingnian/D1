@@ -86,6 +86,7 @@ string Fight::useAbility3(Pokemon& dealer, Pokemon& receiver) { //Ability 3 used
 	return ("You don't have enough stamina for " + dealer.getAbility3().getName());
 }
 string Fight::declareWinner(Pokemon& winner) { // When other pokemon's HP is 0
+	srand(time(NULL));
 	if (winner.getName() == this->pokemon->getName()) {
 		game.getPlayer().addMoney(MONEY_FOR_WIN + (rand() % 15)); //Updated in Fight.h
 		winner.gainExp(EXPERIENCE_FOR_WIN + (rand() % 30)); //Updated in Fight.h

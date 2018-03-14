@@ -8,6 +8,7 @@
 #include <algorithm>
 #include "Game.h"
 #include "protoGUI.h"
+#include "OurWorlds.h"
 
 
 
@@ -44,10 +45,12 @@ namespace pokemonGUI {
 		List<double> listOfMoves;
 		int timerIterator;
 		int timerEnd;
-	private: System::Windows::Forms::Button^  btnStopMapMaking;
-			 Dictionary<String^, PictureBox^>^ enemiesPictureBox = gcnew Dictionary<String^, PictureBox^>();
+		bool automatic = true;
+		System::Windows::Forms::Button^  btnStopMapMaking;
+		Dictionary<String^, PictureBox^>^ enemiesPictureBox = gcnew Dictionary<String^, PictureBox^>();
 		void loadEnemies(World* w);
 		void loadMap(World* w);
+		void removeEnemies();
 		void drawGrid();
 
 
@@ -490,8 +493,10 @@ namespace pokemonGUI {
 		}
 	}
 	private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
+		automatic = false; //Since we are manually loading map we disable the automatic map update
 		loadEnemies(&world);
 		loadMap(&world);
+		automatic = true;
 	}
 
 	private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
@@ -588,7 +593,10 @@ namespace pokemonGUI {
 				timerEnd++;
 
 			}
-			timerMoveCharacter->Start();
+			if (timerEnd != 0) {
+				timerMoveCharacter->Start();
+			}
+			
 		}
 		catch (const exception& e) {
 			cout << "aStarAdventureMap - Error " << e.what();
@@ -603,12 +611,73 @@ private: System::Void panel1_Paint(System::Object^  sender, System::Windows::For
 		 //Map load
 private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
 	pictureCharacter->Location = Point(game.getPlayer().getX(), game.getPlayer().getY());
-	loadMap(game.getWorld());
-	loadEnemies(game.getWorld());
+	loadMap(&world);
+	loadEnemies(&world);
+	
 }
 private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::EventArgs^  e) {
 	try {
 		if (timerIterator / 2 == timerEnd) {
+			for (World* w : world.exits) {
+				switch (w->entrance) {
+				case 'l': //Left
+					if (listOfMoves[timerIterator - 2]*20 >= 960) {
+						removeEnemies();
+						world = *w;
+						int block = w->spawnPoint;
+						characterX = block % (X_MAX / X_STEP) * X_STEP;
+						characterY = block / (X_MAX / X_STEP) * Y_STEP;
+						game.getPlayer().setX(characterX);
+						game.getPlayer().setY(characterY);
+						pictureCharacter->Location = Point(characterX, characterY);
+						loadMap(w);
+						loadEnemies(w);	
+					}
+					break;
+				case 'r'://Right
+					if (listOfMoves[timerIterator - 2]*20 <= 20) {
+						removeEnemies();
+						world = *w;
+						int block = w->spawnPoint;
+						characterX = block % (X_MAX / X_STEP) * X_STEP;
+						characterY = block / (X_MAX / X_STEP) * Y_STEP;
+						game.getPlayer().setX(characterX);
+						game.getPlayer().setY(characterY);
+						pictureCharacter->Location = Point(characterX, characterY);
+						loadMap(w);
+						loadEnemies(w);
+					}
+					break;
+				case 't'://Top
+					if (listOfMoves[timerIterator - 2] * 20 <= 20) {
+						removeEnemies();
+						world = *w;
+						int block = w->spawnPoint;
+						characterX = block % (X_MAX / X_STEP) * X_STEP;
+						characterY = block / (X_MAX / X_STEP) * Y_STEP;
+						game.getPlayer().setX(characterX);
+						game.getPlayer().setY(characterY);
+						pictureCharacter->Location = Point(characterX, characterY);
+						loadMap(w);
+						loadEnemies(w);
+					}
+					break;
+				case 'b'://Bottom
+					if (listOfMoves[timerIterator - 1] * 20 >= 960) {
+						removeEnemies();
+						world = *w;
+						int block = w->spawnPoint;
+						characterX = block % (X_MAX / X_STEP) * X_STEP;
+						characterY = block / (X_MAX / X_STEP) * Y_STEP;
+						game.getPlayer().setX(characterX);
+						game.getPlayer().setY(characterY);
+						pictureCharacter->Location = Point(characterX, characterY);
+						loadMap(w);
+						loadEnemies(w);
+					}
+					break;
+				}
+			}
 			timerMoveCharacter->Stop();
 		}
 		else {

@@ -143,6 +143,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="OurEnemies.cpp" />
     <ClCompile Include="OurPokemons.cpp" />
+    <ClCompile Include="OurWorlds.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="pokeInfo.cpp" />
     <ClCompile Include="Pokemon.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="OurEnemies.h" />
     <ClInclude Include="OurPokemons.h" />
+    <ClInclude Include="OurWorlds.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="pokeInfo.h">
       <FileType>CppForm</FileType>
