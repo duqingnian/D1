@@ -1,5 +1,6 @@
 #include "Pokemon.h"
 #include <sstream>
+#include "OurPokemons.h"
 
 //Initialising a pokemon
 Pokemon::Pokemon() {
@@ -117,7 +118,7 @@ System::String^ Pokemon::labelStats() {
 	ss << "Type: " << this->type << endl;
 	return gcnew System::String(ss.str().c_str());
 }
-void Pokemon::savePokemon() {
+int Pokemon::savePokemon() {
 	sqlite3 *dbp;
 	sqlite3_open(DB, &dbp);
 	
@@ -129,14 +130,13 @@ void Pokemon::savePokemon() {
 	int maxID = sqlite3_column_int(saving, 0);
 
 	sqlite3_finalize(saving);
-	saving = nullptr;
 
 	int check;
 
 	command = "INSERT INTO Power VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+
 	check = sqlite3_bind_int(saving, 1, maxID + 1);
-	
 	check = sqlite3_bind_int(saving, 2, this->level);
 	check = sqlite3_bind_int(saving, 3, this->HP);
 	check = sqlite3_bind_int(saving, 4, this->maxHP);
@@ -148,9 +148,66 @@ void Pokemon::savePokemon() {
 
 	check = sqlite3_step(saving);
 	check = sqlite3_finalize(saving);
+
+	command = "INSERT INTO PokemonTable(PokemonID, TypeID, Name, PowerID) VALUES(?, 0, ?, ?)";
+	check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+	check = sqlite3_bind_int(saving, 1, maxID + 1);
+	check = sqlite3_bind_text(saving, 2, this->name.c_str(), this->name.size(), NULL);
+	check = sqlite3_bind_int(saving, 3, maxID + 1);
+	check = sqlite3_step(saving);
+	check = sqlite3_finalize(saving);
 	check = sqlite3_close(dbp);
 
+	return maxID + 1; //Returns the ID for this save
+}
 
 
+Pokemon Pokemon::loadPokemon(int pokemonID) {
 
+	sqlite3 *db;
+	sqlite3_stmt *statement = nullptr;
+
+	if (sqlite3_open(DB, &db) == SQLITE_OK) {
+		string querry;
+		
+		querry = "SELECT * FROM PokemonTable WHERE PokemonID = ?";
+		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
+		cout << sqlite3_errmsg(db) << endl;
+		sqlite3_bind_int(statement, 1, pokemonID);
+		cout << sqlite3_errmsg(db) << endl;
+		sqlite3_step(statement);
+		cout << sqlite3_errmsg(db) << endl;
+		const unsigned char * pokemonName1 = sqlite3_column_text(statement, 2);
+		string pokemonName = (char*)pokemonName1;
+
+		sqlite3_finalize(statement);
+		Pokemon pokemon;
+		for (Pokemon *p : pokemonArray) { //Based on pokemon name, get pokemon object
+			if (p->getName() == pokemonName) {
+				pokemon = *p;
+			}
+		}
+		
+
+		querry = "SELECT * FROM Power WHERE PowerID = ?";
+		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
+		sqlite3_bind_int(statement, 1, pokemonID);
+		sqlite3_step(statement);
+		
+		pokemon.level = sqlite3_column_int(statement, 1);
+		pokemon.HP = sqlite3_column_int(statement, 2);
+		pokemon.maxHP = sqlite3_column_int(statement, 3);
+		pokemon.exp = sqlite3_column_int(statement, 4);
+		pokemon.agility = sqlite3_column_int(statement, 5);
+		pokemon.strength = sqlite3_column_int(statement, 6);
+		pokemon.agility = sqlite3_column_int(statement, 7);
+		pokemon.stamina = sqlite3_column_int(statement, 8);
+		pokemon.maxStamina = pokemon.stamina;
+
+		sqlite3_finalize(statement);
+		sqlite3_close(db);
+
+
+		return pokemon;
+	}
 }

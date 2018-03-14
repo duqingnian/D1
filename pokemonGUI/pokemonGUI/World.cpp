@@ -5,26 +5,31 @@
 #include <string>
 #include <sstream>
 #include "OurEnemies.h"
+#include "OurWorlds.h"
+
 using namespace std;
 
-World world;
+
 
 World::World()
 {
-	this->name = "";
+	this->name = "map1";
 	this->id = 0;
-	this->spawnPoint = 51;
+	this->spawnPoint = 398;
 	this->enemies = { &Enemy1, &Enemy2, &Enemy3 };
 	this->pictureLocation = "./Maps/village.png";
+	this->entrance = 'r';
+	this->exits = {&World2};
 
 }
-World::World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits) {
-	this->name = name;
-	this->id = id;
-	this->spawnPoint = spawnPoint;
-	this->pictureLocation = pictureLocation;
-	this->enemies = enemies;
-	this->exits = exits;
+World::World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits, char entrance) {
+	this->name = name; //Also used for map name
+	this->id = id; //ID
+	this->spawnPoint = spawnPoint; //Where to spawn the character
+	this->pictureLocation = pictureLocation; //Location of the picture
+	this->enemies = enemies; //Enemies in this world
+	this->exits = exits; //Worlds that are connected
+	this->entrance = entrance; // l, r, t or b. Left, right, top, or bottom
 }
 
 World::~World()

@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "frmAdventrureMap.h"
 
+void pokemonGUI::frmAdventrureMap::removeEnemies() {
+	for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
+		delete pair->Value;
+	}
+	enemiesPictureBox->Clear();
+}
 void pokemonGUI::frmAdventrureMap::loadEnemies(World* w) {
 	try {
 		for (Enemy* enemy : w->enemies) {
@@ -39,6 +45,9 @@ void pokemonGUI::frmAdventrureMap::loadMap(World * w)
 	//Load world from a file
 	msclr::interop::marshal_context context;
 	std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
+	if (automatic) {
+		worldName = world.name;
+	}
 	world.loadWorld(worldName); //Loads set with the new world
 	pbMap->Load(game.systemString(world.pictureLocation));
 
@@ -48,10 +57,10 @@ void pokemonGUI::frmAdventrureMap::loadMap(World * w)
 	}
 	graphics->Clear(Color::White);
 	drawGrid();
-	for (Block b : w->blocks) {
+	for (Block b : world.blocks) {
 		int x = b.id % (X_MAX / X_STEP) * X_STEP;
 		int y = b.id / (X_MAX / X_STEP) * Y_STEP;
-		w->obstacles.insert(b.id); // Insert blocks id into obstacles to prevent player movement over them
+		world.obstacles.insert(b.id); // Insert blocks id into obstacles to prevent player movement over them
 
 		if (b.color == "blue") {
 			color = Color::Blue;
@@ -64,10 +73,10 @@ void pokemonGUI::frmAdventrureMap::loadMap(World * w)
 	}
 
 	//Add enemies as obstacles
-	for (Enemy* en : w->enemies) {
+	for (Enemy* en : world.enemies) {
 		if (en->isAlive()) {
 			int id = en->getX() / X_STEP + en->getY() / Y_STEP * X_MAX / X_STEP;
-			w->obstacles.insert(id);
+			world.obstacles.insert(id);
 		}
 	}
 }

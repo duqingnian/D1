@@ -5,6 +5,7 @@
 #include <set>
 #include <vector>
 
+
 using namespace std;
 
 struct Block {
@@ -25,9 +26,10 @@ class World
 public:
 	World();
 	~World();
-	World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits);
+	World(string name, int id, string pictureLocation, int spawnPoint, vector<Enemy*> enemies, vector<World*> exits, char entrance);
 	vector<Enemy*> enemies;
 	vector<World*> exits;
+	char entrance;
 	int spawnPoint;
 	string pictureLocation;
 	string name;
