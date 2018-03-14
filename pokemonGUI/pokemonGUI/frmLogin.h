@@ -1,5 +1,7 @@
 #pragma once
-
+#include <msclr/marshal.h>
+#include "Database\sqlite3.h"
+#define DB "Pokemon.sqlite"
 namespace pokemonGUI {
 
 	using namespace System;
@@ -34,9 +36,12 @@ namespace pokemonGUI {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::TextBox^  txtPass;
 	protected:
-	private: System::Windows::Forms::TextBox^  textBox2;
+
+	private: System::Windows::Forms::TextBox^  txtUser;
+	protected:
+
 	private: System::Windows::Forms::Label^  txtUserName;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Button^  btnLogin;
@@ -56,27 +61,27 @@ namespace pokemonGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->txtPass = (gcnew System::Windows::Forms::TextBox());
+			this->txtUser = (gcnew System::Windows::Forms::TextBox());
 			this->txtUserName = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnLogin = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// textBox1
+			// txtPass
 			// 
-			this->textBox1->Location = System::Drawing::Point(145, 215);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(227, 22);
-			this->textBox1->TabIndex = 0;
+			this->txtPass->Location = System::Drawing::Point(145, 215);
+			this->txtPass->Name = L"txtPass";
+			this->txtPass->Size = System::Drawing::Size(227, 22);
+			this->txtPass->TabIndex = 0;
 			// 
-			// textBox2
+			// txtUser
 			// 
-			this->textBox2->Location = System::Drawing::Point(145, 167);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(227, 22);
-			this->textBox2->TabIndex = 1;
+			this->txtUser->Location = System::Drawing::Point(145, 167);
+			this->txtUser->Name = L"txtUser";
+			this->txtUser->Size = System::Drawing::Size(227, 22);
+			this->txtUser->TabIndex = 1;
 			// 
 			// txtUserName
 			// 
@@ -106,6 +111,7 @@ namespace pokemonGUI {
 			this->btnLogin->TabIndex = 4;
 			this->btnLogin->Text = L"Login";
 			this->btnLogin->UseVisualStyleBackColor = true;
+			this->btnLogin->Click += gcnew System::EventHandler(this, &frmLogin::btnLogin_Click);
 			// 
 			// button2
 			// 
@@ -125,8 +131,8 @@ namespace pokemonGUI {
 			this->Controls->Add(this->btnLogin);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->txtUserName);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->txtUser);
+			this->Controls->Add(this->txtPass);
 			this->Name = L"frmLogin";
 			this->Text = L"frmLogin";
 			this->Load += gcnew System::EventHandler(this, &frmLogin::frmLogin_Load);
@@ -136,6 +142,24 @@ namespace pokemonGUI {
 		}
 #pragma endregion
 	private: System::Void frmLogin_Load(System::Object^  sender, System::EventArgs^  e) {
+
+
 	}
+private: System::Void btnLogin_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	String ^ userName;
+
+	String ^ Password;
+	msclr::interop::marshal_context ctx;
+
+	//convert system string to std string for sql preparetion 
+	const char * charUserName = ctx.marshal_as<const char*>(userName = txtUser->Text);
+	const char * charPassword = ctx.marshal_as<const char*>(Password = txtPass->Text);
+
+
+
+
+
+}
 };
 }
