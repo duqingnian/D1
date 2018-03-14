@@ -40,6 +40,8 @@ Player::Player(string name, Pokemon pokemon, int money, int healthPotions, int s
 int Player::savePlayer() {
 	//Returns ID for the save
 
+	int pokemonID = this->pokemon.savePokemon(); //Saves players pokemon and returns that saves ID to use as foreign key
+
 	sqlite3 *db; //A pointer to the database
 	bool connected = false; //To check if we have made a connection
 	if (sqlite3_open(DB, &db) == SQLITE_OK) { //Make a connection
@@ -47,102 +49,133 @@ int Player::savePlayer() {
 	}
 	else {
 		cout << "Can't connect to database" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 	}
+
 	int ok; //For testing functions
 	sqlite3_stmt * statement = nullptr;
-	string querry = "INSERT INTO PlayerStats(ID, Pokemon, PosX, PosY, Money, HealthPotions, StaminaPotions, Score) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	string querry;
+
+
+	//To connect PlayerStats table with Player table
+	string name = this->name;
+	querry = "SELECT playerID FROM Player WHERE UserName = ?";
+	sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
+	sqlite3_bind_text(statement, 1, name.c_str(), name.size(), NULL);
+	sqlite3_step(statement);
+	int PlayerFK = sqlite3_column_int(statement, 0);
+	sqlite3_finalize(statement);
+
+
+	querry = "INSERT INTO PlayerStats(PokemonID, PosX, PosY, Money, HealthPotions, StaminaPotions, Score, PlayerFK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	ok = sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr); //We prepare our statement
 	if (ok != SQLITE_OK) {
 		cout << "Problems preparing SQLite3 statement in Player Save" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 	}
 
-	//----------------------------
-	//For our ID let's use the number of seconds since January 1, 2000
-	time_t timer;
-	struct tm y2k = { 0 };
-	int seconds;
-	y2k.tm_hour = 0;   y2k.tm_min = 0; y2k.tm_sec = 0;
-	y2k.tm_year = 100; y2k.tm_mon = 0; y2k.tm_mday = 1;
-	time(&timer); 
-	seconds = difftime(timer, mktime(&y2k));
-	//------------------------------
-
-	//Time for database sanitization
-	ok = sqlite3_bind_int(statement, 1, seconds);
-		if (ok != SQLITE_OK) {
-			cout << "Problems binding ID in Player Save" << endl;
-		}
-	//The fourth argument is position of \0
-	ok = sqlite3_bind_text(statement, 2, this->pokemon.getName().c_str(), this->pokemon.getName().size(), NULL);
+	//ID is set to Auto increment so no need to worry about that 
+	ok = sqlite3_bind_int(statement, 1, pokemonID);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding pokemon name in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 3, this->x);
+	ok = sqlite3_bind_int(statement, 2, this->x);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding posX in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 4, this->y);
+	ok = sqlite3_bind_int(statement, 3, this->y);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding posY in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 5, this->money);
+	ok = sqlite3_bind_int(statement, 4, this->money);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding money in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 6, this->healthPotions);
+	ok = sqlite3_bind_int(statement, 5, this->healthPotions);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding healthPotions in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 7, this->staminaPotions);
+	ok = sqlite3_bind_int(statement, 6, this->staminaPotions);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding staminaPotions in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
-	ok = sqlite3_bind_int(statement, 8, this->score);
+	ok = sqlite3_bind_int(statement, 7, this->score);
 		if (ok != SQLITE_OK) {
 			cout << "Problems binding score in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
+		}
+	ok = sqlite3_bind_int(statement, 8, PlayerFK);
+		if (ok != SQLITE_OK) {
+			cout << "Problems binding Player Foreign Key in Player Save" << endl;
+			cout << sqlite3_errmsg(db) << endl;
 		}
 
 	
 	ok = sqlite3_step(statement); //Execute statement
 	if (ok != SQLITE_DONE) {
 		cout << "Problems executing SQLite3 statement in Player Save" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 	}
 
 	ok = sqlite3_finalize(statement); //Deletes statement and cleans everything up
 	if (ok != SQLITE_OK) {
 		cout << "Problems finalizing SQLite3 statement in Player Save" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 	}
+
+	int ID = sqlite3_last_insert_rowid(db); //We can get our auto incremented ID with this method without making extra SQL querries.
 
 	ok = sqlite3_close(db); //Closes connection
 	if (ok != SQLITE_OK) {
-		cout << "Problems preparing SQLite3 statement in Player Save" << endl;
+		cout << "Problems closing Database connection in Player Save" << endl;
+		cout << sqlite3_errmsg(db) << endl;
 	}
 
-	return seconds;
+	return ID; //The ID for the row we saved data in
 }
 
 void Player::loadPlayer(int PlayerID) {
+	
+
+
 	sqlite3 *db;
 	sqlite3_stmt *statement;
 
 	if (sqlite3_open(DB, &db) == SQLITE_OK) {
-		string querry = "SELECT * FROM PlayerStats WHERE ID = ?";
+		string querry;
+		if (PlayerID == -1) {
+			string name = game.getPlayer().getName();
+			querry = "SELECT playerID FROM Player WHERE UserName = ?";
+			sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
+			sqlite3_bind_text(statement, 1, name.c_str(), name.size(), NULL);
+			sqlite3_step(statement);
+			PlayerID = sqlite3_column_int(statement, 0);
+			sqlite3_finalize(statement);
+		}
+
+		querry = "SELECT * FROM PlayerStats WHERE PlayerFK = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
 		sqlite3_bind_int(statement, 1, PlayerID);
 		sqlite3_step(statement);
-		string pokemonName = (char*) sqlite3_column_text(statement, 1); //Get Pokemon name
-		Pokemon pokemon;
-		for (Pokemon *p : pokemonArray) { //Based on pokemon name, get pokemon object
-			if (p->getName() == pokemonName) {
-				pokemon = *p;
-			}
-		}
-		int x = sqlite3_column_int(statement, 2);
-		int y = sqlite3_column_int(statement, 3);
-		int money = sqlite3_column_int(statement, 4);
-		int healthPotions = sqlite3_column_int(statement, 5);
-		int staminaPotions = sqlite3_column_int(statement, 6);
-		int score = sqlite3_column_int(statement, 7);
+		int pokemonID = sqlite3_column_int(statement, 2); //Get PokemonID
+
+		int x = sqlite3_column_int(statement, 3);
+		int y = sqlite3_column_int(statement, 4);
+		int money = sqlite3_column_int(statement, 5);
+		int healthPotions = sqlite3_column_int(statement, 6);
+		int staminaPotions = sqlite3_column_int(statement, 7);
+		int score = sqlite3_column_int(statement, 8);
+
+		sqlite3_finalize(statement);
+		sqlite3_close(db);
+
+		Pokemon pokemon = Pokemon::loadPokemon(pokemonID); //SQL querry that gets pokemon from database
 		
 		string name = (string)"Player:" + to_string(PlayerID);
 

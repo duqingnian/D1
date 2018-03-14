@@ -26,7 +26,7 @@ public:
 
 	//Functions
 	int savePlayer();
-	static void loadPlayer(int PlayerID);
+	static void loadPlayer(int PlayerID = -1);
 
 	//Getters
 	inline const string& getName() const { return this->name; }

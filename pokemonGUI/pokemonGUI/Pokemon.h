@@ -5,6 +5,7 @@
 #define DB "Pokemon.sqlite"
 #include "sqlite3.h"
 
+
 class Pokemon {
 private:
 	string name;
@@ -41,7 +42,8 @@ public:
 	void addStamina(int staminaAmount);
 	void receiveDmg(const int dmg);
 	void printStats();
-	void savePokemon();
+	int savePokemon();
+	static Pokemon loadPokemon(int pokemonID);
 	System::String^ labelStats();
 	
 	//Getters
