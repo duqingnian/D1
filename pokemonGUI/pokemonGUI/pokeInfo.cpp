@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "frmAdventrureMap.h"
 #include "frmShop.h"
+#include "frmLogin.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -16,7 +17,7 @@ void main() {
 	Application::SetCompatibleTextRenderingDefault(false);
 	
 	//Run Pokemon Info dialog
-	pokemonGUI::pokeInfo form;
+	pokemonGUI::frmLogin form;
 	Application::Run(%form);
 
 
