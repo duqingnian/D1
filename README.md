@@ -2,9 +2,6 @@
 Old School Game
 
 
-http://www.text-image.com/convert/ascii.html
+To see the actual code for the game look into /PokemonGUI/PokemonGUI/
 
-I'm using Image width 50 and Invert image in case the background isnt empty.
-
-
-https://www.youtube.com/watch?v=K6X2jwqWA-E
+Everything else is previous prototypes, that have been adapted to the actual game, meaning some have been altered and others might not have made it at all.
