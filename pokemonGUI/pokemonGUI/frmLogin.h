@@ -222,10 +222,11 @@ namespace pokemonGUI {
 		if (userAccept(dbFile, charUserName, charPassword) == true)
 
 		{
-			pokemonGUI::pokeInfo info;
-			info.ShowDialog();
 			game.getPlayer().setName(charUserName);
 			Player::loadPlayer();
+			pokemonGUI::pokeInfo info;
+			info.ShowDialog();
+			
 		}
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {

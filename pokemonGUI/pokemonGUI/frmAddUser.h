@@ -6,6 +6,7 @@
 #include <string>
 #include "Game.h"
 #include <sstream>
+#include "pokeInfo.h"
 #define DB "Pokemon.sqlite"
 #include "Database\sqlite3.h"
 
@@ -203,6 +204,7 @@ namespace pokemonGUI {
 			this->btnCancel->TabIndex = 14;
 			this->btnCancel->Text = L"Cancel";
 			this->btnCancel->UseVisualStyleBackColor = true;
+			this->btnCancel->Click += gcnew System::EventHandler(this, &frmAddUser::btnCancel_Click);
 			// 
 			// lblPassNotCorrect
 			// 
@@ -313,7 +315,11 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 		 if (!(userNameDup(dbFile, charUserName) != false || passwordPass() != true|| emptyTxt()== true)){
 			 runParamSQL(dbFile, charFName, charLName, charEmailAdd, charPassword, charUserName);
-			 game.getPlayer().setName(charUserName);
+			 Player p{ charUserName };
+			 game.setPlayer(p);
+			 pokemonGUI::pokeInfo form;
+			 this->Visible = false;
+			 form.ShowDialog();
 		  }
 }
 		 bool passwordPass()
@@ -465,5 +471,8 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 }
 			 return false;
 		 }
+private: System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->Close();
+}
 };
 }
