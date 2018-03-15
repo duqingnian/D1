@@ -9,12 +9,13 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 void main() {
-	
+	//The MAIN function that get's executed first
 
 
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	
+	//Run Pokemon Info dialog
 	pokemonGUI::pokeInfo form;
 	Application::Run(%form);
 
@@ -22,6 +23,9 @@ void main() {
 }
 
 void pokemonGUI::pokeInfo::updateLabel() {
+	//Updates labels, buttons, progress bars and every other piece of information
+	//Displayed on this screen
+
 	if (cbPokemonSelect->SelectedIndex != -1) {
 		//Pokemon stats
 		labelStats->Text = game.getPlayer().getPokemon().labelStats();
@@ -44,6 +48,7 @@ void pokemonGUI::pokeInfo::updateLabel() {
 		double playerStamina = game.getPlayer().getPokemon().getStamina();
 		playerStamina = playerStamina / playerMaxStamina * 100;
 
+		//Progress bars
 		pgBarPlayerHealth->Value = playerHealth;
 		pgBarPlayerStamina->Value = playerStamina;
 	}

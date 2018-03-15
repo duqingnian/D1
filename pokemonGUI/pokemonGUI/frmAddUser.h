@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "Game.h"
 #include <sstream>
 #define DB "Pokemon.sqlite"
 #include "Database\sqlite3.h"
@@ -317,6 +318,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 		 if (!(userNameDup(dbFile, charUserName) != false || passwordPass() != true|| emptyTxt()== true)){
 			 runParamSQL(dbFile, charFName, charLName, charEmailAdd, charPassword, charUserName);
+			 game.getPlayer().setName(charUserName);
 		  }
 }
 		 bool passwordPass()

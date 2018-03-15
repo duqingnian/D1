@@ -320,14 +320,10 @@ namespace pokemonGUI {
 		}
 #pragma endregion
 	private: System::Void protoGUI_Load(System::Object^  sender, System::EventArgs^  e) {
-		//things to happen when the program loads.
-
-
-
 	}
-			 //-----------------------------------------------------------------------------------------------------------
 //Button clicks
 private: System::Void btnAbility1_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Player uses first ability
 	string s = game.getFight().useAbility1(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	labelCurrentAction->Text = game.systemString(s);
 	enemyTurn(); //Enemy's attack
@@ -335,6 +331,7 @@ private: System::Void btnAbility1_Click(System::Object^  sender, System::EventAr
 	updatePgbar();
 }
 private: System::Void btnAbility2_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Player uses second ability
 	string s = game.getFight().useAbility2(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	labelCurrentAction->Text = game.systemString(s);
 	enemyTurn(); //Enemy's attack
@@ -342,6 +339,7 @@ private: System::Void btnAbility2_Click(System::Object^  sender, System::EventAr
 	updatePgbar();
 }
 private: System::Void btnAbility3_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Player uses third ability
 	string s = game.getFight().useAbility3(game.getPlayer().getPokemon(), game.getFight().getEnemy());
 	labelCurrentAction->Text = game.systemString(s);
 	enemyTurn(); //Enemy's attack
@@ -349,6 +347,8 @@ private: System::Void btnAbility3_Click(System::Object^  sender, System::EventAr
 	updatePgbar();
 }			
 private: System::Void btnStartBattle_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Clicked on Start Battle.
+	//Turns action buttons visible
 	this->timerHealth->Start();
 	btnAbility1->Visible = true;
 	btnAbility2->Visible = true;
@@ -358,21 +358,22 @@ private: System::Void btnStartBattle_Click(System::Object^  sender, System::Even
 	btnStartBattle->Visible = false;
 
 }
-private: System::Void btnHealthPotion_Click(System::Object^  sender, System::EventArgs^  e) { //Health potion button click
+private: System::Void btnHealthPotion_Click(System::Object^  sender, System::EventArgs^  e) { 
+	//Health potion button click
 	string s = game.getFight().useHealthPotion();
 	labelCurrentAction->Text = game.systemString(s);
 	enemyTurn(); //Enemy's turn
 	updateLabels();
 	updatePgbar();
 }
-private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::EventArgs^  e) { //Stamina potion button click
+private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::EventArgs^  e) { 
+	//Stamina potion button click
 	string s = game.getFight().useStaminaPotion();
 	labelCurrentAction->Text = game.systemString(s);
 	enemyTurn(); //Enemy's turn
 	updateLabels();
 	updatePgbar();
 }
- //-----------------------------------------------------------------------------------------------------------
 
  //Timers
 		 private: System::Void timerHealth_Tick(System::Object^  sender, System::EventArgs^  e) {
@@ -404,7 +405,9 @@ private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::Ev
 
 				  }
 
-private: System::Void timerEnemyTurn_Tick(System::Object^  sender, System::EventArgs^  e) { //2 sec after player used attack
+private: System::Void timerEnemyTurn_Tick(System::Object^  sender, System::EventArgs^  e) { 
+	//Wait for 2 seconds after player used an action
+	//Then make action buttons pressable again and display enemies move
 	string s = game.enemyAttack(); //enemy attack back
 	labelCurrentAction->Text = game.systemString(s); //update current action label
 	btnAbility1->Enabled = true; //reverse grey out buttons

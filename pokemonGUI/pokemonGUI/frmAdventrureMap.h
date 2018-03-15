@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "protoGUI.h"
 #include "OurWorlds.h"
+#include "frmMainMenu.h"
 
 
 
@@ -380,21 +381,25 @@ namespace pokemonGUI {
 
 		}
 #pragma endregion
-	private: System::Void btnMapMaker_Click(System::Object^  sender, System::EventArgs^  e) { //Button Start Map Maker
-																							  //Draws grid
+	private: System::Void btnMapMaker_Click(System::Object^  sender, System::EventArgs^  e) { 
+		//Button Start Map Maker
+		//Draws grid if picture map is invisible and lets you start drawing obstacles like walls or water
+		//And add gold coins
+		//Also Enables new buttons specifically made for world design
+		//After the first press, works as a "New Map" button
 		
 		pictureCharacter->Location = Point(characterX, characterY);
 		world.blocks.clear();
 		graphics = Graphics::FromImage(pbMap->Image);
-		//graphics = panel1->CreateGraphics();
-		//graphics->Clear(Color::White);
-		//this->pbMap->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbMap.Image")));
 		drawGrid();
 		mapMaking = true;
 		btnLoadMap->Visible = true;
 		btnSaveMap->Visible = true;
-		btnLoadMap->Enabled = false;
-		btnSaveMap->Enabled = false;
+		if (textBoxWorldName->Text == "") {
+			//Do not enable Load and Save buttons if world name is not specified
+			btnLoadMap->Enabled = false;
+			btnSaveMap->Enabled = false;
+		}
 		btnStopMapMaking->Visible = true;
 		textBoxWorldName->Visible = true;
 		label1->Visible = true;
@@ -412,6 +417,8 @@ namespace pokemonGUI {
 
 	private: System::Void panel1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 		//Mouse down. Start timer to draw with mouse drag
+		//Based on which mouse button is pressed either start drawing or start erasing
+		//Also if an enemy object is toggled, move the object to a new clicked place
 		if (mapMaking) {
 			if (e->Button.ToString() == "Left") {
 				timerMouseDrag->Start();
@@ -419,7 +426,8 @@ namespace pokemonGUI {
 			else if (e->Button.ToString() == "Right") {
 				timerEraser->Start();
 			}
-
+			//If an enemy object has dragging=true, move it to the newly clicked position
+			//And display it's new X and Y position
 			for (Enemy *en : world.enemies) {
 				if (en->isDragging()) {
 					for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
@@ -443,11 +451,15 @@ namespace pokemonGUI {
 	}
 
 	private: System::Void timerMouseDrag_Tick(System::Object^  sender, System::EventArgs^  e) {
-		//Every 10 ms captures block and draws on it
+		//Every 10 ms get the current mouse positon on the map and draw a square on that position
+		//Transform the X and Y coordinates into a single number 0-1249
+		//Store this number into a set because if we were to store the same number twice,
+		//Set will not add the duplicate and only keep one so it will not get over filled
+
 		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
 			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP); // Coordinates 0-1249
-			int x = block % (X_MAX / X_STEP) * X_STEP;// From 0-1249 get X cord
-			int y = block / (X_MAX / X_STEP) * Y_STEP;// From the weird one number get the Y cord
+			int x = block % (X_MAX / X_STEP) * X_STEP;// From the block number get the X cord
+			int y = block / (X_MAX / X_STEP) * Y_STEP;// From the block number get the Y cord
 			Block b;
 			b.id = block;
 			b.color = world.colorName;
@@ -463,22 +475,26 @@ namespace pokemonGUI {
 		}
 	}
 	private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		//Update mouse coordinates
+		//Update mouse coordinates as a local object to keep track of where the mouse pointer is
+		//When calling other funtions, that do not have MouseEvent as a parameter
 		if (mapMaking) {
 			mouse = e;
 		}
 	}
 	private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-		//Release mouse and stop drawing and capturing blocks
+		//When mouse is released it stops drawing/erasing new obstacles
 		if (mapMaking) {
 			timerMouseDrag->Stop();
 			timerEraser->Stop();
 		}
 	}
 	private: System::Void btnSaveMap_Click(System::Object^  sender, System::EventArgs^  e) {
-		//Save world
+		//Saves world with the world name currently in World Name text box
+
+		//Converts from System::String^ to std::string
+		//String^ is a managed object, while string is non-managed
 		msclr::interop::marshal_context context;
-		std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); //Convert from String^ to std::string
+		std::string worldName = context.marshal_as<std::string>(textBoxWorldName->Text); 
 		world.saveWorld(worldName);
 	}
 	private: System::Void textBoxWorldName_TextChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -493,14 +509,17 @@ namespace pokemonGUI {
 		}
 	}
 	private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
-		automatic = false; //Since we are manually loading map we disable the automatic map update
+		//Since we are manually loading map we disable the automatic map update
+		automatic = false; 
 		loadEnemies(&world);
 		loadMap(&world);
 		automatic = true;
 	}
 
 	private: System::Void timerEraser_Tick(System::Object^  sender, System::EventArgs^  e) {
-		//Timer for erasing what has been drawn with holding right click
+		//Timer for erasing what has been drawn while holding down mouse right click
+		//And taking the block number out of set containing them
+		//Also turns the block color back to white
 		if (mouse->X < X_MAX && mouse->Y < Y_MAX) {
 			int block = mouse->X / X_STEP + mouse->Y / Y_STEP * (X_MAX / X_STEP);
 			int x = block % (X_MAX / X_STEP) * X_STEP;
@@ -536,9 +555,8 @@ namespace pokemonGUI {
 	private: System::Void frmAdventrureMap_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 		//Character move keys pressed
 		if (e->KeyCode == Keys::Escape) {
-			//pokemonGUI::frmMainMenu mainMenu;
-			//mainMenu.ShowDialog(); //Launch Main Menu
-			loadEnemies(&World()); //Move this afterwards
+			pokemonGUI::frmMainMenu mainMenu;
+			mainMenu.ShowDialog(); //Launch Main Menu
 		}
 		int X = characterX;
 		int Y = characterY;
@@ -555,8 +573,11 @@ namespace pokemonGUI {
 			Y += 20;
 		}
 		if (e->KeyCode == Keys::ShiftKey) {
+			//Toggle map visibility
 			if (pbMap->Visible) {
 				pbMap->Visible = false;
+				drawGrid();
+				loadMap(&world);
 			}
 			else {
 				pbMap->Visible = true;
@@ -572,8 +593,10 @@ namespace pokemonGUI {
 		}
 
 	}
-// Use A* alghorithm to figure out the best path from yourself to the double click position
+
 	private: System::Void aStar_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		// Use A* alghorithm to figure out the best path from yourself to the double click position
+		// Then start timer to gradually move our charactor step by step
 		try {
 			Node player;
 			player.x = characterX / 20;
@@ -608,14 +631,19 @@ namespace pokemonGUI {
 private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 }
 
-		 //Map load
+		 
 private: System::Void frmAdventrureMap_Load(System::Object^  sender, System::EventArgs^  e) {
+	//When first launching Map 
 	pictureCharacter->Location = Point(game.getPlayer().getX(), game.getPlayer().getY());
 	loadMap(&world);
 	loadEnemies(&world);
 	
 }
 private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::EventArgs^  e) {
+	//Based on A* algorithm move players character step by step to the desired location
+	//At the end of the path check if that is a place to make a map transition
+	//And if so, then transition to the next map
+
 	try {
 		if (timerIterator / 2 == timerEnd) {
 			for (World* w : world.exits) {
@@ -681,6 +709,7 @@ private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::E
 			timerMoveCharacter->Stop();
 		}
 		else {
+			//Move charactor by one step
 			int x = listOfMoves[timerIterator];
 			int y = listOfMoves[timerIterator + 1];
 			characterX = x * 20;
@@ -695,8 +724,10 @@ private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::E
 		cout << "TimerMoveCharacter - Error " << e.what() << endl;
 	}
 }
-	//Double click enemy character to open up fight window
+	
 	private: System::Void pbEnemy_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+		//Double click enemy character to open up fight window
+		//If enemy loses the fight - he is removed from the map
 		if (!mapMaking) {
 			if (game.getPlayer().getPokemon().getHP() != 0) {
 				for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
@@ -734,8 +765,11 @@ private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::E
 			}
 		}
 	}
-		 //Clicked on enemy character to start moving it
+		 
 private: System::Void pbEnemy_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	//Clicked on enemy character to start moving it
+	//Can only happen if the map is in map making mode
+	//Meant for easier level design
 	if (mapMaking) {
 		for each(KeyValuePair<String^, PictureBox^>^ pair in enemiesPictureBox) {
 			PictureBox^ thisBox = safe_cast<PictureBox^>(sender);
@@ -759,8 +793,10 @@ private: System::Void pbEnemy_MouseDown(System::Object^  sender, System::Windows
 		}
 	}
 }
-		 //Button stop map making. 
+		 
 private: System::Void btnStopMapMaking_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Button stop map making
+	//Hides everything connected to map making and lets the player move his character
 	mapMaking = false;
 	btnLoadMap->Visible =false;
 	btnSaveMap->Visible = false;

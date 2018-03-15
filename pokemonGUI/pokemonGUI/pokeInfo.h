@@ -3,11 +3,11 @@
 #include "Fight.h"
 #include "protoGUI.h"
 #include "Game.h"
-#include "frmLogin.h"
 #include "frmAddUser.h"
 #include "frmMainMenu.h"
 #include "frmShop.h"
 #include "frmAdventrureMap.h"
+#include "frmLogin.h"
 
 namespace pokemonGUI {
 
@@ -299,12 +299,15 @@ namespace pokemonGUI {
 		}
 #pragma endregion
 		//--------------------------------------------------------------------------------------------------------------------------------
-	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { //Start Game button clicked
+	private: System::Void btnStartGame_Click(System::Object^  sender, System::EventArgs^  e) { 
+		//Start Game button clicked
+		//Launches Adventure Map dialog
 
 		timerRefresh->Start();
 
 		if (cbPokemonSelect->SelectedIndex == -1)
 		{
+			//If no pokemon is selected
 			MessageBox::Show("Select a Pokemon", "Alert");
 		}
 		else
@@ -312,13 +315,15 @@ namespace pokemonGUI {
 			cbPokemonSelect->Enabled = false;
 			btnStartGame->Text = "Continue";
 			pokemonGUI::frmAdventrureMap mapGui;
-			mapGui.ShowDialog(); //Launch fight GUI
+			mapGui.ShowDialog(); //Launch Adventure Map GUI
 		}
 		
 	}
 private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { //Pokemon selection made
+private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) { 
+	//Pokemon selection made
+	//Happens when a new pokemon gets selected in the combo box
 	if (cbPokemonSelect->Text == "Catter") {
 		labelStats->Text = Catter.labelStats();
 		game.getPlayer().setPokemon(Catter);
@@ -370,10 +375,11 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 }
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-
-	pokemonGUI::frmLogin login;
-	login.ShowDialog(); //Launch fight GUI
-	game.getPlayer().savePlayer();
+	//Save game button pressed
+	//Launches Add user dialog
+	pokemonGUI::frmLogin frmLogin;
+	frmLogin.ShowDialog(); //Launch fight GUI
+	//game.getPlayer().savePlayer();
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 }
@@ -384,14 +390,19 @@ private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows:
 	}
 }
 private: System::Void timerRefresh_Tick(System::Object^  sender, System::EventArgs^  e) {
+	//Update labels every few seconds, so they stay up to date with everything happening in other windows
 	updateLabel();
 }
 private: System::Void btnShop_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Clicked on SHOP button
 	pokemonGUI::frmShop shop;
 	shop.ShowDialog(); //Launch Shop
 	updateLabel();
 }
 private: System::Void btnHealthPotion_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Clicked on button Use Health Potion
+	//Checks if the player has atleast one potion
+	//And uses it
 	if (cbPokemonSelect->SelectedIndex != -1) { //Use health potion
 		if (game.getPlayer().getHealthPotions() > 0) {
 			game.getPlayer().getPokemon().heal(50);
@@ -401,6 +412,9 @@ private: System::Void btnHealthPotion_Click(System::Object^  sender, System::Eve
 	}
 }
 private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Clicked on button Use Stamina Potion
+	//Checks if the player has atleast one potion
+	//And uses it
 	if (cbPokemonSelect->SelectedIndex != -1) { //Use stamina potion
 		if (game.getPlayer().getStaminaPotions() > 0) {
 			game.getPlayer().getPokemon().addStamina(50);
@@ -410,11 +424,14 @@ private: System::Void btnStaminaPotion_Click(System::Object^  sender, System::Ev
 	}
 }
 private: System::Void btnLevelUp_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Clicked on level up button
+	//Levels up the pokemon
 	game.getPlayer().getPokemon().levelUp();
 	updateLabel();
 }
 private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventArgs^  e) {
-
+	//Clicked on button Load Game.
+	//Loads a player from database and displays this players pokemon
 	Player::loadPlayer();
 
 	for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection

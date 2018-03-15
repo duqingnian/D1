@@ -91,5 +91,5 @@ Ability("Flop", 10, 0),
 Ability("Flop", 10, 0),
 Ability("Flop", 10, 0) };
 
-
+//Array of all the pokemons
 array<Pokemon*, 13> pokemonArray = { &Catter, &Zizi, &Pyro, &Lemongrass, &Thundershock, &Wail, &Blaze, &Flyff, &Jolt, &Treehouse, &Deeria, &Hydros, &Flop };

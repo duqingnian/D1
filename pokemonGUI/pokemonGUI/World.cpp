@@ -37,6 +37,8 @@ World::~World()
 }
 
 void World::saveWorld(string fileName) {
+	//Saves world's obstacles into a .txt file
+	//With the specified file name
 	ofstream worldFile;
 	worldFile.open("Maps/"+fileName+".txt");
 	for (Block b : world.blocks) {
@@ -45,6 +47,8 @@ void World::saveWorld(string fileName) {
 	worldFile.close();
 }
 void World::loadWorld(string fileName) {
+	//Loads world from a .txt file
+	//With a specified file name
 	world.blocks.clear();
 	world.obstacles.clear();
 	string line;

@@ -99,10 +99,14 @@ string Fight::declareWinner(Pokemon& winner) { // When other pokemon's HP is 0
 }
 int Fight::calculateDamage(Ability ability, Pokemon& dealer, Pokemon& receiver) {
 	srand(time(NULL));
-	int str = dealer.getStrength()/100 + 1; // Strength 0-100. Damage modifier. 20 - Adds 20% to damage.
+	// Strength 0-100. Damage modifier. 20 - Adds 20% to damage.
+	int str = dealer.getStrength()/100 + 1; 
+	// Agility 0-100% how often will the attack miss. 0 - always miss, 100 - never miss.
 	int agi = dealer.getAgility(); 
-	int isWeak = (dealer.getType()==receiver.getWeakness()) ? 1 : 0; // Add 50% to damage is enemy is weak against your type
-	int miss = ((rand() % 100 + 1) < agi) ? 1 : 0; // Agility 0-100% how often will the attack miss. 0 - always miss, 100 - never miss.
+	// Add 50% to damage is enemy is weak against your type
+	int isWeak = (dealer.getType()==receiver.getWeakness()) ? 1 : 0; 
+
+	int miss = ((rand() % 100 + 1) < agi) ? 1 : 0; 
 	int dmg = ability.getDamage();
 
 	int damage = miss * ((str*dmg) - (rand() % 5)) + (isWeak * str*dmg);

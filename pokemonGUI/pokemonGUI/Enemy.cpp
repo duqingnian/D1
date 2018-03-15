@@ -16,7 +16,8 @@ Enemy::Enemy()
 	this->dragging = false;
 }
 
-Enemy::Enemy(string name, Pokemon pokemon, string pokemonName, int x, int y, string pictureLocation){
+Enemy::Enemy(string name, Pokemon pokemon, string pokemonName,
+		int x, int y, string pictureLocation){
 	this->name = name;
 	this->pokemon = pokemon;
 	this->pokemonName = pokemonName;
