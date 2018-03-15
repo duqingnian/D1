@@ -9,13 +9,14 @@
 using namespace std;
 
 struct Block {
+	//Structure for obstacles
 	std::string color;
 	int id;
 
 };
 
 inline bool operator < (const Block& lhs, const Block& rhs)
-{//We need to overload "<" to put our struct into a set
+{//We need to overload "<" to put our Block structure into a set
 	return lhs.id < rhs.id;
 }
 
@@ -42,7 +43,7 @@ public:
 	set<int> obstacles;
 
 
-
+	//Load and Save functions
 	static void saveWorld(std::string fileName);
 	static void loadWorld(std::string fileName);
 

@@ -60,7 +60,8 @@ public:
 			vector<Node> usablePath;
 
 			
-			while (!(map[x][y].parentX == x && map[x][y].parentY == y) && map[x][y].x != -1 && map[x][y].y != -1) {
+			while (!(map[x][y].parentX == x && map[x][y].parentY == y)
+				&& map[x][y].x != -1 && map[x][y].y != -1) {
 
 				path.push(map[x][y]);
 				int tempX = map[x][y].parentX;
@@ -139,7 +140,8 @@ public:
 				}
 				float temp = FLT_MAX;
 				vector<Node>::iterator itNode;
-				for (vector<Node>::iterator it = openList.begin(); it != openList.end(); it = next(it)) {
+				for (vector<Node>::iterator it = openList.begin();
+					it != openList.end(); it = next(it)) {
 					Node n = *it;
 					if (n.fCost < temp) {
 						temp = n.fCost;

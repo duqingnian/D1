@@ -3,6 +3,7 @@
 #include "Database\sqlite3.h"
 #define DB "Pokemon.sqlite"
 #include "frmAddUser.h"
+#include "Game.h"
 namespace pokemonGUI {
 
 	using namespace System;
@@ -158,7 +159,7 @@ private: System::Void btnLogin_Click(System::Object^  sender, System::EventArgs^
 	const char * charUserName = ctx.marshal_as<const char*>(userName = txtUser->Text);
 	const char * charPassword = ctx.marshal_as<const char*>(Password = txtPass->Text);
 
-
+	game.getPlayer().setName(charUserName);
 
 
 

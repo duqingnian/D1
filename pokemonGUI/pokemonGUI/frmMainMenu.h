@@ -38,7 +38,7 @@ namespace pokemonGUI {
 	protected:
 	private: System::Windows::Forms::Button^  btnSave;
 	private: System::Windows::Forms::Button^  btnLoad;
-	private: System::Windows::Forms::Button^  btnPokemonList;
+
 	private: System::Windows::Forms::Label^  label1;
 
 	private:
@@ -57,7 +57,6 @@ namespace pokemonGUI {
 			this->btnResume = (gcnew System::Windows::Forms::Button());
 			this->btnSave = (gcnew System::Windows::Forms::Button());
 			this->btnLoad = (gcnew System::Windows::Forms::Button());
-			this->btnPokemonList = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
@@ -89,15 +88,6 @@ namespace pokemonGUI {
 			this->btnLoad->Text = L"Load Game";
 			this->btnLoad->UseVisualStyleBackColor = true;
 			// 
-			// btnPokemonList
-			// 
-			this->btnPokemonList->Location = System::Drawing::Point(55, 203);
-			this->btnPokemonList->Name = L"btnPokemonList";
-			this->btnPokemonList->Size = System::Drawing::Size(134, 39);
-			this->btnPokemonList->TabIndex = 0;
-			this->btnPokemonList->Text = L"Pokemon List";
-			this->btnPokemonList->UseVisualStyleBackColor = true;
-			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
@@ -111,9 +101,8 @@ namespace pokemonGUI {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(240, 287);
+			this->ClientSize = System::Drawing::Size(240, 243);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->btnPokemonList);
 			this->Controls->Add(this->btnLoad);
 			this->Controls->Add(this->btnSave);
 			this->Controls->Add(this->btnResume);

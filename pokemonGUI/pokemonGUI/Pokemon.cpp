@@ -69,6 +69,7 @@ void Pokemon::addStamina(int staminaAmount) { //Heal back HP
 }
 void Pokemon::levelUp() { //level Up
 	if (this->exp >= 100) {
+		//If enough xp
 		this->level += 1;
 		this->exp -= 100;
 		this->strength += 5;
@@ -95,6 +96,7 @@ void Pokemon::receiveDmg(const int dmg) { //Subtract HP
 	}
 }
 void Pokemon::printStats() {
+	//For displaying stats in the terminal window
 	cout << "Name:" << this->name << endl;
 	cout << "Level:" << this->level << endl;
 	cout << "Experience:" << this->exp << endl;
@@ -106,6 +108,7 @@ void Pokemon::printStats() {
 	cout << "Type:" << this->type << endl;
 }
 System::String^ Pokemon::labelStats() {
+	//For displaying stats in a graphical user interface
 	stringstream ss;
 	ss << "Name: " << this->name << endl;
 	ss << "Level: " << this->level << endl;
@@ -119,6 +122,8 @@ System::String^ Pokemon::labelStats() {
 	return gcnew System::String(ss.str().c_str());
 }
 int Pokemon::savePokemon() {
+	//Saves this pokemons current stats into database
+
 	sqlite3 *dbp;
 	sqlite3_open(DB, &dbp);
 	
@@ -163,6 +168,8 @@ int Pokemon::savePokemon() {
 
 
 Pokemon Pokemon::loadPokemon(int pokemonID) {
+	//Loads pokemon based on unique ID
+	//And returns that pokemons object
 
 	sqlite3 *db;
 	sqlite3_stmt *statement = nullptr;
@@ -200,8 +207,7 @@ Pokemon Pokemon::loadPokemon(int pokemonID) {
 		pokemon.exp = sqlite3_column_int(statement, 4);
 		pokemon.agility = sqlite3_column_int(statement, 5);
 		pokemon.strength = sqlite3_column_int(statement, 6);
-		pokemon.agility = sqlite3_column_int(statement, 7);
-		pokemon.stamina = sqlite3_column_int(statement, 8);
+		pokemon.stamina = sqlite3_column_int(statement, 7);
 		pokemon.maxStamina = pokemon.stamina;
 
 		sqlite3_finalize(statement);
