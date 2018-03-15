@@ -23,7 +23,7 @@ namespace pokemonGUI {
 			//
 			//TODO: Add the constructor code here
 			//
-			labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "£";
+			labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "Â£";
 		}
 
 	protected:
@@ -195,22 +195,31 @@ namespace pokemonGUI {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		
+
 		int money = game.getPlayer().getMoney();
 		if (money >= 20) {
 			game.getPlayer().addHealthPotion();
 			game.getPlayer().removeMoney(20);
+			if (money - 20 <= 0) {
+				button1->Enabled = false;
+				button2->Enabled = false;
+			}
 		}
-		labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "£";
+		labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "Â£";
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		int money = game.getPlayer().getMoney();
 		if (money >= 20) {
 			game.getPlayer().addStaminaPotion();
 			game.getPlayer().removeMoney(20);
+			if (money - 20 <= 0) {
+				button2->Enabled = false;
+				button1->Enabled = false;
+			}
 		}
-		labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "£";
+		labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "Â£";
 	}
 private: System::Void label3_Click(System::Object^  sender, System::EventArgs^  e) {
 }
