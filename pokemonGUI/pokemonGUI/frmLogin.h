@@ -1,8 +1,11 @@
 #pragma once
 #include <msclr/marshal.h>
 #include "Database\sqlite3.h"
+
 #define DB "Pokemon.sqlite"
 #include "frmAddUser.h"
+#include "Player.h"
+#include "Game.h"
 namespace pokemonGUI {
 
 	using namespace System;
@@ -76,6 +79,7 @@ namespace pokemonGUI {
 			this->txtPass->Name = L"txtPass";
 			this->txtPass->Size = System::Drawing::Size(227, 22);
 			this->txtPass->TabIndex = 0;
+			this->txtPass->UseSystemPasswordChar = true;
 			// 
 			// txtUser
 			// 
@@ -148,7 +152,7 @@ namespace pokemonGUI {
 
 	}
 private: System::Void btnLogin_Click(System::Object^  sender, System::EventArgs^  e) {
-
+	sqlite3 *dbFile;
 	String ^ userName;
 
 	String ^ Password;
@@ -159,7 +163,14 @@ private: System::Void btnLogin_Click(System::Object^  sender, System::EventArgs^
 	const char * charPassword = ctx.marshal_as<const char*>(Password = txtPass->Text);
 
 
+	if (userAccept(dbFile, charUserName, charPassword) == true)
+	{
+		//pokemonGUI::pokeInfo info;
+		//info.ShowDialog();
 
+		game.getPlayer().setName(charUserName);
+		Player::loadPlayer();
+	}
 
 
 }
@@ -168,5 +179,66 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	frmAddUser.ShowDialog();
 
 }
+		 bool userAccept(sqlite3 *dbFile, const char * userName, const char * password)
+		 {
+			 // prevent dulicate user names to be created in the database
+			 sqlite3_open(DB, &dbFile);
+
+			 char *zErrMsg = 0;
+			 sqlite3_stmt *stmt;
+			 const char *pzTest;
+			 char * sql;
+
+			 sql = "select count(UserName) from Player where UserName = ? and password = ? ;";
+
+			 cout << sqlite3_errmsg(dbFile);
+
+			 int rc = sqlite3_prepare(dbFile, sql, strlen(sql), &stmt, nullptr);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not prepeare the statement" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 rc = sqlite3_bind_text(stmt, 1, userName, strlen(userName), 0);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not bind username to sql" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 rc = sqlite3_bind_text(stmt, 2, password, strlen(password), 0);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not bind password to sql" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 rc = sqlite3_step(stmt);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not execute it" << endl;
+				 cout << sqlite3_errmsg(dbFile);
+			 }
+
+			 int countCheck = sqlite3_column_int(stmt, 0);
+
+			 if (countCheck >= 1)
+			 {
+				 
+				 return true;
+			 }
+			 rc = sqlite3_finalize(stmt);
+
+			 if (rc != SQLITE_OK);
+			 {
+				 cout << "Database could not clear statement";
+			 }
+			 return false;
+		 }
 };
 }

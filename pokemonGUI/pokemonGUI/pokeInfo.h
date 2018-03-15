@@ -3,6 +3,7 @@
 #include "Fight.h"
 #include "protoGUI.h"
 #include "Game.h"
+#include "frmLogin.h"
 #include "frmAddUser.h"
 #include "frmMainMenu.h"
 #include "frmShop.h"
@@ -370,8 +371,8 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 		 //----------------------------------------------------------------------------------------------------------------------------
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
-	pokemonGUI::frmAddUser frmAddUser;
-	frmAddUser.ShowDialog(); //Launch fight GUI
+	pokemonGUI::frmLogin login;
+	login.ShowDialog(); //Launch fight GUI
 	game.getPlayer().savePlayer();
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {

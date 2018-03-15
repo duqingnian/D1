@@ -263,6 +263,7 @@ namespace pokemonGUI {
 			this->pgBarPlayerStamina->Name = L"pgBarPlayerStamina";
 			this->pgBarPlayerStamina->Size = System::Drawing::Size(371, 23);
 			this->pgBarPlayerStamina->TabIndex = 14;
+			this->pgBarPlayerStamina->Click += gcnew System::EventHandler(this, &protoGUI::pgBarPlayerStamina_Click);
 			// 
 			// label3
 			// 
@@ -415,5 +416,8 @@ private: System::Void timerEnemyTurn_Tick(System::Object^  sender, System::Event
 	updatePgbar();
 	timerEnemyTurn->Stop(); //stop timer
 }
+private: System::Void pgBarPlayerStamina_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+
 };
 }
