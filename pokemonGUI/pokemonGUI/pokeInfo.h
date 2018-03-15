@@ -7,7 +7,7 @@
 #include "frmMainMenu.h"
 #include "frmShop.h"
 #include "frmAdventrureMap.h"
-#include "frmLogin.h"
+
 
 namespace pokemonGUI {
 
@@ -377,9 +377,7 @@ private: System::Void cbPokemonSelect_SelectedIndexChanged(System::Object^  send
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 	//Save game button pressed
 	//Launches Add user dialog
-	pokemonGUI::frmLogin frmLogin;
-	frmLogin.ShowDialog(); //Launch fight GUI
-	//game.getPlayer().savePlayer();
+	game.getPlayer().savePlayer();
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
 }
