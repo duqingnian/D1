@@ -288,6 +288,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnStartGame);
 			this->Controls->Add(this->btnSaveGame);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Name = L"pokeInfo";
 			this->Text = L"pokeInfo";
 			this->Load += gcnew System::EventHandler(this, &pokeInfo::pokeInfo_Load);
