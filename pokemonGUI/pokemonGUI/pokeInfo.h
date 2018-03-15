@@ -3,7 +3,6 @@
 #include "Fight.h"
 #include "protoGUI.h"
 #include "Game.h"
-#include "frmAddUser.h"
 #include "frmMainMenu.h"
 #include "frmShop.h"
 #include "frmAdventrureMap.h"
@@ -380,6 +379,19 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	game.getPlayer().savePlayer();
 }
 private: System::Void pokeInfo_Load(System::Object^  sender, System::EventArgs^  e) {
+	if (game.getPlayer().getPokemon().getName() != "") {
+		Pokemon temp = game.getPlayer().getPokemon();
+		for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection
+			if (cbPokemonSelect->Items[i]->ToString() == game.systemString(game.getPlayer().getPokemon().getName())) {
+				cbPokemonSelect->SelectedIndex = i;
+				cbPokemonSelect->Enabled = false;
+				break;
+			}
+		}
+		game.getPlayer().setPokemon(temp);
+	}
+	updateLabel();
+	pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());
 }
 private: System::Void pokeInfo_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 	if (e->KeyCode == Keys::Escape) {
@@ -431,13 +443,16 @@ private: System::Void btnLoadGame_Click(System::Object^  sender, System::EventAr
 	//Clicked on button Load Game.
 	//Loads a player from database and displays this players pokemon
 	Player::loadPlayer();
-
-	for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection
-		if (cbPokemonSelect->Items[i]->ToString() == game.systemString(game.getPlayer().getPokemon().getName())) {
-			cbPokemonSelect->SelectedIndex = i;
-			cbPokemonSelect->Enabled = false;
-			break;
+	if (game.getPlayer().getPokemon().getName() != "") {
+		Pokemon temp = game.getPlayer().getPokemon();
+		for (int i = 0; i < cbPokemonSelect->Items->Count; i++) { //Simulate loaded item as users selection
+			if (cbPokemonSelect->Items[i]->ToString() == game.systemString(game.getPlayer().getPokemon().getName())) {
+				cbPokemonSelect->SelectedIndex = i;
+				cbPokemonSelect->Enabled = false;
+				break;
+			}
 		}
+		game.getPlayer().setPokemon(temp);
 	}
 	updateLabel();
 	pictureBox1->ImageLocation = gcnew System::String(game.getPlayer().getPokemon().getPictureFileName().c_str());

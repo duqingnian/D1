@@ -173,7 +173,7 @@ void Player::loadPlayer(int PlayerID) {
 		querry = "SELECT * FROM PlayerStats WHERE PlayerFK = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
 		sqlite3_bind_int(statement, 1, PlayerID);
-		int pokemonID, x, y, money, healthPotions, staminaPotions, score;
+		int pokemonID=-1, x, y, money, healthPotions, staminaPotions, score;
 		while (sqlite3_step(statement) != SQLITE_DONE) {
 			pokemonID = sqlite3_column_int(statement, 2); //Get PokemonID
 			x = sqlite3_column_int(statement, 3);
@@ -188,12 +188,15 @@ void Player::loadPlayer(int PlayerID) {
 
 		sqlite3_finalize(statement);
 		sqlite3_close(db);
+		Pokemon pokemon;
+		if (pokemonID != -1) {
+			//SQL querry that gets pokemon from database
+			pokemon = Pokemon::loadPokemon(pokemonID); 
+			//Make a new player object and set that as our game player
+			Player player(name, pokemon, money, healthPotions, staminaPotions, score, x, y);
+			game.setPlayer(player);
 
-		Pokemon pokemon = Pokemon::loadPokemon(pokemonID); //SQL querry that gets pokemon from database
-		
-		//Make a new player object and set that as our game player
-		Player player(name, pokemon, money, healthPotions, staminaPotions, score, x, y);
-		game.setPlayer(player);
+		}
  	}
 	
 }

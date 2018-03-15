@@ -333,7 +333,6 @@ namespace pokemonGUI {
 			// 
 			// timerMoveCharacter
 			// 
-			this->timerMoveCharacter->Interval = 200;
 			this->timerMoveCharacter->Tick += gcnew System::EventHandler(this, &frmAdventrureMap::timerMoveCharacter_Tick);
 			// 
 			// btnStopMapMaking

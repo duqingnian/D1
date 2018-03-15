@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "pokeInfo.h"
 #include "Game.h"
 #include <sstream>
 #define DB "Pokemon.sqlite"
@@ -112,130 +113,123 @@ namespace pokemonGUI {
 			// 
 			// txtFirstName
 			// 
-			this->txtFirstName->Location = System::Drawing::Point(148, 106);
-			this->txtFirstName->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtFirstName->Location = System::Drawing::Point(197, 130);
+			this->txtFirstName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtFirstName->Name = L"txtFirstName";
-			this->txtFirstName->Size = System::Drawing::Size(136, 20);
+			this->txtFirstName->Size = System::Drawing::Size(180, 22);
 			this->txtFirstName->TabIndex = 0;
 			// 
 			// txtEmailAddress
 			// 
-			this->txtEmailAddress->Location = System::Drawing::Point(148, 175);
-			this->txtEmailAddress->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtEmailAddress->Location = System::Drawing::Point(197, 215);
+			this->txtEmailAddress->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtEmailAddress->Name = L"txtEmailAddress";
-			this->txtEmailAddress->Size = System::Drawing::Size(136, 20);
+			this->txtEmailAddress->Size = System::Drawing::Size(180, 22);
 			this->txtEmailAddress->TabIndex = 1;
 			// 
 			// txtUserName
 			// 
-			this->txtUserName->Location = System::Drawing::Point(148, 152);
-			this->txtUserName->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtUserName->Location = System::Drawing::Point(197, 187);
+			this->txtUserName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtUserName->Name = L"txtUserName";
-			this->txtUserName->Size = System::Drawing::Size(136, 20);
+			this->txtUserName->Size = System::Drawing::Size(180, 22);
 			this->txtUserName->TabIndex = 2;
 			// 
 			// txtLastName
 			// 
-			this->txtLastName->Location = System::Drawing::Point(148, 128);
-			this->txtLastName->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtLastName->Location = System::Drawing::Point(197, 158);
+			this->txtLastName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtLastName->Name = L"txtLastName";
-			this->txtLastName->Size = System::Drawing::Size(136, 20);
+			this->txtLastName->Size = System::Drawing::Size(180, 22);
 			this->txtLastName->TabIndex = 3;
 			// 
 			// txtPassword
 			// 
-			this->txtPassword->Location = System::Drawing::Point(148, 197);
-			this->txtPassword->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtPassword->Location = System::Drawing::Point(197, 242);
+			this->txtPassword->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtPassword->Name = L"txtPassword";
-			this->txtPassword->Size = System::Drawing::Size(136, 20);
+			this->txtPassword->Size = System::Drawing::Size(180, 22);
 			this->txtPassword->TabIndex = 4;
 			this->txtPassword->UseSystemPasswordChar = true;
 			// 
 			// txtPasswordConf
 			// 
-			this->txtPasswordConf->Location = System::Drawing::Point(148, 219);
-			this->txtPasswordConf->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtPasswordConf->Location = System::Drawing::Point(197, 270);
+			this->txtPasswordConf->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->txtPasswordConf->Name = L"txtPasswordConf";
 			this->txtPasswordConf->PasswordChar = '*';
-			this->txtPasswordConf->Size = System::Drawing::Size(136, 20);
+			this->txtPasswordConf->Size = System::Drawing::Size(180, 22);
 			this->txtPasswordConf->TabIndex = 5;
 			this->txtPasswordConf->UseSystemPasswordChar = true;
 			// 
 			// lblFirstName
 			// 
 			this->lblFirstName->AutoSize = true;
-			this->lblFirstName->Location = System::Drawing::Point(81, 106);
-			this->lblFirstName->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblFirstName->Location = System::Drawing::Point(108, 130);
 			this->lblFirstName->Name = L"lblFirstName";
-			this->lblFirstName->Size = System::Drawing::Size(63, 13);
+			this->lblFirstName->Size = System::Drawing::Size(84, 17);
 			this->lblFirstName->TabIndex = 6;
 			this->lblFirstName->Text = L"First Name: ";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(81, 128);
-			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label2->Location = System::Drawing::Point(108, 158);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(64, 13);
+			this->label2->Size = System::Drawing::Size(84, 17);
 			this->label2->TabIndex = 7;
 			this->label2->Text = L"Last Name: ";
 			// 
 			// lblReenterPass
 			// 
 			this->lblReenterPass->AutoSize = true;
-			this->lblReenterPass->Location = System::Drawing::Point(44, 219);
-			this->lblReenterPass->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblReenterPass->Location = System::Drawing::Point(59, 270);
 			this->lblReenterPass->Name = L"lblReenterPass";
-			this->lblReenterPass->Size = System::Drawing::Size(100, 13);
+			this->lblReenterPass->Size = System::Drawing::Size(133, 17);
 			this->lblReenterPass->TabIndex = 9;
 			this->lblReenterPass->Text = L"Re-enter Password:";
 			// 
 			// lblPassword
 			// 
 			this->lblPassword->AutoSize = true;
-			this->lblPassword->Location = System::Drawing::Point(88, 197);
-			this->lblPassword->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblPassword->Location = System::Drawing::Point(117, 242);
 			this->lblPassword->Name = L"lblPassword";
-			this->lblPassword->Size = System::Drawing::Size(56, 13);
+			this->lblPassword->Size = System::Drawing::Size(73, 17);
 			this->lblPassword->TabIndex = 8;
 			this->lblPassword->Text = L"Password:";
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(110, 152);
-			this->label5->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label5->Location = System::Drawing::Point(147, 187);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(0, 13);
+			this->label5->Size = System::Drawing::Size(0, 17);
 			this->label5->TabIndex = 11;
 			// 
 			// lblEmailAddress
 			// 
 			this->lblEmailAddress->AutoSize = true;
-			this->lblEmailAddress->Location = System::Drawing::Point(64, 175);
-			this->lblEmailAddress->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblEmailAddress->Location = System::Drawing::Point(85, 215);
 			this->lblEmailAddress->Name = L"lblEmailAddress";
-			this->lblEmailAddress->Size = System::Drawing::Size(79, 13);
+			this->lblEmailAddress->Size = System::Drawing::Size(106, 17);
 			this->lblEmailAddress->TabIndex = 10;
 			this->lblEmailAddress->Text = L"Email Address: ";
 			// 
 			// lblUserName
 			// 
 			this->lblUserName->AutoSize = true;
-			this->lblUserName->Location = System::Drawing::Point(81, 152);
-			this->lblUserName->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblUserName->Location = System::Drawing::Point(108, 187);
 			this->lblUserName->Name = L"lblUserName";
-			this->lblUserName->Size = System::Drawing::Size(66, 13);
+			this->lblUserName->Size = System::Drawing::Size(87, 17);
 			this->lblUserName->TabIndex = 12;
 			this->lblUserName->Text = L"User Name: ";
 			// 
 			// btnConfirm
 			// 
-			this->btnConfirm->Location = System::Drawing::Point(160, 375);
-			this->btnConfirm->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->btnConfirm->Location = System::Drawing::Point(213, 462);
+			this->btnConfirm->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnConfirm->Name = L"btnConfirm";
-			this->btnConfirm->Size = System::Drawing::Size(125, 31);
+			this->btnConfirm->Size = System::Drawing::Size(167, 38);
 			this->btnConfirm->TabIndex = 13;
 			this->btnConfirm->Text = L"Confirm";
 			this->btnConfirm->UseVisualStyleBackColor = true;
@@ -243,31 +237,31 @@ namespace pokemonGUI {
 			// 
 			// btnCancel
 			// 
-			this->btnCancel->Location = System::Drawing::Point(290, 375);
-			this->btnCancel->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->btnCancel->Location = System::Drawing::Point(387, 462);
+			this->btnCancel->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnCancel->Name = L"btnCancel";
-			this->btnCancel->Size = System::Drawing::Size(125, 31);
+			this->btnCancel->Size = System::Drawing::Size(167, 38);
 			this->btnCancel->TabIndex = 14;
 			this->btnCancel->Text = L"Cancel";
 			this->btnCancel->UseVisualStyleBackColor = true;
+			this->btnCancel->Click += gcnew System::EventHandler(this, &frmAddUser::btnCancel_Click);
 			// 
 			// lblPassNotCorrect
 			// 
 			this->lblPassNotCorrect->AutoSize = true;
 			this->lblPassNotCorrect->ForeColor = System::Drawing::Color::Red;
-			this->lblPassNotCorrect->Location = System::Drawing::Point(288, 223);
-			this->lblPassNotCorrect->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->lblPassNotCorrect->Location = System::Drawing::Point(384, 274);
 			this->lblPassNotCorrect->Name = L"lblPassNotCorrect";
-			this->lblPassNotCorrect->Size = System::Drawing::Size(127, 13);
+			this->lblPassNotCorrect->Size = System::Drawing::Size(169, 17);
 			this->lblPassNotCorrect->TabIndex = 15;
 			this->lblPassNotCorrect->Text = L"Password is not the same";
 			this->lblPassNotCorrect->Visible = false;
 			// 
 			// frmAddUser
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(511, 469);
+			this->ClientSize = System::Drawing::Size(681, 577);
 			this->Controls->Add(this->lblPassNotCorrect);
 			this->Controls->Add(this->btnCancel);
 			this->Controls->Add(this->btnConfirm);
@@ -285,7 +279,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->txtEmailAddress);
 			this->Controls->Add(this->txtFirstName);
 			this->ForeColor = System::Drawing::Color::Black;
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"frmAddUser";
 			this->Text = L"frmAddUser";
 			this->Load += gcnew System::EventHandler(this, &frmAddUser::frmAddUser_Load);
@@ -318,7 +312,11 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 		 if (!(userNameDup(dbFile, charUserName) != false || passwordPass() != true|| emptyTxt()== true)){
 			 runParamSQL(dbFile, charFName, charLName, charEmailAdd, charPassword, charUserName);
-			 game.getPlayer().setName(charUserName);
+			 Player p{ charUserName };
+			 game.setPlayer(p);
+			 pokemonGUI::pokeInfo form;
+			 this->Visible = false;
+			 form.ShowDialog();
 		  }
 }
 		 bool passwordPass()
@@ -470,5 +468,9 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 }
 			 return false;
 		 }
+private: System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->Close();
+	
+}
 };
 }
