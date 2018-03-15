@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "pokeInfo.h"
 #include "Game.h"
 #include <sstream>
 #define DB "Pokemon.sqlite"
@@ -58,13 +57,13 @@ namespace pokemonGUI {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::TextBox^  txtFirstName;
+
 	protected:
-	private: System::Windows::Forms::TextBox^  txtEmailAddress;
-	private: System::Windows::Forms::TextBox^  txtUserName;
-	private: System::Windows::Forms::TextBox^  txtLastName;
-	private: System::Windows::Forms::TextBox^  txtPassword;
-	private: System::Windows::Forms::TextBox^  txtPasswordConf;
+
+
+
+
+
 	private: System::Windows::Forms::Label^  lblFirstName;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  lblReenterPass;
@@ -79,6 +78,17 @@ namespace pokemonGUI {
 	private: System::Windows::Forms::Button^  btnConfirm;
 	private: System::Windows::Forms::Button^  btnCancel;
 	private: System::Windows::Forms::Label^  lblPassNotCorrect;
+	private: System::Windows::Forms::TextBox^  txtFirstName;
+	private: System::Windows::Forms::TextBox^  txtLastName;
+	private: System::Windows::Forms::TextBox^  txtUserName;
+	private: System::Windows::Forms::TextBox^  txtEmailAddress;
+	private: System::Windows::Forms::TextBox^  txtPassword;
+	private: System::Windows::Forms::TextBox^  txtPasswordConf;
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -93,12 +103,6 @@ namespace pokemonGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
-			this->txtEmailAddress = (gcnew System::Windows::Forms::TextBox());
-			this->txtUserName = (gcnew System::Windows::Forms::TextBox());
-			this->txtLastName = (gcnew System::Windows::Forms::TextBox());
-			this->txtPassword = (gcnew System::Windows::Forms::TextBox());
-			this->txtPasswordConf = (gcnew System::Windows::Forms::TextBox());
 			this->lblFirstName = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->lblReenterPass = (gcnew System::Windows::Forms::Label());
@@ -109,58 +113,13 @@ namespace pokemonGUI {
 			this->btnConfirm = (gcnew System::Windows::Forms::Button());
 			this->btnCancel = (gcnew System::Windows::Forms::Button());
 			this->lblPassNotCorrect = (gcnew System::Windows::Forms::Label());
+			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
+			this->txtLastName = (gcnew System::Windows::Forms::TextBox());
+			this->txtUserName = (gcnew System::Windows::Forms::TextBox());
+			this->txtEmailAddress = (gcnew System::Windows::Forms::TextBox());
+			this->txtPassword = (gcnew System::Windows::Forms::TextBox());
+			this->txtPasswordConf = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
-			// 
-			// txtFirstName
-			// 
-			this->txtFirstName->Location = System::Drawing::Point(197, 130);
-			this->txtFirstName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtFirstName->Name = L"txtFirstName";
-			this->txtFirstName->Size = System::Drawing::Size(180, 22);
-			this->txtFirstName->TabIndex = 0;
-			// 
-			// txtEmailAddress
-			// 
-			this->txtEmailAddress->Location = System::Drawing::Point(197, 215);
-			this->txtEmailAddress->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtEmailAddress->Name = L"txtEmailAddress";
-			this->txtEmailAddress->Size = System::Drawing::Size(180, 22);
-			this->txtEmailAddress->TabIndex = 1;
-			// 
-			// txtUserName
-			// 
-			this->txtUserName->Location = System::Drawing::Point(197, 187);
-			this->txtUserName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtUserName->Name = L"txtUserName";
-			this->txtUserName->Size = System::Drawing::Size(180, 22);
-			this->txtUserName->TabIndex = 2;
-			// 
-			// txtLastName
-			// 
-			this->txtLastName->Location = System::Drawing::Point(197, 158);
-			this->txtLastName->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtLastName->Name = L"txtLastName";
-			this->txtLastName->Size = System::Drawing::Size(180, 22);
-			this->txtLastName->TabIndex = 3;
-			// 
-			// txtPassword
-			// 
-			this->txtPassword->Location = System::Drawing::Point(197, 242);
-			this->txtPassword->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtPassword->Name = L"txtPassword";
-			this->txtPassword->Size = System::Drawing::Size(180, 22);
-			this->txtPassword->TabIndex = 4;
-			this->txtPassword->UseSystemPasswordChar = true;
-			// 
-			// txtPasswordConf
-			// 
-			this->txtPasswordConf->Location = System::Drawing::Point(197, 270);
-			this->txtPasswordConf->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->txtPasswordConf->Name = L"txtPasswordConf";
-			this->txtPasswordConf->PasswordChar = '*';
-			this->txtPasswordConf->Size = System::Drawing::Size(180, 22);
-			this->txtPasswordConf->TabIndex = 5;
-			this->txtPasswordConf->UseSystemPasswordChar = true;
 			// 
 			// lblFirstName
 			// 
@@ -244,7 +203,6 @@ namespace pokemonGUI {
 			this->btnCancel->TabIndex = 14;
 			this->btnCancel->Text = L"Cancel";
 			this->btnCancel->UseVisualStyleBackColor = true;
-			this->btnCancel->Click += gcnew System::EventHandler(this, &frmAddUser::btnCancel_Click);
 			// 
 			// lblPassNotCorrect
 			// 
@@ -257,11 +215,59 @@ namespace pokemonGUI {
 			this->lblPassNotCorrect->Text = L"Password is not the same";
 			this->lblPassNotCorrect->Visible = false;
 			// 
+			// txtFirstName
+			// 
+			this->txtFirstName->Location = System::Drawing::Point(199, 130);
+			this->txtFirstName->Name = L"txtFirstName";
+			this->txtFirstName->Size = System::Drawing::Size(181, 22);
+			this->txtFirstName->TabIndex = 16;
+			// 
+			// txtLastName
+			// 
+			this->txtLastName->Location = System::Drawing::Point(198, 158);
+			this->txtLastName->Name = L"txtLastName";
+			this->txtLastName->Size = System::Drawing::Size(181, 22);
+			this->txtLastName->TabIndex = 17;
+			// 
+			// txtUserName
+			// 
+			this->txtUserName->Location = System::Drawing::Point(198, 187);
+			this->txtUserName->Name = L"txtUserName";
+			this->txtUserName->Size = System::Drawing::Size(181, 22);
+			this->txtUserName->TabIndex = 18;
+			// 
+			// txtEmailAddress
+			// 
+			this->txtEmailAddress->Location = System::Drawing::Point(199, 215);
+			this->txtEmailAddress->Name = L"txtEmailAddress";
+			this->txtEmailAddress->Size = System::Drawing::Size(181, 22);
+			this->txtEmailAddress->TabIndex = 19;
+			// 
+			// txtPassword
+			// 
+			this->txtPassword->Location = System::Drawing::Point(199, 243);
+			this->txtPassword->Name = L"txtPassword";
+			this->txtPassword->Size = System::Drawing::Size(181, 22);
+			this->txtPassword->TabIndex = 20;
+			// 
+			// txtPasswordConf
+			// 
+			this->txtPasswordConf->Location = System::Drawing::Point(199, 270);
+			this->txtPasswordConf->Name = L"txtPasswordConf";
+			this->txtPasswordConf->Size = System::Drawing::Size(181, 22);
+			this->txtPasswordConf->TabIndex = 21;
+			// 
 			// frmAddUser
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(681, 577);
+			this->Controls->Add(this->txtPasswordConf);
+			this->Controls->Add(this->txtPassword);
+			this->Controls->Add(this->txtEmailAddress);
+			this->Controls->Add(this->txtUserName);
+			this->Controls->Add(this->txtLastName);
+			this->Controls->Add(this->txtFirstName);
 			this->Controls->Add(this->lblPassNotCorrect);
 			this->Controls->Add(this->btnCancel);
 			this->Controls->Add(this->btnConfirm);
@@ -272,13 +278,8 @@ namespace pokemonGUI {
 			this->Controls->Add(this->lblPassword);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->lblFirstName);
-			this->Controls->Add(this->txtPasswordConf);
-			this->Controls->Add(this->txtPassword);
-			this->Controls->Add(this->txtLastName);
-			this->Controls->Add(this->txtUserName);
-			this->Controls->Add(this->txtEmailAddress);
-			this->Controls->Add(this->txtFirstName);
 			this->ForeColor = System::Drawing::Color::Black;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"frmAddUser";
 			this->Text = L"frmAddUser";
@@ -312,11 +313,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 		 if (!(userNameDup(dbFile, charUserName) != false || passwordPass() != true|| emptyTxt()== true)){
 			 runParamSQL(dbFile, charFName, charLName, charEmailAdd, charPassword, charUserName);
-			 Player p{ charUserName };
-			 game.setPlayer(p);
-			 pokemonGUI::pokeInfo form;
-			 this->Visible = false;
-			 form.ShowDialog();
+			 game.getPlayer().setName(charUserName);
 		  }
 }
 		 bool passwordPass()
@@ -432,7 +429,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			int rc = sqlite3_prepare(dbFile, sql, strlen(sql), &stmt, nullptr);
 
-			 if (rc != SQLITE_OK);
+			 if (rc != SQLITE_OK)
 			 {
 				 cout << "Database could not prepeare the statement" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -440,7 +437,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			 rc = sqlite3_bind_text(stmt, 1, userName, strlen(userName), 0);
 
-			 if (rc != SQLITE_OK);
+			 if (rc != SQLITE_OK)
 			 {
 				 cout << "Database could not bind text to sql" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -448,7 +445,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			 rc = sqlite3_step(stmt);
 
-			 if (rc != SQLITE_OK);
+			 if (rc != SQLITE_OK)
 			 {
 				 cout << "Database could not execute it" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -462,15 +459,11 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 }
 			 rc = sqlite3_finalize(stmt);
 
-			 if (rc != SQLITE_OK);
+			 if (rc != SQLITE_OK)
 			 {
 				 cout << "Database could not clear statement";
 			 }
 			 return false;
 		 }
-private: System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->Close();
-	
-}
 };
 }

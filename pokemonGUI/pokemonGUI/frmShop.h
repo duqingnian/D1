@@ -195,8 +195,8 @@ namespace pokemonGUI {
 
 		}
 #pragma endregion
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) { //Health Potion button, checks if enough money, if not then disable button
+
 
 		int money = game.getPlayer().getMoney();
 		if (money >= 20) {
@@ -209,7 +209,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		}
 		labelMoney->Text = "You have: " + game.getPlayer().getMoney() + "£";
 	}
-	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) { //Stamina Potion button, checks if enough money, if not then disable button
 		int money = game.getPlayer().getMoney();
 		if (money >= 20) {
 			game.getPlayer().addStaminaPotion();

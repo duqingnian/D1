@@ -365,6 +365,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->btnLoadMap);
 			this->Controls->Add(this->btnSaveMap);
 			this->Controls->Add(this->btnMapMaker);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->MaximizeBox = false;
 			this->Name = L"frmAdventrureMap";
