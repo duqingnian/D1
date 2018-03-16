@@ -3,7 +3,6 @@
 #include <msclr/marshal.h>
 
 #include "Database\sqlite3.h"
-
 #define DB "Pokemon.sqlite"
 #include "pokeInfo.h"
 #include "frmAddUser.h"
@@ -11,6 +10,8 @@
 #include "Player.h"
 
 #include "Game.h"
+#include <Windows.h>
+#include <mmsystem.h>
 
 namespace pokemonGUI {
 
@@ -116,6 +117,7 @@ namespace pokemonGUI {
 		void InitializeComponent(void)
 
 		{
+			PlaySound(TEXT("Birds.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(frmLogin::typeid));
 			this->txtUserName = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
