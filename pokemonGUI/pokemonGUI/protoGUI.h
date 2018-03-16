@@ -317,6 +317,7 @@ namespace pokemonGUI {
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
+
 		}
 #pragma endregion
 	private: System::Void protoGUI_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -356,7 +357,6 @@ private: System::Void btnStartBattle_Click(System::Object^  sender, System::Even
 	btnHealthPotion->Visible = true;
 	btnStaminaPotion->Visible = true;
 	btnStartBattle->Visible = false;
-
 }
 private: System::Void btnHealthPotion_Click(System::Object^  sender, System::EventArgs^  e) { 
 	//Health potion button click

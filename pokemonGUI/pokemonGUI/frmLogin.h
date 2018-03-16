@@ -1,14 +1,11 @@
 #pragma once
 
 #include <msclr/marshal.h>
-
 #include "Database\sqlite3.h"
 #define DB "Pokemon.sqlite"
 #include "pokeInfo.h"
 #include "frmAddUser.h"
-
 #include "Player.h"
-
 #include "Game.h"
 #include <Windows.h>
 #include <mmsystem.h>
@@ -16,67 +13,38 @@
 namespace pokemonGUI {
 
 	using namespace System;
-
 	using namespace System::ComponentModel;
-
 	using namespace System::Collections;
-
 	using namespace System::Windows::Forms;
-
 	using namespace System::Data;
-
 	using namespace System::Drawing;
 
 	/// <summary>
-
 	/// Summary for frmLogin
-
 	/// </summary>
 
 	public ref class frmLogin : public System::Windows::Forms::Form
-
 	{
-
 	public:
-
 		frmLogin(void)
-
 		{
-
 			InitializeComponent();
-
 			//
-
 			//TODO: Add the constructor code here
-
 			//
-
 		}
-
 	protected:
-
 		/// <summary>
-
 		/// Clean up any resources being used.
-
 		/// </summary>
 
 		~frmLogin()
-
 		{
-
 			if (components)
-
 			{
-
 				delete components;
-
 			}
-
 		}
-
-
-
 	protected:
 
 
@@ -244,7 +212,6 @@ namespace pokemonGUI {
 		const char * charPassword = ctx.marshal_as<const char*>(Password = txtPass->Text);
 
 		if (userAccept(dbFile, charUserName, charPassword) == true)
-
 		{
 			game.getPlayer().setName(charUserName);
 			Player::loadPlayer();
@@ -252,7 +219,6 @@ namespace pokemonGUI {
 			pokemonGUI::pokeInfo info;
 			info.ShowDialog();
 			this->Close();
-
 			
 		}
 	}
