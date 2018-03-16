@@ -74,11 +74,11 @@ namespace pokemonGUI {
 
 		}
 
-	private: System::Windows::Forms::TextBox^ txtPass;
+
 
 	protected:
 
-	private: System::Windows::Forms::TextBox^ txtUser;
+
 
 	protected:
 
@@ -90,6 +90,8 @@ namespace pokemonGUI {
 
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::TextBox^  txtUser;
+	private: System::Windows::Forms::TextBox^  txtPass;
 
 	private:
 
@@ -115,41 +117,23 @@ namespace pokemonGUI {
 
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(frmLogin::typeid));
-			this->txtPass = (gcnew System::Windows::Forms::TextBox());
-			this->txtUser = (gcnew System::Windows::Forms::TextBox());
 			this->txtUserName = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnLogin = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->txtUser = (gcnew System::Windows::Forms::TextBox());
+			this->txtPass = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
-			// 
-			// txtPass
-			// 
-			this->txtPass->Location = System::Drawing::Point(513, 379);
-			this->txtPass->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
-			this->txtPass->Name = L"txtPass";
-			this->txtPass->Size = System::Drawing::Size(171, 20);
-			this->txtPass->TabIndex = 0;
-			this->txtPass->UseSystemPasswordChar = true;
-			// 
-			// txtUser
-			// 
-			this->txtUser->Location = System::Drawing::Point(513, 318);
-			this->txtUser->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
-			this->txtUser->Name = L"txtUser";
-			this->txtUser->Size = System::Drawing::Size(171, 20);
-			this->txtUser->TabIndex = 1;
 			// 
 			// txtUserName
 			// 
 			this->txtUserName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txtUserName->Location = System::Drawing::Point(15, 138);
-			this->txtUserName->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->txtUserName->Location = System::Drawing::Point(20, 170);
 			this->txtUserName->Name = L"txtUserName";
-			this->txtUserName->Size = System::Drawing::Size(90, 18);
+			this->txtUserName->Size = System::Drawing::Size(120, 22);
 			this->txtUserName->TabIndex = 2;
 			this->txtUserName->Text = L"User Name:";
 			// 
@@ -157,19 +141,18 @@ namespace pokemonGUI {
 			// 
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(14, 175);
-			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+			this->label1->Location = System::Drawing::Point(19, 215);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(90, 18);
+			this->label1->Size = System::Drawing::Size(120, 22);
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"Password:";
 			// 
 			// btnLogin
 			// 
-			this->btnLogin->Location = System::Drawing::Point(377, 423);
-			this->btnLogin->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->btnLogin->Location = System::Drawing::Point(503, 521);
+			this->btnLogin->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnLogin->Name = L"btnLogin";
-			this->btnLogin->Size = System::Drawing::Size(97, 48);
+			this->btnLogin->Size = System::Drawing::Size(129, 59);
 			this->btnLogin->TabIndex = 4;
 			this->btnLogin->Text = L"Login";
 			this->btnLogin->UseVisualStyleBackColor = true;
@@ -177,10 +160,10 @@ namespace pokemonGUI {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(504, 423);
-			this->button2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button2->Location = System::Drawing::Point(672, 521);
+			this->button2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(97, 48);
+			this->button2->Size = System::Drawing::Size(129, 59);
 			this->button2->TabIndex = 5;
 			this->button2->Text = L"Create Account";
 			this->button2->UseVisualStyleBackColor = true;
@@ -189,27 +172,45 @@ namespace pokemonGUI {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(-3, -6);
+			this->pictureBox1->Location = System::Drawing::Point(-4, -7);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1002, 502);
+			this->pictureBox1->Size = System::Drawing::Size(1336, 618);
 			this->pictureBox1->TabIndex = 6;
 			this->pictureBox1->TabStop = false;
 			// 
+			// txtUser
+			// 
+			this->txtUser->Location = System::Drawing::Point(684, 391);
+			this->txtUser->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->txtUser->Name = L"txtUser";
+			this->txtUser->Size = System::Drawing::Size(227, 22);
+			this->txtUser->TabIndex = 7;
+			// 
+			// txtPass
+			// 
+			this->txtPass->Location = System::Drawing::Point(684, 453);
+			this->txtPass->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->txtPass->Name = L"txtPass";
+			this->txtPass->Size = System::Drawing::Size(227, 22);
+			this->txtPass->TabIndex = 8;
+			this->txtPass->UseSystemPasswordChar = true;
+			// 
 			// frmLogin
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(999, 495);
+			this->ClientSize = System::Drawing::Size(1332, 609);
+			this->Controls->Add(this->txtPass);
+			this->Controls->Add(this->txtUser);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->btnLogin);
-			this->Controls->Add(this->txtUser);
-			this->Controls->Add(this->txtPass);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->txtUserName);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"frmLogin";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Login";
@@ -248,6 +249,7 @@ namespace pokemonGUI {
 			Player::loadPlayer();
 			pokemonGUI::pokeInfo info;
 			info.ShowDialog();
+
 			
 		}
 	}
