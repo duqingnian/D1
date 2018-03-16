@@ -219,21 +219,21 @@ namespace pokemonGUI {
 			// 
 			// txtFirstName
 			// 
-			this->txtFirstName->Location = System::Drawing::Point(199, 130);
+			this->txtFirstName->Location = System::Drawing::Point(199, 127);
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(181, 22);
 			this->txtFirstName->TabIndex = 16;
 			// 
 			// txtLastName
 			// 
-			this->txtLastName->Location = System::Drawing::Point(198, 158);
+			this->txtLastName->Location = System::Drawing::Point(199, 155);
 			this->txtLastName->Name = L"txtLastName";
 			this->txtLastName->Size = System::Drawing::Size(181, 22);
 			this->txtLastName->TabIndex = 17;
 			// 
 			// txtUserName
 			// 
-			this->txtUserName->Location = System::Drawing::Point(198, 187);
+			this->txtUserName->Location = System::Drawing::Point(199, 187);
 			this->txtUserName->Name = L"txtUserName";
 			this->txtUserName->Size = System::Drawing::Size(181, 22);
 			this->txtUserName->TabIndex = 18;
@@ -251,13 +251,15 @@ namespace pokemonGUI {
 			this->txtPassword->Name = L"txtPassword";
 			this->txtPassword->Size = System::Drawing::Size(181, 22);
 			this->txtPassword->TabIndex = 20;
+			this->txtPassword->UseSystemPasswordChar = true;
 			// 
 			// txtPasswordConf
 			// 
-			this->txtPasswordConf->Location = System::Drawing::Point(199, 270);
+			this->txtPasswordConf->Location = System::Drawing::Point(199, 271);
 			this->txtPasswordConf->Name = L"txtPasswordConf";
 			this->txtPasswordConf->Size = System::Drawing::Size(181, 22);
 			this->txtPasswordConf->TabIndex = 21;
+			this->txtPasswordConf->UseSystemPasswordChar = true;
 			// 
 			// frmAddUser
 			// 
@@ -284,6 +286,7 @@ namespace pokemonGUI {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"frmAddUser";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"frmAddUser";
 			this->Load += gcnew System::EventHandler(this, &frmAddUser::frmAddUser_Load);
 			this->ResumeLayout(false);
@@ -379,7 +382,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 				 sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
 				 sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
 				 sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
-				 sqlite3_bind_text(stmt, 5, pass, strlen(pass), 0);
+				 sqlite3_bind_text(stmt, 5, pass, strlen(userName), 0);
 		
 				 // commit 
 				 sqlite3_step(stmt);
