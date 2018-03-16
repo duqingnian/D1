@@ -11,6 +11,8 @@
 #include "Player.h"
 
 #include "Game.h"
+#include <Windows.h>
+#include <MMSystem.h>
 
 namespace pokemonGUI {
 
@@ -25,6 +27,7 @@ namespace pokemonGUI {
 	using namespace System::Data;
 
 	using namespace System::Drawing;
+
 
 	/// <summary>
 
@@ -41,14 +44,9 @@ namespace pokemonGUI {
 		frmLogin(void)
 
 		{
-
+			
 			InitializeComponent();
 
-			//
-
-			//TODO: Add the constructor code here
-
-			//
 
 		}
 
@@ -63,7 +61,7 @@ namespace pokemonGUI {
 		~frmLogin()
 
 		{
-
+			//PlaySound(TEXT("Birds.wav"));// , NULL, SND_SYNC);
 			if (components)
 
 			{
@@ -128,7 +126,7 @@ namespace pokemonGUI {
 			// txtPass
 			// 
 			this->txtPass->Location = System::Drawing::Point(513, 379);
-			this->txtPass->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtPass->Margin = System::Windows::Forms::Padding(2);
 			this->txtPass->Name = L"txtPass";
 			this->txtPass->Size = System::Drawing::Size(171, 20);
 			this->txtPass->TabIndex = 0;
@@ -137,7 +135,7 @@ namespace pokemonGUI {
 			// txtUser
 			// 
 			this->txtUser->Location = System::Drawing::Point(513, 318);
-			this->txtUser->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->txtUser->Margin = System::Windows::Forms::Padding(2);
 			this->txtUser->Name = L"txtUser";
 			this->txtUser->Size = System::Drawing::Size(171, 20);
 			this->txtUser->TabIndex = 1;
@@ -167,7 +165,7 @@ namespace pokemonGUI {
 			// btnLogin
 			// 
 			this->btnLogin->Location = System::Drawing::Point(377, 423);
-			this->btnLogin->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->btnLogin->Margin = System::Windows::Forms::Padding(2);
 			this->btnLogin->Name = L"btnLogin";
 			this->btnLogin->Size = System::Drawing::Size(97, 48);
 			this->btnLogin->TabIndex = 4;
@@ -178,7 +176,7 @@ namespace pokemonGUI {
 			// button2
 			// 
 			this->button2->Location = System::Drawing::Point(504, 423);
-			this->button2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(97, 48);
 			this->button2->TabIndex = 5;
@@ -194,6 +192,7 @@ namespace pokemonGUI {
 			this->pictureBox1->Size = System::Drawing::Size(1002, 502);
 			this->pictureBox1->TabIndex = 6;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &frmLogin::pictureBox1_Click);
 			// 
 			// frmLogin
 			// 
@@ -209,7 +208,7 @@ namespace pokemonGUI {
 			this->Controls->Add(this->txtUserName);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"frmLogin";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Login";
@@ -312,7 +311,9 @@ namespace pokemonGUI {
 
 			 }
 
-	};
+	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+};
 
 }
 

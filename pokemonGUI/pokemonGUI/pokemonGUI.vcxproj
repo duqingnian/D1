@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -198,6 +198,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.h</DependentUpon>
@@ -217,6 +218,24 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Database\sqlite3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib.1.0.dll">
+      <Guid>6bf52a50-394a-11d3-b153-00c04f79faa6</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>false</Isolated>
+    </COMReference>
+    <COMReference Include="AxWMPLib.1.0.dll">
+      <Guid>6bf52a50-394a-11d3-b153-00c04f79faa6</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>aximp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
