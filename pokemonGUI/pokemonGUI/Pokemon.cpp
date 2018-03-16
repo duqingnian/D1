@@ -125,43 +125,48 @@ int Pokemon::savePokemon() {
 	//Saves this pokemons current stats into database
 
 	sqlite3 *dbp;
-	sqlite3_open(DB, &dbp);
-	
+	int maxID;
+	if (sqlite3_open(DB, &dbp) == SQLITE_OK) {
 
-	sqlite3_stmt * saving = nullptr;
-	string command = "SELECT MAX(PowerID) FROM Power";
-	sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
-	sqlite3_step(saving);
-	int maxID = sqlite3_column_int(saving, 0);
 
-	sqlite3_finalize(saving);
+		sqlite3_stmt * saving = nullptr;
+		string command = "SELECT MAX(PowerID) FROM Power";
+		sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+		sqlite3_step(saving);
+		maxID = sqlite3_column_int(saving, 0);
 
-	int check;
+		sqlite3_finalize(saving);
+		sqlite3_close(dbp);
 
-	command = "INSERT INTO Power VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+		int check;
+		check = sqlite3_open(DB, &dbp);
+		command = "INSERT INTO Power VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
 
-	check = sqlite3_bind_int(saving, 1, maxID + 1);
-	check = sqlite3_bind_int(saving, 2, this->level);
-	check = sqlite3_bind_int(saving, 3, this->HP);
-	check = sqlite3_bind_int(saving, 4, this->maxHP);
-	check = sqlite3_bind_int(saving, 5, this->exp);
-	check = sqlite3_bind_int(saving, 6, this->agility);
-	check = sqlite3_bind_int(saving, 7, this->strength);
-	check = sqlite3_bind_int(saving, 8, this->maxStamina);
-	check = sqlite3_bind_int(saving, 9, 0);
+		check = sqlite3_bind_int(saving, 1, maxID + 1);
+		check = sqlite3_bind_int(saving, 2, this->level);
+		check = sqlite3_bind_int(saving, 3, this->HP);
+		check = sqlite3_bind_int(saving, 4, this->maxHP);
+		check = sqlite3_bind_int(saving, 5, this->exp);
+		check = sqlite3_bind_int(saving, 6, this->agility);
+		check = sqlite3_bind_int(saving, 7, this->strength);
+		check = sqlite3_bind_int(saving, 8, this->maxStamina);
+		check = sqlite3_bind_int(saving, 9, 0);
 
-	check = sqlite3_step(saving);
-	check = sqlite3_finalize(saving);
+		check = sqlite3_step(saving);
+		check = sqlite3_finalize(saving);
+		check = sqlite3_close(dbp);
 
-	command = "INSERT INTO PokemonTable(PokemonID, TypeID, Name, PowerID) VALUES(?, 0, ?, ?)";
-	check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
-	check = sqlite3_bind_int(saving, 1, maxID + 1);
-	check = sqlite3_bind_text(saving, 2, this->name.c_str(), this->name.size(), NULL);
-	check = sqlite3_bind_int(saving, 3, maxID + 1);
-	check = sqlite3_step(saving);
-	check = sqlite3_finalize(saving);
-	check = sqlite3_close(dbp);
+		check = sqlite3_open(DB, &dbp);
+		command = "INSERT INTO PokemonTable(PokemonID, TypeID, Name, PowerID) VALUES(?, 0, ?, ?)";
+		check = sqlite3_prepare(dbp, command.c_str(), command.size() + 1, &saving, nullptr);
+		check = sqlite3_bind_int(saving, 1, maxID + 1);
+		check = sqlite3_bind_text(saving, 2, this->name.c_str(), this->name.size(), NULL);
+		check = sqlite3_bind_int(saving, 3, maxID + 1);
+		check = sqlite3_step(saving);
+		check = sqlite3_finalize(saving);
+		check = sqlite3_close(dbp);
+	}
 
 	return maxID + 1; //Returns the ID for this save
 }
@@ -170,37 +175,35 @@ int Pokemon::savePokemon() {
 Pokemon Pokemon::loadPokemon(int pokemonID) {
 	//Loads pokemon based on unique ID
 	//And returns that pokemons object
-
+	
 	sqlite3 *db;
 	sqlite3_stmt *statement = nullptr;
-
+	Pokemon pokemon;
 	if (sqlite3_open(DB, &db) == SQLITE_OK) {
 		string querry;
-		
+
 		querry = "SELECT * FROM PokemonTable WHERE PokemonID = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
-		cout << sqlite3_errmsg(db) << endl;
 		sqlite3_bind_int(statement, 1, pokemonID);
-		cout << sqlite3_errmsg(db) << endl;
 		sqlite3_step(statement);
-		cout << sqlite3_errmsg(db) << endl;
 		const unsigned char * pokemonName1 = sqlite3_column_text(statement, 2);
 		string pokemonName = (char*)pokemonName1;
 
 		sqlite3_finalize(statement);
-		Pokemon pokemon;
+		sqlite3_close(db);
+		
 		for (Pokemon *p : pokemonArray) { //Based on pokemon name, get pokemon object
 			if (p->getName() == pokemonName) {
 				pokemon = *p;
 			}
 		}
-		
 
+		sqlite3_open(DB, &db);
 		querry = "SELECT * FROM Power WHERE PowerID = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
 		sqlite3_bind_int(statement, 1, pokemonID);
 		sqlite3_step(statement);
-		
+
 		pokemon.level = sqlite3_column_int(statement, 1);
 		pokemon.HP = sqlite3_column_int(statement, 2);
 		pokemon.maxHP = sqlite3_column_int(statement, 3);
@@ -210,10 +213,11 @@ Pokemon Pokemon::loadPokemon(int pokemonID) {
 		pokemon.stamina = sqlite3_column_int(statement, 7);
 		pokemon.maxStamina = pokemon.stamina;
 
-		sqlite3_finalize(statement);
+		int i = sqlite3_finalize(statement);
 		sqlite3_close(db);
 
-
-		return pokemon;
 	}
+
+	return pokemon;
+	
 }

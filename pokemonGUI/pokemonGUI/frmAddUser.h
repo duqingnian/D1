@@ -219,21 +219,21 @@ namespace pokemonGUI {
 			// 
 			// txtFirstName
 			// 
-			this->txtFirstName->Location = System::Drawing::Point(199, 127);
+			this->txtFirstName->Location = System::Drawing::Point(199, 130);
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(181, 22);
 			this->txtFirstName->TabIndex = 16;
 			// 
 			// txtLastName
 			// 
-			this->txtLastName->Location = System::Drawing::Point(199, 155);
+			this->txtLastName->Location = System::Drawing::Point(198, 158);
 			this->txtLastName->Name = L"txtLastName";
 			this->txtLastName->Size = System::Drawing::Size(181, 22);
 			this->txtLastName->TabIndex = 17;
 			// 
 			// txtUserName
 			// 
-			this->txtUserName->Location = System::Drawing::Point(199, 187);
+			this->txtUserName->Location = System::Drawing::Point(198, 187);
 			this->txtUserName->Name = L"txtUserName";
 			this->txtUserName->Size = System::Drawing::Size(181, 22);
 			this->txtUserName->TabIndex = 18;
@@ -251,15 +251,13 @@ namespace pokemonGUI {
 			this->txtPassword->Name = L"txtPassword";
 			this->txtPassword->Size = System::Drawing::Size(181, 22);
 			this->txtPassword->TabIndex = 20;
-			this->txtPassword->UseSystemPasswordChar = true;
 			// 
 			// txtPasswordConf
 			// 
-			this->txtPasswordConf->Location = System::Drawing::Point(199, 271);
+			this->txtPasswordConf->Location = System::Drawing::Point(199, 270);
 			this->txtPasswordConf->Name = L"txtPasswordConf";
 			this->txtPasswordConf->Size = System::Drawing::Size(181, 22);
 			this->txtPasswordConf->TabIndex = 21;
-			this->txtPasswordConf->UseSystemPasswordChar = true;
 			// 
 			// frmAddUser
 			// 
@@ -286,7 +284,6 @@ namespace pokemonGUI {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"frmAddUser";
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"frmAddUser";
 			this->Load += gcnew System::EventHandler(this, &frmAddUser::frmAddUser_Load);
 			this->ResumeLayout(false);
@@ -364,12 +361,12 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 		 // A function to run parameterize query
 		 void runParamSQL(sqlite3 *db, const char *fn, const char *ln, const char *emailAdd, const char * pass, const char * userName)
 		 {
-			 sqlite3_open(DB, &db);
 			 char *zErrMsg = 0;
 			 sqlite3_stmt *stmt;
 			 const char *pzTest;
 			 char *SQL;
 
+			 sqlite3_open(DB, &db);
 			 // Insert data item into myTable
 			 SQL = "insert into Player (FirstName, LastName, EmailAddress, Password, UserName) values (?,?,?,?,?)";
 			
@@ -378,15 +375,17 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 if (rc == SQLITE_OK) {
 				
 				 // bind the value to prevent sql injection
-				 sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
-				 sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
-				 sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
-				 sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
-				 sqlite3_bind_text(stmt, 5, pass, strlen(userName), 0);
+				 rc = sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
+				 rc = sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
+				 rc = sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
+				 rc = sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
+				 rc = sqlite3_bind_text(stmt, 5, pass, strlen(pass), 0);
 		
 				 // commit 
-				 sqlite3_step(stmt);
-				 sqlite3_finalize(stmt);
+				 rc = sqlite3_step(stmt);
+				 rc = sqlite3_finalize(stmt);
+				 rc = sqlite3_close(db);
+				 cout << sqlite3_errmsg(db);
 			 }
 		 }
 		 bool emptyTxt() {
@@ -454,7 +453,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			 rc = sqlite3_step(stmt);
 
-			 if (rc != SQLITE_OK)
+			 if (rc != SQLITE_DONE)
 			 {
 				 cout << "Database could not execute it" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -472,6 +471,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 {
 				 cout << "Database could not clear statement";
 			 }
+
 			 return false;
 		 }
 private: System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e) {

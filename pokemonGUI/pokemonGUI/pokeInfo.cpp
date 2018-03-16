@@ -15,7 +15,6 @@ void main() {
 
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	
 	//Run Pokemon Info dialog
 	pokemonGUI::frmLogin form;
 	Application::Run(%form);

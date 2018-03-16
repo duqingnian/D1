@@ -607,9 +607,10 @@ namespace pokemonGUI {
 			destination.x = e->X / 20;
 			destination.y = e->Y / 20;
 
+			listOfMoves.Clear();
 			timerEnd = 0;
 			timerIterator = 0;
-			listOfMoves.Clear();
+			
 
 			for (Node node : Cordinate::aStar(player, destination)) {
 				listOfMoves.Add(node.x);
@@ -647,66 +648,71 @@ private: System::Void timerMoveCharacter_Tick(System::Object^  sender, System::E
 
 	try {
 		if (timerIterator / 2 == timerEnd) {
-			for (World* w : world.exits) {
-				switch (w->entrance) {
-				case 'l': //Left
-					if (listOfMoves[timerIterator - 2]*20 >= 960) {
-						removeEnemies();
-						world = *w;
-						int block = w->spawnPoint;
-						characterX = block % (X_MAX / X_STEP) * X_STEP;
-						characterY = block / (X_MAX / X_STEP) * Y_STEP;
-						game.getPlayer().setX(characterX);
-						game.getPlayer().setY(characterY);
-						pictureCharacter->Location = Point(characterX, characterY);
-						loadMap(w);
-						loadEnemies(w);	
+			if (timerIterator != 0) {
+				for (World* w : world.exits) {
+					switch (w->entrance) {
+					case 'l': //Left
+						if (listOfMoves[timerIterator - 2] * 20 >= 960) {
+							removeEnemies();
+							world = *w;
+							int block = w->spawnPoint;
+							characterX = block % (X_MAX / X_STEP) * X_STEP;
+							characterY = block / (X_MAX / X_STEP) * Y_STEP;
+							game.getPlayer().setX(characterX);
+							game.getPlayer().setY(characterY);
+							pictureCharacter->Location = Point(characterX, characterY);
+							loadMap(w);
+							loadEnemies(w);
+						}
+						break;
+					case 'r'://Right
+						if (listOfMoves[timerIterator - 2] * 20 <= 20) {
+							removeEnemies();
+							world = *w;
+							int block = w->spawnPoint;
+							characterX = block % (X_MAX / X_STEP) * X_STEP;
+							characterY = block / (X_MAX / X_STEP) * Y_STEP;
+							game.getPlayer().setX(characterX);
+							game.getPlayer().setY(characterY);
+							pictureCharacter->Location = Point(characterX, characterY);
+							loadMap(w);
+							loadEnemies(w);
+						}
+						break;
+					case 't'://Top
+						if (listOfMoves[timerIterator - 2] * 20 <= 20) {
+							removeEnemies();
+							world = *w;
+							int block = w->spawnPoint;
+							characterX = block % (X_MAX / X_STEP) * X_STEP;
+							characterY = block / (X_MAX / X_STEP) * Y_STEP;
+							game.getPlayer().setX(characterX);
+							game.getPlayer().setY(characterY);
+							pictureCharacter->Location = Point(characterX, characterY);
+							loadMap(w);
+							loadEnemies(w);
+						}
+						break;
+					case 'b'://Bottom
+						if (listOfMoves[timerIterator - 1] * 20 >= 960) {
+							removeEnemies();
+							world = *w;
+							int block = w->spawnPoint;
+							characterX = block % (X_MAX / X_STEP) * X_STEP;
+							characterY = block / (X_MAX / X_STEP) * Y_STEP;
+							game.getPlayer().setX(characterX);
+							game.getPlayer().setY(characterY);
+							pictureCharacter->Location = Point(characterX, characterY);
+							loadMap(w);
+							loadEnemies(w);
+						}
+						break;
 					}
-					break;
-				case 'r'://Right
-					if (listOfMoves[timerIterator - 2]*20 <= 20) {
-						removeEnemies();
-						world = *w;
-						int block = w->spawnPoint;
-						characterX = block % (X_MAX / X_STEP) * X_STEP;
-						characterY = block / (X_MAX / X_STEP) * Y_STEP;
-						game.getPlayer().setX(characterX);
-						game.getPlayer().setY(characterY);
-						pictureCharacter->Location = Point(characterX, characterY);
-						loadMap(w);
-						loadEnemies(w);
-					}
-					break;
-				case 't'://Top
-					if (listOfMoves[timerIterator - 2] * 20 <= 20) {
-						removeEnemies();
-						world = *w;
-						int block = w->spawnPoint;
-						characterX = block % (X_MAX / X_STEP) * X_STEP;
-						characterY = block / (X_MAX / X_STEP) * Y_STEP;
-						game.getPlayer().setX(characterX);
-						game.getPlayer().setY(characterY);
-						pictureCharacter->Location = Point(characterX, characterY);
-						loadMap(w);
-						loadEnemies(w);
-					}
-					break;
-				case 'b'://Bottom
-					if (listOfMoves[timerIterator - 1] * 20 >= 960) {
-						removeEnemies();
-						world = *w;
-						int block = w->spawnPoint;
-						characterX = block % (X_MAX / X_STEP) * X_STEP;
-						characterY = block / (X_MAX / X_STEP) * Y_STEP;
-						game.getPlayer().setX(characterX);
-						game.getPlayer().setY(characterY);
-						pictureCharacter->Location = Point(characterX, characterY);
-						loadMap(w);
-						loadEnemies(w);
-					}
-					break;
 				}
 			}
+			listOfMoves.Clear();
+			timerEnd = 0;
+			timerIterator = 0;
 			timerMoveCharacter->Stop();
 		}
 		else {
