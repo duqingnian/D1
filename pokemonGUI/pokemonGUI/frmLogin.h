@@ -299,17 +299,25 @@ namespace pokemonGUI {
 
 				 int countCheck = sqlite3_column_int(stmt, 0);
 
-				 if (countCheck >= 1)
-				 {
-					 cout << "found user" << endl;
-					 return true;
-				 }
 
 				 rc = sqlite3_finalize(stmt);
 
 				 if (rc != SQLITE_OK)
 				 {
 					 cout << "Database could not clear statement";
+				 }
+
+				 rc = sqlite3_close(dbFile);
+
+				 if (rc != SQLITE_OK)
+				 {
+					 cout << "Database could not clear statement";
+				 }
+
+				 if (countCheck >= 1)
+				 {
+					 cout << "found user" << endl;
+					 return true;
 				 }
 
 				 return false;

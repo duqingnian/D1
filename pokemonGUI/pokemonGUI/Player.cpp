@@ -73,9 +73,10 @@ int Player::savePlayer() {
 	//Get data from our querry
 	int PlayerFK = sqlite3_column_int(statement, 0);
 	//Reset our statement
-	sqlite3_reset(statement);
+	sqlite3_finalize(statement);
+	sqlite3_close(db);
 
-
+	sqlite3_open(DB, &db);
 	querry = "INSERT INTO PlayerStats(PokemonID, PosX, PosY, Money, HealthPotions, StaminaPotions, Score, PlayerFK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	ok = sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr); //We prepare our statement
 	if (ok != SQLITE_OK) {
@@ -167,9 +168,10 @@ void Player::loadPlayer(int PlayerID) {
 			sqlite3_bind_text(statement, 1, name.c_str(), name.size(), NULL);
 			sqlite3_step(statement);
 			PlayerID = sqlite3_column_int(statement, 0);
-			sqlite3_reset(statement);
+			sqlite3_finalize(statement);
+			sqlite3_close(db);
 		}
-
+		sqlite3_open(DB, &db);
 		querry = "SELECT * FROM PlayerStats WHERE PlayerFK = ?";
 		sqlite3_prepare(db, querry.c_str(), querry.size() + 1, &statement, nullptr);
 		sqlite3_bind_int(statement, 1, PlayerID);

@@ -361,12 +361,12 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 		 // A function to run parameterize query
 		 void runParamSQL(sqlite3 *db, const char *fn, const char *ln, const char *emailAdd, const char * pass, const char * userName)
 		 {
-			 sqlite3_open(DB, &db);
 			 char *zErrMsg = 0;
 			 sqlite3_stmt *stmt;
 			 const char *pzTest;
 			 char *SQL;
 
+			 sqlite3_open(DB, &db);
 			 // Insert data item into myTable
 			 SQL = "insert into Player (FirstName, LastName, EmailAddress, Password, UserName) values (?,?,?,?,?)";
 			
@@ -375,15 +375,17 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 if (rc == SQLITE_OK) {
 				
 				 // bind the value to prevent sql injection
-				 sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
-				 sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
-				 sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
-				 sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
-				 sqlite3_bind_text(stmt, 5, pass, strlen(pass), 0);
+				 rc = sqlite3_bind_text(stmt, 1, fn, strlen(fn), 0);
+				 rc = sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
+				 rc = sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
+				 rc = sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
+				 rc = sqlite3_bind_text(stmt, 5, pass, strlen(pass), 0);
 		
 				 // commit 
-				 sqlite3_step(stmt);
-				 sqlite3_finalize(stmt);
+				 rc = sqlite3_step(stmt);
+				 rc = sqlite3_finalize(stmt);
+				 rc = sqlite3_close(db);
+				 cout << sqlite3_errmsg(db);
 			 }
 		 }
 		 bool emptyTxt() {
@@ -451,7 +453,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 
 			 rc = sqlite3_step(stmt);
 
-			 if (rc != SQLITE_OK)
+			 if (rc != SQLITE_DONE)
 			 {
 				 cout << "Database could not execute it" << endl;
 				 cout << sqlite3_errmsg(dbFile);
@@ -469,6 +471,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 			 {
 				 cout << "Database could not clear statement";
 			 }
+
 			 return false;
 		 }
 private: System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e) {
