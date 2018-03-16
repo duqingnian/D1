@@ -314,8 +314,10 @@ namespace pokemonGUI {
 		{
 			cbPokemonSelect->Enabled = false;
 			btnStartGame->Text = "Continue";
+			this->Visible = false;
 			pokemonGUI::frmAdventrureMap mapGui;
 			mapGui.ShowDialog(); //Launch Adventure Map GUI
+			this->Visible = true;
 		}
 		
 	}

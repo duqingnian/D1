@@ -5,14 +5,18 @@
 #include "frmAdventrureMap.h"
 #include "frmShop.h"
 #include "frmLogin.h"
+#pragma comment(lib, "winmm.lib")
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#pragma comment(lib, "user32.lib")
 
 using namespace System;
 using namespace System::Windows::Forms;
 
 void main() {
 	//The MAIN function that get's executed first
-
-
+	PlaySound(TEXT("Birds.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE); //Hide console window
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	//Run Pokemon Info dialog
@@ -26,7 +30,7 @@ void pokemonGUI::pokeInfo::updateLabel() {
 	//Updates labels, buttons, progress bars and every other piece of information
 	//Displayed on this screen
 
-	if (cbPokemonSelect->SelectedIndex != -1) {
+	if (cbPokemonSelect->SelectedIndex != -1 && game.getPlayer().getPokemon().getName()!="") {
 		//Pokemon stats
 		labelStats->Text = game.getPlayer().getPokemon().labelStats();
 
