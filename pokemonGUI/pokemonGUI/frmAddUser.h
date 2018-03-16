@@ -382,7 +382,7 @@ private: System::Void btnConfirm_Click(System::Object^  sender, System::EventArg
 				 sqlite3_bind_text(stmt, 2, ln, strlen(ln), 0);
 				 sqlite3_bind_text(stmt, 3, emailAdd, strlen(emailAdd), 0);
 				 sqlite3_bind_text(stmt, 4, pass, strlen(pass), 0);
-				 sqlite3_bind_text(stmt, 5, pass, strlen(pass), 0);
+				 sqlite3_bind_text(stmt, 5, userName, strlen(userName), 0);
 		
 				 // commit 
 				 rc = sqlite3_step(stmt);
