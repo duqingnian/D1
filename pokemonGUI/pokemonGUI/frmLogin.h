@@ -180,6 +180,8 @@ namespace pokemonGUI {
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"frmLogin";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Login";

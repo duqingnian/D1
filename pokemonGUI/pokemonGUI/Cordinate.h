@@ -4,17 +4,20 @@
 #include <stack>
 #include <vector>
 #include <array>
+#define X_MAX 1000
+#define X_STEP 20
+#define Y_MAX 500
+#define Y_STEP 20
+
 struct Node
 {
-	//properties of all class properties
 	int y;
 	int x;
 	int parentX;
 	int parentY;
-	float gCost
-		, hCost; // distance from starting node, distance from end cost and total cost
+	float gCost;
+	float hCost; 
 	float fCost;
-
 };
 
 inline bool operator < (const Node& lhs, const Node& rhs)
@@ -28,9 +31,9 @@ public:
 	
 
 	static bool isValid(int x, int y) { //If our Node is an obstacle it is not valid
-		int id = x + y * (1000 / 20);
+		int id = x + y * (X_MAX / X_STEP);
 		if (world.obstacles.count(id) == 0) {
-			if (x < 0 || y < 0 || x >= 50 || y >= 25) {
+			if (x < 0 || y < 0 || x >= (X_MAX / X_STEP) || y >= (Y_MAX / Y_STEP)) {
 				return false;
 			}
 			return true;
@@ -51,7 +54,7 @@ public:
 		return H;
 	}
 
-	static vector<Node> makePath(array<array<Node,25>,50> map, Node dest) {
+	static vector<Node> makePath(array<array<Node, (Y_MAX / Y_STEP)>, (X_MAX / X_STEP)> map, Node dest) {
 		try {
 			cout << "Found a path" << endl;
 			int x = dest.x;
@@ -59,10 +62,9 @@ public:
 			stack<Node> path;
 			vector<Node> usablePath;
 
-			
 			while (!(map[x][y].parentX == x && map[x][y].parentY == y)
-				&& map[x][y].x != -1 && map[x][y].y != -1) {
-
+				&& map[x][y].x != -1 && map[x][y].y != -1) 
+			{
 				path.push(map[x][y]);
 				int tempX = map[x][y].parentX;
 				int tempY = map[x][y].parentY;
@@ -70,7 +72,6 @@ public:
 				y = tempY;
 				
 			}
-
 			path.push(map[x][y]);
 
 			while (!path.empty()) {
@@ -99,13 +100,13 @@ public:
 			return empty;
 			//You clicked on yourself
 		}
-		bool closedList[50][25];
+		bool closedList[(X_MAX / X_STEP)][(Y_MAX / Y_STEP)];
 
 		//Initialize whole map
 		//Node allMap[50][25];
-		array<array < Node, 25>,50> allMap;
-		for (int x = 0; x < 50; x++) {
-			for (int y = 0; y < 25; y++) {
+		array<array < Node, (Y_MAX / Y_STEP)>, (X_MAX / X_STEP)> allMap;
+		for (int x = 0; x < (X_MAX / X_STEP); x++) {
+			for (int y = 0; y < (Y_MAX / Y_STEP); y++) {
 				allMap[x][y].fCost = FLT_MAX;
 				allMap[x][y].gCost = FLT_MAX;
 				allMap[x][y].hCost = FLT_MAX;
@@ -127,17 +128,18 @@ public:
 		allMap[x][y].parentX = x;
 		allMap[x][y].parentY = y;
 
-		vector<Node> openList;
-		
+		vector<Node> openList;	
 		openList.emplace_back(allMap[x][y]);
 		bool destinationFound = false;
 
-		while (!openList.empty()&&openList.size()<1250) {
+		while (!openList.empty()&&openList.size()<(X_MAX / X_STEP)*(Y_MAX / Y_STEP)) {
 			Node node;
 			do {
-				if (openList.empty()) {
-					break;
-				}
+				//This do-while loop could be replaced with extracting the first
+				//element from a set, but you'd have to make the openList a set.
+				//To be completely honest, I don't remember the reason why I do
+				//it with a vector, but for now it's still an option, although
+				//not as good as a set performance wise.
 				float temp = FLT_MAX;
 				vector<Node>::iterator itNode;
 				for (vector<Node>::iterator it = openList.begin();
@@ -152,59 +154,49 @@ public:
 				openList.erase(itNode);
 			} while (isValid(node.x, node.y) == false);
 
-			
-
 			x = node.x;
 			y = node.y;
 			closedList[x][y] = true;
 
-
+			//For each neighbour starting from North-West to South-East
 			for (int newX = -1; newX <= 1; newX++) {
 				for (int newY = -1; newY <= 1; newY++) {
 					double gNew, hNew, fNew;
 					if (isValid(x + newX, y + newY)) {
 						if (isDestination(x + newX, y + newY, dest))
 						{
+							//Destination found - make path
 							allMap[x + newX][y + newY].parentX = x;
 							allMap[x + newX][y + newY].parentY = y;
-
 							destinationFound = true;
 							return makePath(allMap, dest);
-
 						}
 						else if (closedList[x + newX][y + newY] == false)
 						{
 							gNew = node.gCost + 1.0;
 							hNew = calculateH(x + newX, y + newY, dest);
 							fNew = gNew + hNew;
-
 							// Check if this path is better than the one already present
 							if (allMap[x + newX][y + newY].fCost == FLT_MAX ||
 								allMap[x + newX][y + newY].fCost > fNew)
 							{
-								// Update the details of this cell
+								// Update the details of this neighbour node
 								allMap[x + newX][y + newY].fCost = fNew;
 								allMap[x + newX][y + newY].gCost = gNew;
 								allMap[x + newX][y + newY].hCost = hNew;
 								allMap[x + newX][y + newY].parentX = x;
 								allMap[x + newX][y + newY].parentY = y;
 								openList.emplace_back(allMap[x + newX][y + newY]);
-
 							}
 						}
 					}
 				}
 			}
-
-
-
 			}
 			if (destinationFound == false) {
 				cout << "Destination not found" << endl;
 				return empty;
-
 		}
-
 	}
 };
 #endif
