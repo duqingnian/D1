@@ -1,80 +1,150 @@
-// FOR THIS TO WORK, YOU'LL NEED TO RUN THE SQL FILES IN THE TERMINAL (APPS ANYWHERE) FIRST AND THEN CONNECT TO THE SERVER.
-// SO TYPE: connect/@acal
-//          THEN COPY AND PASTE ALL THE SQL STATEMENTS INTO THE TERMINAL FROM THE FILE POKEMONDATABASEWITHJOINING.SQL
-//          THEN TYPE: commit
-//          AND DO THAT FOR EACH FILE
-// AND THEN RUN THE FILE CONNECTINGTOSQL.CPP BEFORE RUNNING RETRIEVINGINFO.CPP
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "libsqlite.hpp"
+using namespace std;
 
-#include <iostream>
-#include <fstream>
-#include <string>
-//  using namespace std;
+////////////////////////////////////////////GETS WEAKNESS////////////////////////////////////////////
 
-int main(int dbtask)
-{
-	// need to initialise any variables here 
+       char getWeakness (char namex[])
+         try
+       {
+             //char x;
+             cout << "Function - getWeakness for type " << namex <<  ".  Connecting to database..." << endl; 
+         
+             sqlite::sqlite db( "PokemonNew.sqlite" );
+             auto cur = db.get_statement();
+             cur->set_sql( "SELECT * from Type where Type = '&namex' ; " ); // pass parameter namex to select
+             cur->set_sql( "SELECT * from Type where Type = 'FIRE' ; " );
+             cur->prepare();  
+         
+             while( cur->step() )  {                  // loop over results and display them 
+                    cout << cur->get_int(0) << " " << cur->get_text(1) << " " << cur->get_text(2) << " " << endl;
+                    cout <<  "Weakness for " << cur->get_text(1) << " is " << cur->get_text(2) << " " << endl;
+             }
+       }
+       catch( sqlite::exception e )      // catch any sql errors
+       {
+           std::cerr << e.what() << std::endl;
+           cout << "Error: " << e.what() << endl;
+           return 1;
+       };
 
-	//  dbtask; // passed in as 1, 2, 3, 4, 5.....
+////////////////////////////////////////////GETS POKEMON ID////////////////////////////////////////////
 
-	switch (dbtask) {
-  case 1:
-		int newuser(char name);   // Creates new user. Returns userid as integer and reads in username as character 
-		break;
-	case 2:
-		int getuserid(char name); //Gets existing userid. Returns userid as integer and reads in username as character 
-		break;
-	case 3:
-		int getuserpoints(int userid); //Gets existing userid.s Returns totalpoints as integer. int newuser(char name)
-		break;
-	case 4:
-	int getpower(int userid); // gets existing user's power using the userid
-		break;
-	case 5:
-		int getability(int userid); // gets the ability for the user
-		break;
-	case 6:
-		int gettype(int userid);  // gets the type for the user. 
-		break;
-	}
+       char getPokemon (char namey[])
+         try
+       {
+             //char x;
+             cout << "Function - getPokemon for type " << namey <<  ".  Connecting to database..." << endl; 
+         
+             sqlite::sqlite db( "PokemonNew.sqlite" );
+             auto cur = db.get_statement();
+             cur->set_sql( "SELECT * from PokemonTable where Name = '&namey' ; " ); // pass parameter name to select
+             cur->set_sql( "SELECT * from PokemonTable where Name = 'CATTER' ; " );
+             cur->prepare();  
+         
+             while( cur->step() )  {                  // loop over results and display them 
+                    cout << cur->get_int(0) << " " << cur->get_int(1) << " " << cur->get_text(2) << " " << cur->get_int(3) << " " << endl;
+                    cout <<  "ID for Pokemon " << cur->get_text(2) << " is " << cur->get_int(0) << " " << endl;
+             }
+       }
+       catch( sqlite::exception e )
+       {
+           std::cerr << e.what() << std::endl;
+           cout << "Error: " << e.what() << endl;
+           return 1;
+       };
 
-	int newuser(char name)
-	{
-		cmd.setCommandText("insert into username(userid, username, totalpoints) values (user_seq.nextval, &name, 0");
-		cmd.Execute();
-		con.Commit();   //commits the insert to the database
-		cmd.setCommandText("select userid from username where name = '&name'"); // returns the user_id back for new user.
-		return cmd.Execute(); // executes the select command and returns the value of user_id              
-	}
-
-	int getuserid(char name)
-	{
-		cmd.setCommandText("select userid from username where name = '&name'"); // returns the user_id back for user.
-		return cmd.Execute();
-	}
-
-	int getuserpoints(int userid)
-	{
-		cmd.setCommandText("select total_points from username where userid = '&userid'"); // returns the total_points back for user_id.
-		return cmd.Execute();
-	}
-
-	int getpower(int userid)
-	{
-		cmd.setCommandText("select power from pokemon, power where pokemon.userid = '&userid' and power.pokemonid = pokemon.pokemonid"); // returns the power back for user.
-		return cmd.Execute();
-	}
-
-	int getability(int userid)
-	{
-		cmd.setCommandText("select abilityident from ability, pokemon where pokemon.userid = '&userid' and ability.pokemonid = pokemon.pokemonid"); // returns the ability back for user.
-		return cmd.Execute();
-	}
-
-	int gettype(int userid)
-	{
-		cmd.setCommandText("select type from type, pokemon where pokemon.userid = '&userid' and type.pokemonid = pokemon.pokemonid"); // returns the power back for user.
-		return cmd.Execute();
-	}
+////////////////////////////////////////////GETS POKEMON NAME////////////////////////////////////////////
 
 
-} // end main
+       char getPokemonId (char id[])
+         try
+       {
+             //char x;
+             cout << "Function - getPokemon for type " << id <<  ".  Connecting to database..." << endl; 
+         
+             sqlite::sqlite db( "PokemonNew.sqlite" );
+             auto cur = db.get_statement();
+             cur->set_sql( "SELECT * from PokemonTable where PokemonID = '&id' ; " ); // pass parameter id to select
+             cur->set_sql( "SELECT * from PokemonTable where PokemonID = '4' ; " );
+             cur->prepare();  
+         
+             while( cur->step() )  {
+                    cout << cur->get_int(0) << " " << cur->get_int(1) << " " << cur->get_text(2) << " " << cur->get_int(3) << " " << endl;
+                    cout <<  "Pokemon Name for id " << cur->get_text(1) << " is " << cur->get_text(2) << " " << endl;
+             }
+       }
+       catch( sqlite::exception e )
+       {
+           std::cerr << e.what() << std::endl;
+           cout << "Error: " << e.what() << endl;
+           return 1;
+       };
+
+////////////////////////////////////////////GETS ABILITY NAME////////////////////////////////////////////
+
+       char getAbility (char id[])
+         try
+       {
+             //char x;
+             cout << "Function - getAbility for type " << id <<  ".  Connecting to database..." << endl; 
+         
+             sqlite::sqlite db( "PokemonNew.sqlite" );
+             auto cur = db.get_statement();
+             cur->set_sql( "SELECT * from Ability where Damage >= '&id' ; " ); // pass parameter name to select
+             cur->set_sql( "SELECT * from Ability where Damage >= 10 ; " );
+             cur->prepare();  
+         
+             while( cur->step() )  {                  // loop over results and display them 
+                    cout << cur->get_int(0) << " " << cur->get_text(1) << " " << cur->get_int(2) << " " << cur->get_int(3) << " " << endl;
+                    cout <<  "Ability for Damage " << cur->get_int(2) << " is " << cur->get_text(1) << " " << endl;
+             }
+       }
+       catch( sqlite::exception e )      // catch any sql errors
+       {
+           std::cerr << e.what() << std::endl;
+           cout << "Error: " << e.what() << endl;
+           return 1;
+       };
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ int main (int argc, char *argv[])   
+ {
+       char* dbtask = argv[1];
+       char* namex  = argv[2];
+       char* id = argv[3];
+       //char weakness;
+   
+       cout << "Hello in main      - dbtask=" << *dbtask << " namex=" << namex << " user_id =" << id << endl;
+       //cout << "In main argv - dbtask=" << argv[1] << " namex=" << argv[2] << " user_id =" << argv[3] << endl;
+	 
+       switch (*dbtask)
+       {
+       case '1': // dbtask 1 - gets the Weakness from the type table
+              cout << "call function getWeakness parameter type " << namex << endl; 
+              getWeakness(namex);              
+              break;
+           
+       case '2': // dbtask 2 – gets pokemon id details for pokemon name
+              cout << "call function getPokemon parameter name " << namex << endl; 
+              getPokemon(namex);             
+              break;
+              
+       case '3': // dbtask 3 – gets pokemon details for pokemon_id 
+              cout << "call function getPokemon parameter id " << id << endl; 
+              getPokemonId(id);              
+              break;
+           
+       case '4': // dbtask 4 – gets ability details for damage 
+              cout << "call function getAbility parameter id " << id << endl; 
+              getAbility(id);             
+              break;
+          
+       } 
+       
+       return 0;
+   
+};

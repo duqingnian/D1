@@ -14,6 +14,9 @@
 
 
 
+
+
+
 namespace pokemonGUI {
 
 	using namespace std;
@@ -33,9 +36,6 @@ namespace pokemonGUI {
 		bool mapMaking = false;
 		Graphics ^ graphics; //Using these to draw on our panel
 		System::Windows::Forms::MouseEventArgs^ mouse;
-		int X_MAX = 1000;
-		int X_STEP = 20;
-		int Y_MAX = 500;+6		int Y_STEP = 20;
 		Color color = Color::Black;
 		int characterX = game.getPlayer().getX();
 		int characterY = game.getPlayer().getY();
@@ -44,7 +44,9 @@ namespace pokemonGUI {
 		int timerEnd;
 		bool automatic = true;
 		System::Windows::Forms::Button^  btnStopMapMaking;
-		Dictionary<String^, PictureBox^>^ enemiesPictureBox = gcnew Dictionary<String^, PictureBox^>();
+	private: System::Windows::Forms::Button^  btnBack;
+
+			 Dictionary<String^, PictureBox^>^ enemiesPictureBox = gcnew Dictionary<String^, PictureBox^>();
 		void loadEnemies(World* w);
 		void loadMap(World* w);
 		void removeEnemies();
@@ -140,6 +142,7 @@ namespace pokemonGUI {
 			this->timerMoveCharacter = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnStopMapMaking = (gcnew System::Windows::Forms::Button());
+			this->btnBack = (gcnew System::Windows::Forms::Button());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureCharacter))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbMap))->BeginInit();
@@ -342,11 +345,22 @@ namespace pokemonGUI {
 			this->btnStopMapMaking->Visible = false;
 			this->btnStopMapMaking->Click += gcnew System::EventHandler(this, &frmAdventrureMap::btnStopMapMaking_Click);
 			// 
+			// btnBack
+			// 
+			this->btnBack->Location = System::Drawing::Point(1376, 66);
+			this->btnBack->Name = L"btnBack";
+			this->btnBack->Size = System::Drawing::Size(135, 496);
+			this->btnBack->TabIndex = 8;
+			this->btnBack->Text = L"Back to Pokemon Menu";
+			this->btnBack->UseVisualStyleBackColor = true;
+			this->btnBack->Click += gcnew System::EventHandler(this, &frmAdventrureMap::button1_Click);
+			// 
 			// frmAdventrureMap
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1908, 652);
+			this->Controls->Add(this->btnBack);
 			this->Controls->Add(this->btnStopMapMaking);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label5);
@@ -385,30 +399,36 @@ namespace pokemonGUI {
 		//Also Enables new buttons specifically made for world design
 		//After the first press, works as a "New Map" button
 		
-		pictureCharacter->Location = Point(characterX, characterY);
-		world.blocks.clear();
-		graphics = Graphics::FromImage(pbMap->Image);
-		drawGrid();
-		mapMaking = true;
-		btnLoadMap->Visible = true;
-		btnSaveMap->Visible = true;
-		if (textBoxWorldName->Text == "") {
-			//Do not enable Load and Save buttons if world name is not specified
-			btnLoadMap->Enabled = false;
-			btnSaveMap->Enabled = false;
+		if (mapMaking) {
+			world.blocks.clear();
+			removeEnemies();
+			graphics->Clear(Color::White);
+			drawGrid();
 		}
-		btnStopMapMaking->Visible = true;
-		textBoxWorldName->Visible = true;
-		label1->Visible = true;
-		label2->Visible = true;
-		label3->Visible = true;
-		label4->Visible = true;
-		label5->Visible = true;
-		panelWall->Visible = true;
-		panelWater->Visible = true;
-		panelMoney->Visible = true;
-		panelMoney->BackColor = Color::Gold;
-		btnMapMaker->Text = "New Map";
+		else {
+
+			mapMaking = true;
+			btnLoadMap->Visible = true;
+			btnSaveMap->Visible = true;
+			if (textBoxWorldName->Text == "") {
+				//Do not enable Load and Save buttons if world name is not specified
+				btnLoadMap->Enabled = false;
+				btnSaveMap->Enabled = false;
+			}
+			btnStopMapMaking->Visible = true;
+			textBoxWorldName->Visible = true;
+			btnBack->Visible = false;
+			label1->Visible = true;
+			label2->Visible = true;
+			label3->Visible = true;
+			label4->Visible = true;
+			label5->Visible = true;
+			panelWall->Visible = true;
+			panelWater->Visible = true;
+			panelMoney->Visible = true;
+			panelMoney->BackColor = Color::Gold;
+			btnMapMaker->Text = "New Map";
+		}
 	}
 
 
@@ -508,7 +528,8 @@ namespace pokemonGUI {
 	private: System::Void btnLoadMap_Click(System::Object^  sender, System::EventArgs^  e) {
 		//Since we are manually loading map we disable the automatic map update
 		automatic = false; 
-		loadEnemies(&world);
+		removeEnemies();
+		//loadEnemies(&world);
 		loadMap(&world);
 		automatic = true;
 	}
@@ -813,7 +834,11 @@ private: System::Void btnStopMapMaking_Click(System::Object^  sender, System::Ev
 	panelWall->Visible = false;
 	panelWater->Visible = false;
 	panelMoney->Visible = false;
+	btnBack->Visible = true;
 	btnMapMaker->Text = "Start map making";
+}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->Close();
 }
 };
 }

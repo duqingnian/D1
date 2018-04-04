@@ -85,7 +85,6 @@ namespace pokemonGUI {
 		void InitializeComponent(void)
 
 		{
-			PlaySound(TEXT("Birds.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(frmLogin::typeid));
 			this->txtUserName = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -143,7 +142,7 @@ namespace pokemonGUI {
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
 			this->pictureBox1->Location = System::Drawing::Point(-4, -7);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(4);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(1336, 618);
 			this->pictureBox1->TabIndex = 6;
@@ -171,7 +170,7 @@ namespace pokemonGUI {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(1332, 609);
+			this->ClientSize = System::Drawing::Size(1322, 591);
 			this->Controls->Add(this->txtPass);
 			this->Controls->Add(this->txtUser);
 			this->Controls->Add(this->button2);
@@ -181,6 +180,8 @@ namespace pokemonGUI {
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"frmLogin";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Login";
@@ -216,16 +217,18 @@ namespace pokemonGUI {
 		{
 			game.getPlayer().setName(charUserName);
 			Player::loadPlayer();
+			this->Visible = false;
 			pokemonGUI::pokeInfo info;
-			info.ShowDialog();	
-		}
-		else {
-			MessageBox::Show("Either User Name or password has been entered wrongly, else create a new account", "Alert");
+			info.ShowDialog();
+			this->Close();
+			
 		}
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Visible = false;
 		pokemonGUI::frmAddUser frmAddUser;
 		frmAddUser.ShowDialog();
+		this->Visible = true;
 	}
 
 			 bool userAccept(sqlite3 *dbFile, const char * userName, const char * password)
