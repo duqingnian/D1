@@ -14,9 +14,6 @@
 
 
 
-
-
-
 namespace pokemonGUI {
 
 	using namespace std;
@@ -38,8 +35,7 @@ namespace pokemonGUI {
 		System::Windows::Forms::MouseEventArgs^ mouse;
 		int X_MAX = 1000;
 		int X_STEP = 20;
-		int Y_MAX = 500;
-		int Y_STEP = 20;
+		int Y_MAX = 500;+6		int Y_STEP = 20;
 		Color color = Color::Black;
 		int characterX = game.getPlayer().getX();
 		int characterY = game.getPlayer().getY();
